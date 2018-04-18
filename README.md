@@ -4,7 +4,7 @@
 
 **TODOLIST:** (before release)
 * [X] Fix strings.
-* [ ] Fix logo.
+* [X] Fix logo.
 * [ ] Make web version for my GitHub pages.
 
 **TODOLIST:** (whenever)
