@@ -1,6 +1,6 @@
 # calc
 
-![calc= Logo](/calc Logo.png)
+![calc Logo](calc Logo.png)
 
 **TODOLIST:** (before release)
 * [X] Fix strings.
@@ -12,7 +12,7 @@
 * [ ] Make those dang help pages.
 
 ## Examples
- 
+
 ```
 calc= [1, 1] {i -> i (i last (i 1 lastn) +) +} 7 iter last
 calc=34
