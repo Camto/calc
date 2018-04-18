@@ -1,6 +1,6 @@
 # calc
 
-![calc Logo](calc Logo.png)
+![calcLogo](calcLogo.png)
 
 **TODOLIST:** (before release)
 * [X] Fix strings.
