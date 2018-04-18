@@ -1,5 +1,7 @@
 # calc
 
+![calc=](calc Logo.png)
+
 **TODOLIST:** (before release)
 * [X] Fix strings.
 * [ ] Fix logo.
