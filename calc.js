@@ -34,14 +34,34 @@ function lex(code) {
 			return {data: parseFloat(number), type: "number"};
 		},
 		
-		string() { // FIX
+		string() {
 			pointer++;
-			var end = pointer;
-			while((code[end] != '"' || code[end - 1] == "\\") && end < code.length) {
-				end++;
+			
+			string = "";
+			var escaped = false;
+			while(code[pointer] != '"' || escaped) {
+				if(!escaped) {
+					if(code[pointer] != "\\") {
+						string += code[pointer];
+					} else {
+						escaped = true;
+					}
+				} else {
+					escaped = false;
+					switch(code[pointer]) {
+						case "n":
+							string += "\n";
+							break;
+						case "t":
+							string += "\t";
+						default:
+							string += code[pointer];
+					}
+				}
+				pointer++;
 			}
-			var string = code.substr(pointer, end - pointer);
-			pointer = end + 1;
+			
+			pointer++;
 			return {data: string, type: "string"};
 		},
 		

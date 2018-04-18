@@ -2,7 +2,7 @@ var calc = require("./../calc.js");
 
 var Discord = require("discord.io");
 var logger = require("winston");
-var auth = require("./auth.json");
+var auth = require("./../auth.json");
 
 logger.remove(logger.transports.Console);
 logger.add(logger.transports.Console, {
