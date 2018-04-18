@@ -1,0 +1,11 @@
+{
+	"name": "calcbot",
+	"version": "1.0.0",
+	"description": "The calc= programming language bot.",
+	"main": "calcbot.js",
+	"author": "Benjamin Philippe Applegate",
+	"dependencies": {
+		"discord.io": "github:woor/discord.io#gateway_v6",
+		"winston": "^2.4.1"
+	}
+}
