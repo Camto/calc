@@ -10,6 +10,7 @@
 **TODOLIST:** (whenever)
 * [ ] Make more good samples please.
 * [ ] Make those dang help pages.
+* [ ] Continue the standard library.
 
 ## Examples
 

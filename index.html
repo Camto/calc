@@ -1,19 +1,42 @@
 <!DOCTYPE html>
 
 <html>
-	<head><title>calc=</title></head>
+	<head>
+		<title>calc=</title>
+		
+		<style>
+		body {
+			margin: 0px;
+		}
+		
+		html, body, #console {
+			height: 100%;
+		}
+		#console {
+		  display: -webkit-flex;
+		  display: flex;
+		  flex-direction: column;
+		}
+		#calc= {
+			overlay: hidden;
+			background: blue;
+		}
+		#log {
+			background: rgb(240,247,255);
+			flex: 1;
+			position: relative;
+		}
+		</style>
+	</head>
 	<body>
-		<textarea
-			id="calc="
-			cols="96" rows="32"
-			placeholder="Tip: don't forget to start with `calc=`."
-			style="resize: none; display: block; margin: 0 auto;"></textarea>
-		<button
-			style="resize: none; display: block; margin: 0 auto;"
-			onclick='calc(document.getElementById("calc=").value)'>
-			
-			Run
-		</button>
+		<div id="console">
+			<div id="log"></div>
+			<textarea
+				id="calc="
+				cols="2"
+				placeholder="Tip: don't forget to start with `calc=`."
+				></textarea>
+		</div>
 		
 		<script src="calc.js"></script>
 	</body>

@@ -89,7 +89,7 @@ function lex(code) {
 	};
 	
 	while(pointer < code.length) {
-		if(/[A-Za-z]/.test(code[pointer])) {
+		if(/[A-Za-z_]/.test(code[pointer])) {
 			tokens.push(expect.symbol());
 		} else if(/\d/.test(code[pointer])) {
 			tokens.push(expect.number());
