@@ -1,0 +1,33 @@
+@font-face {
+	font-family: FiraCode;
+	src: url(FiraCode.ttf);
+}
+
+* {
+	font-family: FiraCode;
+	font-size: 16px;
+}
+
+body {
+	margin: 0px;
+}
+
+html, body, #console {
+	height: 100%;
+}
+
+#console {
+	display: flex;
+	flex-direction: column;
+}
+
+#calc {
+	resize: none;
+}
+
+#log {
+	background: rgb(240,247,255);
+	flex: 1;
+	position: relative;
+	overflow: auto;
+}

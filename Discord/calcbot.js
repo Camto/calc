@@ -14,9 +14,11 @@ var bot = new Discord.Client({
    token: auth.token,
    autorun: true
 });
+
 bot.on("ready", function (evt) {
 	logger.info(`${bot.username} is logged in!`);
 });
+
 bot.on("message", function(user, user_id, channel_id, message, event) {
 	if (user != "calcbot" && message.substring(0, 5) == "calc=") {
 		bot.sendMessage({
