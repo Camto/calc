@@ -677,6 +677,54 @@ Demos!
 					});
 					break;
 			}
+		},
+		"<"() {
+			var right = stack.pop();
+			var left = stack.pop();
+			switch(left.type + right.type) {
+				case "numbernumber":
+					stack.push({
+						data: left.data < right.data | 0,
+						type: "number"
+					});
+					break;
+			}
+		},
+		">"() {
+			var right = stack.pop();
+			var left = stack.pop();
+			switch(left.type + right.type) {
+				case "numbernumber":
+					stack.push({
+						data: left.data > right.data | 0,
+						type: "number"
+					});
+					break;
+			}
+		},
+		"<="() {
+			var right = stack.pop();
+			var left = stack.pop();
+			switch(left.type + right.type) {
+				case "numbernumber":
+					stack.push({
+						data: left.data <= right.data | 0,
+						type: "number"
+					});
+					break;
+			}
+		},
+		">="() {
+			var right = stack.pop();
+			var left = stack.pop();
+			switch(left.type + right.type) {
+				case "numbernumber":
+					stack.push({
+						data: left.data >= right.data | 0,
+						type: "number"
+					});
+					break;
+			}
 		}
 		
 	};
