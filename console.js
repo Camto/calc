@@ -1,4 +1,6 @@
 $(function() {
+	$("#log").append(escape_input(print(calc("calc= h"))));
+	
 	$("#calc").keyup(function(key) {
 		if(key.which == 13) {
 			var result = "";
@@ -7,12 +9,14 @@ $(function() {
 			} catch(err) {
 				result = err.toString();
 			}
+			
 			$("#log").append(escape_input(result));
 			$("#log").append("<br />");
 			$(this).val("calc= ");
 			$('#log').scrollTop($('#log')[0].scrollHeight);
 		}
 	});
+	
 	$("#calc").keydown(function() {
 		$(this).val($(this).val().replace(/[\n\r]/g, ""));
 	});
