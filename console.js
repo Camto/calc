@@ -1,3 +1,6 @@
+var past = ["calc= "];
+var travel = 0;
+
 $(function() {
 	$("#log").append(escape_input(print(calc("calc= h"))));
 	
@@ -9,11 +12,32 @@ $(function() {
 			} catch(err) {
 				result = err.toString();
 			}
+			past.push($(this).val().replace(/[\n\r]/g, ""));
+			travel = past.length;
 			
 			$("#log").append(escape_input(result));
 			$("#log").append("<br />");
 			$(this).val("calc= ");
 			$('#log').scrollTop($('#log')[0].scrollHeight);
+		} else if(key.which == 38) {
+			travel--;
+			if(travel <= 0) {
+				travel = 0;
+			}
+			$(this).val(past[travel]);
+			var length = $(this).val().length * 2;
+			setTimeout(() => this.setSelectionRange(length, length), 1);
+		} else if(key.which == 40) {
+			travel++;
+			if(travel > past.length - 1) {
+				travel = past.length - 1;
+				$(this).val("calc= ");
+				setTimeout(() => this.setSelectionRange(6, 6), 1);
+			} else {
+				$(this).val(past[travel]);
+				var length = $(this).val().length * 2;
+				setTimeout(() => this.setSelectionRange(length, length), 1);
+			}
 		}
 	});
 	
