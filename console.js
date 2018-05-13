@@ -5,11 +5,11 @@ $(function() {
 			try {
 				result = print(calc($(this).val()));
 			} catch(err) {
-				result = err;
+				result = err.toString();
 			}
-			$("#log").append(`<span>${escape_input(result)}</span>`);
+			$("#log").append(escape_input(result));
 			$("#log").append("<br />");
-			$(this).val("");
+			$(this).val("calc= ");
 			$('#log').scrollTop($('#log')[0].scrollHeight);
 		}
 	});

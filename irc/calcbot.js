@@ -19,7 +19,7 @@ bot.addListener("message", function(from, to, text, message) {
 				return calc.print(calc.calc(text));
 			} catch(err) {
 				console.log(err);
-				return err;
+				return err.toString();
 			}
 		})());
 	}
