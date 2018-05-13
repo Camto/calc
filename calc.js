@@ -328,14 +328,14 @@ Demos!
 			stack.push(first);
 			stack.push(second);
 		},
-		"swapn, reversen, invertn"() {
+		"swapn, stack_reversen, stack_invertn"() {
 			var n = stack.pop().data;
 			stack = stack.concat(stack.splice(stack.length - n, n).reverse());
 		},
 		"stack_pop, drop"() {
 			stack.pop();
 		},
-		"popn, dropn"() {
+		"stack_popn, dropn"() {
 			var n = stack.pop().data;
 			for(let cou = 0; cou < n; cou++) {
 				stack.pop();
@@ -473,7 +473,7 @@ Demos!
 			
 			stack.push({data: filtered, type: "list"});
 		},
-		"first, cat, top, head"() {
+		"first, cat, top, head, pop"() {
 			var list = stack.pop().data;
 			stack.push(list[0]);
 		},
@@ -491,7 +491,7 @@ Demos!
 			var list = stack.pop().data;
 			stack.push(list[list.length - index - 1]);
 		},
-		"front, init"() {
+		"front, init, list_drop"() {
 			stack.push({
 				data: stack.pop().data.slice(0, -1),
 				type: "list"
@@ -513,13 +513,27 @@ Demos!
 			var list = stack.pop().data;
 			stack.push({data: list.reverse(), type: "list"});
 		},
+		"reversen, invertn, list_swapn"() {
+			var list = stack.pop().data;
+			var n = list.pop().data;
+			list = list.concat(list.splice(list.length - n, n).reverse());
+			stack.push({data: list, type: "list"});
+		},
+		"popn, list_dropn"() {
+			var n = stack.pop().data;
+			var list = stack.pop().data;
+			for(let cou = 0; cou < n; cou++) {
+				list.pop();
+			}
+			stack.push({data: list, type: "list"});
+		},
 		"extr, extract, expl, explode, spr, spread"() {
 			var list = stack.pop().data;
 			for(let cou = 0; cou < list.length; cou++) {
 				stack.push(list[cou]);
 			}
 		},
-		"group"() {
+		"group, as_list"() {
 			var n = stack.pop().data;
 			
 			var list = [];
@@ -528,86 +542,111 @@ Demos!
 			}
 			stack.push({data: list, type: "list"});
 		},
+		"copy_group, copy_as_list"() {
+			var n = stack.pop().data;
+			
+			var list = [];
+			for(let cou = 0; cou < n; cou++) {
+				list.unshift(stack[stack.length - 1 - cou]);
+			}
+			stack.push({data: list, type: "list"});
+		},
+		group_all() {
+			var list = stack.slice();
+			stack = [];
+			stack.push({data: list, type: "list"});
+		},
+		copy_group_all() {
+			var list = stack.slice();
+			stack.push({data: list, type: "list"});
+		},
 		"list_dup, list_duplicate"() {
-			stack.push(stack[stack.length - 1]);
+			var list = stack.pop().data;
+			list.push(list[list.length - 1]);
+			stack.push({data: list, type: "list"});
 		},
 		list_swap() {
-			var first = stack.pop();
-			var second = stack.pop();
-			stack.push(first);
-			stack.push(second);
-		},
-		"list_swapn, list_reversen, list_invertn"() {
-			var n = stack.pop().data;
-			stack = stack.concat(stack.splice(stack.length - n, n).reverse());
-		},
-		"list_stack_pop, list_drop"() {
-			stack.pop();
-		},
-		"list_popn, list_dropn"() {
-			var n = stack.pop().data;
-			for(let cou = 0; cou < n; cou++) {
-				stack.pop();
-			}
+			var list = stack.pop().data;
+			var first = list.pop();
+			var second = list.pop();
+			list.push(first);
+			list.push(second);
+			stack.push({data: list, type: "list"});
 		},
 		"list_rot, list_rotate"() {
-			var first = stack.pop();
-			var second = stack.pop();
-			var third = stack.pop();
-			stack.push(first);
-			stack.push(third);
-			stack.push(second);
+			var list = stack.pop().data;
+			var first = list.pop();
+			var second = list.pop();
+			var third = list.pop();
+			list.push(first);
+			list.push(third);
+			list.push(second);
+			stack.push({data: list, type: "list"});
 		},
 		"list_anti_rot, list_anti_rotate, list_reverse_rot, list_reverse_rotate, list_counter_rot, list_counter_rotate"() {
-			var first = stack.pop();
-			var second = stack.pop();
-			var third = stack.pop();
-			stack.push(second);
-			stack.push(first);
-			stack.push(third);
+			var list = stack.pop().data;
+			var first = list.pop();
+			var second = list.pop();
+			var third = list.pop();
+			list.push(second);
+			list.push(first);
+			list.push(third);
+			stack.push({data: list, type: "list"});
 		},
 		"list_roll, list_rotn, list_rotaten"() {
 			var n = stack.pop().data;
+			var list = stack.pop().data;
 			
 			if(n > 0) {
-				var rolled = stack.pop();
-				stack.splice(stack.length - n + 1, 0, rolled);
+				var rolled = list.pop();
+				list.splice(list.length - n + 1, 0, rolled);
 			} else {
-				var rolled = stack[stack.length + n];
-				stack.splice(stack.length + n, 1);
-				stack.push(rolled);
+				var rolled = list[list.length + n];
+				list.splice(list.length + n, 1);
+				list.push(rolled);
 			}
+			
+			stack.push({data: list, type: "list"});
 		},
 		"list_anti_roll, list_reverse_roll, list_counter_roll, list_anti_rotn, list_anti_rotaten, list_reverse_rotn, list_reverse_rotaten, list_counter_rotn, list_counter_rotaten"() {
 			var n = stack.pop().data;
+			var list = stack.pop().data;
 			
 			if(n > 0) {
-				var rolled = stack[stack.length - n];
-				stack.splice(stack.length - n, 1);
-				stack.push(rolled);
+				var rolled = list[list.length - n];
+				list.splice(list.length - n, 1);
+				list.push(rolled);
 			} else {
-				var rolled = stack.pop();
-				stack.splice(stack.length + n + 1, 0, rolled);
+				var rolled = list.pop();
+				list.splice(list.length + n + 1, 0, rolled);
 			}
+			
+			stack.push({data: list, type: "list"});
 		},
 		list_nip() {
-			var first = stack.pop();
-			var second = stack.pop();
-			stack.push(first);
+			var list = list.pop().data;
+			var first = list.pop();
+			var second = list.pop();
+			list.push(first);
+			stack.push({data: list, type: "list"});
 		},
 		list_tuck() {
-			var first = stack.pop();
-			var second = stack.pop();
-			stack.push(first);
-			stack.push(second);
-			stack.push(first);
+			var list = stack.pop().data;
+			var first = list.pop();
+			var second = list.pop();
+			list.push(first);
+			list.push(second);
+			list.push(first);
+			stack.push({data: list, type: "list"});
 		},
 		list_over() {
-			var first = stack.pop();
-			var second = stack.pop();
-			stack.push(second);
-			stack.push(first);
-			stack.push(second);
+			var list = stack.pop().data;
+			var first = list.pop();
+			var second = list.pop();
+			list.push(second);
+			list.push(first);
+			list.push(second);
+			stack.push({data: list, type: "list"});
 		},
 		
 		"call, run, do"() {
