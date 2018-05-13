@@ -624,7 +624,7 @@ Demos!
 			stack.push({data: list, type: "list"});
 		},
 		list_nip() {
-			var list = list.pop().data;
+			var list = stack.pop().data;
 			var first = list.pop();
 			var second = list.pop();
 			list.push(first);
