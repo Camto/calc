@@ -528,6 +528,87 @@ Demos!
 			}
 			stack.push({data: list, type: "list"});
 		},
+		"list_dup, list_duplicate"() {
+			stack.push(stack[stack.length - 1]);
+		},
+		list_swap() {
+			var first = stack.pop();
+			var second = stack.pop();
+			stack.push(first);
+			stack.push(second);
+		},
+		"list_swapn, list_reversen, list_invertn"() {
+			var n = stack.pop().data;
+			stack = stack.concat(stack.splice(stack.length - n, n).reverse());
+		},
+		"list_stack_pop, list_drop"() {
+			stack.pop();
+		},
+		"list_popn, list_dropn"() {
+			var n = stack.pop().data;
+			for(let cou = 0; cou < n; cou++) {
+				stack.pop();
+			}
+		},
+		"list_rot, list_rotate"() {
+			var first = stack.pop();
+			var second = stack.pop();
+			var third = stack.pop();
+			stack.push(first);
+			stack.push(third);
+			stack.push(second);
+		},
+		"list_anti_rot, list_anti_rotate, list_reverse_rot, list_reverse_rotate, list_counter_rot, list_counter_rotate"() {
+			var first = stack.pop();
+			var second = stack.pop();
+			var third = stack.pop();
+			stack.push(second);
+			stack.push(first);
+			stack.push(third);
+		},
+		"list_roll, list_rotn, list_rotaten"() {
+			var n = stack.pop().data;
+			
+			if(n > 0) {
+				var rolled = stack.pop();
+				stack.splice(stack.length - n + 1, 0, rolled);
+			} else {
+				var rolled = stack[stack.length + n];
+				stack.splice(stack.length + n, 1);
+				stack.push(rolled);
+			}
+		},
+		"list_anti_roll, list_reverse_roll, list_counter_roll, list_anti_rotn, list_anti_rotaten, list_reverse_rotn, list_reverse_rotaten, list_counter_rotn, list_counter_rotaten"() {
+			var n = stack.pop().data;
+			
+			if(n > 0) {
+				var rolled = stack[stack.length - n];
+				stack.splice(stack.length - n, 1);
+				stack.push(rolled);
+			} else {
+				var rolled = stack.pop();
+				stack.splice(stack.length + n + 1, 0, rolled);
+			}
+		},
+		list_nip() {
+			var first = stack.pop();
+			var second = stack.pop();
+			stack.push(first);
+		},
+		list_tuck() {
+			var first = stack.pop();
+			var second = stack.pop();
+			stack.push(first);
+			stack.push(second);
+			stack.push(first);
+		},
+		list_over() {
+			var first = stack.pop();
+			var second = stack.pop();
+			stack.push(second);
+			stack.push(first);
+			stack.push(second);
+		},
 		
 		"call, run, do"() {
 			run_function(stack.pop());
