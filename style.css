@@ -30,4 +30,5 @@ html, body, #console {
 	flex: 1;
 	position: relative;
 	overflow: auto;
+	overflow-wrap: break-word;
 }
