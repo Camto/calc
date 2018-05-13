@@ -10,6 +10,7 @@ $(function() {
 			$("#log").append(`<span>${escape_input(result)}</span>`);
 			$("#log").append("<br />");
 			$(this).val("");
+			$('#log').scrollTop($('#log')[0].scrollHeight);
 		}
 	});
 	$("#calc").keydown(function() {
