@@ -2,14 +2,14 @@ var past = ["calc= "];
 var travel = 0;
 
 $(function() {
-	$("#log").append(escape_input(print(calc("calc= h"))));
+	$("#log").append(escape_input(print(calc("calc= h", 1000))));
 	
 	$("#calc").keyup(function(key) {
 		switch(key.which) {
 			case 13:
 				var result = "";
 				try {
-					result = print(calc($(this).val()));
+					result = print(calc($(this).val(), 10));
 				} catch(err) {
 					result = err.toString();
 				}

@@ -5,8 +5,7 @@ function calc(code_, max_time) {
 	var code = code_.substr(5, code_.length);
 	var tokens = lex(code);
 	var ast = parse(tokens);
-	// result
-	return run(ast);
+	return run(ast, max_time);
 }
 
 function lex(code) {
@@ -221,10 +220,6 @@ function parse(tokens) {
 function run(ast) {
 	var instruccion_pointer;
 	var stack = [];
-	/*stack.push = function(i) {
-		console.log(i)
-		return Array.prototype.push.apply(this,arguments);
-	};*/
 	
 	function run_function(func) {
 		switch(func.type) {
@@ -923,7 +918,7 @@ function print(value) {
 				return list;
 				break;
 			case "function":
-				return ["{", ...value.args, " -> <function definition>}"].join("");
+				return `{${value.args.join(" ")} -> <function definition>}`
 				break;
 		}
 		
