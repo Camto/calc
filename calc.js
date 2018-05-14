@@ -297,6 +297,8 @@ function run(ast, max_time = Infinity) {
 
 	var built_ins = expand({
 		
+		// Help functions.
+		
 		"help, h"() {
 			stack.push({data: `
 Demos!
@@ -307,23 +309,20 @@ Demos!
 		"page, p, help_page, hp"() {
 			
 		},
+		
+		// Basic functions.
+		
 		"type, typeof, instance, instanceof"() {
 			stack.push({data: stack.pop().type, type: "string"});
 		},
-		"iter, iterate, iterative"() {
-			var iter_cou = stack.pop().data;
-			var iterator = stack.pop();
-			
-			for(let cou = 0; cou < iter_cou; cou++) {
-				run_function(iterator);
-			}
-		},
-		"true, t, yes, y, on"() {
+		"true, t, yes, on"() {
 			stack.push({data: 1, type: "number"});
 		},
-		"false, f, no, n, off"() {
+		"false, f, no, off"() {
 			stack.push({data: 0, type: "number"});
 		},
+		
+		// Stack functions.
 		
 		"dup, duplicate"() {
 			stack.push(stack[stack.length - 1]);
@@ -432,6 +431,8 @@ Demos!
 		"stack_reverse, stack_invert"() {
 			stack.reverse();
 		},
+		
+		// List functions.
 		
 		"map, apply, apply_to"() {
 			var mapper = stack.pop();
@@ -655,8 +656,63 @@ Demos!
 			stack.push({data: list, type: "list"});
 		},
 		
+		// Math functions.
+		
+		pi() {
+			stack.push({data: Math.PI, type: "number"});
+		},
+		e() {
+			stack.push({data: Math.E, type: "number"});
+		},
+		"abs, absolute, positive"() {
+			stack.push({data: Math.abs(stack.pop().data), type: "number"});
+		},
+		"round, trunc, truncate"() {
+			stack.push({data: Math.round(stack.pop().data), type: "number"});
+		},
+		"ceil, ceiling, roof"() {
+			stack.push({data: Math.ceil(stack.pop().data), type: "number"});
+		},
+		floor() {
+			stack.push({data: Math.floor(stack.pop().data), type: "number"});
+		},
+		"max, maximum, biggest"() {
+			var right = stack.pop();
+			var left = stack.pop();
+			stack.push({data: Math.max(left, right), type: "number"});
+		},
+		"main, minimum, smallest"() {
+			var right = stack.pop();
+			var left = stack.pop();
+			stack.push({data: Math.min(left, right), type: "number"});
+		},
+		"rand, random"() {
+			var min = stack.pop().data;
+			var max = stack.pop().data;
+			stack.push({data: (Math.random() * (max - min)) + min, type: "number"});
+		},
+		"cos, cosine"() {
+			stack.push({data: Math.cos(stack.pop().data), type: "number"});
+		},
+		"sin, sine"() {
+			stack.push({data: Math.sin(stack.pop().data), type: "number"});
+		},
+		"tan, tangent"() {
+			stack.push({data: Math.tan(stack.pop().data), type: "number"});
+		},
+		
+		// Function functions.
+		
 		"call, run, do"() {
 			run_function(stack.pop());
+		},
+		"iter, iterate, iterative"() {
+			var iter_cou = stack.pop().data;
+			var iterator = stack.pop();
+			
+			for(let cou = 0; cou < iter_cou; cou++) {
+				run_function(iterator);
+			}
 		}
 		
 	});
@@ -910,12 +966,13 @@ function print(value) {
 	} else {
 		
 		switch(value.type) {
-			case "number":
 			case "string":
 			case "symbol":
 			case "operator":
 				return value.data;
 				break;
+			case "number":
+				return Math.floor(value.data * 100000) / 100000
 			case "list":
 				var list = "[";
 				for(let cou = 0; cou < value.data.length; cou++) {

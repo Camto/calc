@@ -7,6 +7,7 @@ $(function() {
 	$("#calc").keyup(function(key) {
 		switch(key.which) {
 			case 13:
+				$(this).val($(this).val().replace(/[\n\r]/g, ""));
 				var result = "";
 				try {
 					result = print(calc($(this).val(), 10000));
