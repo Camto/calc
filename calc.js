@@ -217,7 +217,7 @@ function parse(tokens) {
 	return ast;
 }
 
-function run(ast) {
+function run(ast, max_time = Infinity) {
 	var instruccion_pointer;
 	var stack = [];
 	
@@ -230,6 +230,10 @@ function run(ast) {
 				}
 				var code = func.data;
 				for(let code_pointer = 0; code_pointer < code.length; code_pointer++) {
+					if((new Date).getTime() - start_time > max_time) {
+						throw "Error: code took too long to run, stopped.";
+					}
+					
 					switch(code[code_pointer].type) {
 						case "symbol":
 							if(!built_ins[code[code_pointer].data]) {
@@ -851,7 +855,13 @@ Demos!
 		
 	};
 	
+	var start_time = (new Date).getTime();
+	
 	for(instruccion_pointer = 0; instruccion_pointer < ast.length; instruccion_pointer++) {
+		if((new Date).getTime() - start_time > max_time) {
+			throw "Error: code took too long to run, stopped.";
+		}
+		
 		switch(ast[instruccion_pointer].type) {
 			case "symbol":
 				if(built_ins[ast[instruccion_pointer].data]) {
