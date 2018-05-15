@@ -702,9 +702,17 @@ Demos!
 		"tan, tangent"() {
 			stack.push({data: Math.tan(stack.pop().data), type: "number"});
 		},
-		"log, logarithm"() {
-			var base = stack.pop().data;
+		"sqrt, square_root"() {
+			stack.push({data: Math.sqrt(stack.pop().data), type: "number"});
+		},
+		root() {
 			var num = stack.pop().data;
+			var exp = stack.pop().data;
+			stack.push({data: Math.pow(num, 1 / exp), type: "number"});
+		},
+		"log, logarithm"() {
+			var num = stack.pop().data;
+			var base = stack.pop().data;
 			stack.push({data: Math.log(num) / Math.log(base), type: "number"});
 		},
 		
@@ -720,7 +728,8 @@ Demos!
 			for(let cou = 0; cou < iter_cou; cou++) {
 				run_function(iterator);
 			}
-		}
+		},
+		"id, identity"() {}
 		
 	});
 
