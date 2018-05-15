@@ -1,3 +1,5 @@
+"use strict";
+
 function calc(code_, max_time) {
 	if(code_.substr(0, 5) != "calc=") {
 		throw "There is no `calc=`.";

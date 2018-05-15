@@ -1,3 +1,5 @@
+"use strict";
+
 var calc = require("./../calc.js");
 
 var irc = require("irc");

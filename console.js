@@ -1,3 +1,5 @@
+"use strict";
+
 var past = ["calc= "];
 var travel = 0;
 
