@@ -700,6 +700,11 @@ Demos!
 		"tan, tangent"() {
 			stack.push({data: Math.tan(stack.pop().data), type: "number"});
 		},
+		"log, logarithm"() {
+			var base = stack.pop().data;
+			var num = stack.pop().data;
+			stack.push({data: Math.log(num) / Math.log(base), type: "number"});
+		},
 		
 		// Function functions.
 		
