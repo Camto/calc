@@ -482,6 +482,9 @@ Demos!
 			
 			stack.push({data: filtered, type: "list"});
 		},
+		"size, length"() {
+			stack.push({data: stack.pop().data.length, type: "number"});
+		},
 		"first, cat, top, head, pop"() {
 			var list = stack.pop().data;
 			stack.push(list[0]);
@@ -895,6 +898,7 @@ Demos!
 						data: Object.compare(left.data, right.data) | 0,
 						type: "number"
 					});
+					break;
 			}
 		},
 		"<"() {
@@ -904,6 +908,13 @@ Demos!
 				case "numbernumber":
 					stack.push({
 						data: left.data < right.data | 0,
+						type: "number"
+					});
+					break;
+				case "stringstring":
+				case "listlist":
+					stack.push({
+						data: left.data.length < right.data.length | 0,
 						type: "number"
 					});
 					break;
@@ -919,6 +930,13 @@ Demos!
 						type: "number"
 					});
 					break;
+				case "stringstring":
+				case "listlist":
+					stack.push({
+						data: left.data.length > right.data.length | 0,
+						type: "number"
+					});
+					break;
 			}
 		},
 		"<="() {
@@ -931,6 +949,13 @@ Demos!
 						type: "number"
 					});
 					break;
+				case "stringstring":
+				case "listlist":
+					stack.push({
+						data: left.data.length <= right.data.length | 0,
+						type: "number"
+					});
+					break;
 			}
 		},
 		">="() {
@@ -940,6 +965,13 @@ Demos!
 				case "numbernumber":
 					stack.push({
 						data: left.data >= right.data | 0,
+						type: "number"
+					});
+					break;
+				case "stringstring":
+				case "listlist":
+					stack.push({
+						data: left.data.length >= right.data.length | 0,
 						type: "number"
 					});
 					break;
