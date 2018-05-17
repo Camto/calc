@@ -45,7 +45,7 @@ function lex(code) {
 		string() {
 			pointer++;
 			
-			string = "";
+			var string = "";
 			var escaped = false;
 			while(code[pointer] != '"' || escaped) {
 				if(!escaped) {
@@ -705,10 +705,13 @@ Demos!
 		"sqrt, square_root"() {
 			stack.push({data: Math.sqrt(stack.pop().data), type: "number"});
 		},
+		"cbrt, cube_root"() {
+			stack.push({data: Math.cbrt(stack.pop().data), type: "number"});
+		},
 		root() {
 			var num = stack.pop().data;
 			var exp = stack.pop().data;
-			stack.push({data: Math.pow(num, 1 / exp), type: "number"});
+			stack.push({data: num ** (1 / exp), type: "number"});
 		},
 		"log, logarithm"() {
 			var num = stack.pop().data;
@@ -815,7 +818,7 @@ Demos!
 			switch(left.type + right.type) {
 				case "numbernumber":
 					stack.push({
-						data: left.data**right.data,
+						data: left.data ** right.data,
 						type: "number"
 					});
 					break;
@@ -874,6 +877,24 @@ Demos!
 						type: "number"
 					});
 					break;
+			}
+		},
+		"="() {
+			var right = stack.pop();
+			var left = stack.pop();
+			switch(left.type + right.type) {
+				case "numbernumber":
+				case "stringstring":
+					stack.push({
+						data: left.data == right.data | 0,
+						type: "number"
+					});
+					break;
+				case "listlist":
+					stack.push({
+						data: Object.compare(left.data, right.data) | 0,
+						type: "number"
+					});
 			}
 		},
 		"<"() {
@@ -1017,19 +1038,44 @@ try {
 // Taken from https://stackoverflow.com/questions/14743536/multiple-key-names-same-pair-value .
 function expand(obj) {
 	var keys = Object.keys(obj);
-	for (let cou = 0; cou < keys.length; cou++) {
+	for(let cou = 0; cou < keys.length; cou++) {
 		var key = keys[cou];
 		var subkeys = key.split(/,\s?/);
 		var target = obj[key];
 		delete obj[key];
-		subkeys.forEach(function(key) {obj[key] = target;});
+		subkeys.forEach(key => obj[key] = target);
 	}
 	return obj;
 }
 
-Array.prototype.rotate = function(n) {
-	for (var cou = 0; cou < n; cou++) {
-		this.push(this.shift());
+// Taken from https://gist.github.com/nicbell/6081098 .
+Object.compare = function(obj1, obj2) {
+	for(var p in obj1) {
+		if(obj1.hasOwnProperty(p) !== obj2.hasOwnProperty(p)) {
+			return false;
+		}
+		switch(typeof (obj1[p])) {
+			case "object":
+				if(!Object.compare(obj1[p], obj2[p])) {
+					return false;
+				}
+				break;
+			case "function":
+				if(typeof (obj2[p]) == "undefined" || (p != "compare" && obj1[p].toString() != obj2[p].toString())) {
+					return false;
+				}
+				break;
+			default:
+				if(obj1[p] != obj2[p]) {
+					return false;
+				}
+				break;
+		}
 	}
-	return this;
-}
+	for(var p in obj2) {
+		if(typeof (obj1[p]) == "undefined") {
+			return false;
+		}
+	}
+	return true;
+};
