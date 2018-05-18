@@ -242,13 +242,24 @@ function run(ast, max_time = Infinity) {
 	var instruccion_pointer;
 	var stack = [];
 	
-	function run_function(func) {
+	function run_function(func, outer_scopes) {
+		var scopes = outer_scopes;
+		function get_variable(variable_name) {
+			for(let cou; cou < scopes.length; cou++) {
+				if(scopes[cou].hasOwnProperty(variable_name)) {
+					return scopes[cou][variable_name];
+				}
+			}
+		}
+		
 		switch(func.type) {
 			case "function":
 				var args = {};
+				
 				for(let cou = 0; cou < func.args.length; cou++) {
 					args[func.args[func.args.length - cou - 1]] = stack.pop();
 				}
+				scopes.unshift(args);
 				var code = func.data;
 				for(let code_pointer = 0; code_pointer < code.length; code_pointer++) {
 					if((new Date).getTime() - start_time > max_time) {
