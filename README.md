@@ -1,12 +1,7 @@
 ![calc= logo.](Logos/calc_Logo_GitHub.png)
 
-**TODOLIST:** (before release)
-* [X] Fix strings.
-* [X] Fix logo.
-* [ ] Make web version for my GitHub pages.
-
-**TODOLIST:** (whenever)
-* [ ] Make more good samples please.
+**TODOLIST:**
+* [ ] Make web main page.
 * [ ] Make those dang help pages.
 * [ ] Continue the standard library.
 
@@ -23,7 +18,7 @@ calc=120
 ```
 
 ```
-calc= ["Hey", "'Sup", "Yo"] {i -> i "!" +} map {acc i -> acc i + "\n" +} "\n" fold
+calc= ["Hey", "'Sup", "Yo"] {+ "!\n" +} "\n" fold
 calc=
 Hey!
 'Sup!
