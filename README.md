@@ -1,4 +1,4 @@
-![calc= logo.](calc_Logo_GitHub.png)
+![calc= logo.](Logos/calc_Logo_GitHub.png)
 
 **TODOLIST:** (before release)
 * [X] Fix strings.
