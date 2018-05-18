@@ -109,7 +109,7 @@ function lex(code) {
 			}
 		} else if(code[pointer] == '"') {
 			tokens.push(expect.string());
-		} else if(/\[|,|\]|{|}|\$|\+|\*|\/|\^|\.|=|<|>|&|\||!/.test(code[pointer])) {
+		} else if(/\[|,|\]|{|}|\$|;|\+|\*|\/|\^|\.|=|<|>|&|\||!/.test(code[pointer])) {
 			tokens.push(expect.operator());
 		} else {
 			pointer++;
@@ -126,15 +126,34 @@ function parse(tokens) {
 	function parse_function() {
 		token_pointer++;
 		var args = [];
-		while(tokens[token_pointer].data != "->" && token_pointer < tokens.length) {
-			if(tokens[token_pointer].type == "symbol") {
-				args.push(tokens[token_pointer].data);
-			} else {
-				throw `Parameter name \`${tokens[token_pointer].data}\` is of type \`${tokens[token_pointer].type}\` when it should be of type \`symbol\`.`;
+		
+		var has_arrow = false;
+		var end = token_pointer;
+		var function_depth = 0;
+		while(tokens[end].data != "}" && end < tokens.length) {
+			if(tokens[end].type == "operator") {
+				if(tokens[end].data == "->" && !function_depth) {
+					has_arrow = true;
+				} else if(tokens[end].data == "{") {
+					function_depth++;
+				} else if(tokens[end].data == "}") {
+					function_depth--;
+				}
+			}
+			end++;
+		}
+		
+		if(has_arrow) {
+			while(!(tokens[token_pointer].data == "->" && tokens[token_pointer].type == "operator") && token_pointer < tokens.length) {
+				if(tokens[token_pointer].type == "symbol") {
+					args.push(tokens[token_pointer].data);
+				} else {
+					throw `Parameter name \`${tokens[token_pointer].data}\` is of type \`${tokens[token_pointer].type}\` when it should be of type \`symbol\`.`;
+				}
+				token_pointer++;
 			}
 			token_pointer++;
 		}
-		token_pointer++;
 		
 		var code = [];
 		while(tokens[token_pointer].data != "}" && token_pointer < tokens.length) {
