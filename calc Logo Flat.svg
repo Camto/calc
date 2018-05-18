@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.1 r15371"
+   sodipodi:docname="calc Logo Flat.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.959798"
+     inkscape:cx="422.37935"
+     inkscape:cy="478.65876"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1057"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g4536"
+       inkscape:export-xdpi="166.45454"
+       inkscape:export-ydpi="166.45454">
+      <rect
+         y="164.05956"
+         x="92.420639"
+         height="0.76839989"
+         width="25.056517"
+         id="rect4489"
+         style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:6.01823282;stroke-linecap:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:6.01823282;stroke-linecap:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="rect4491"
+         width="25.056517"
+         height="0.76839989"
+         x="92.420639"
+         y="166.05429" />
+      <text
+         id="text4487"
+         y="168.24312"
+         x="92.345253"
+         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#000000;fill-opacity:1;stroke-width:0.26458332"
+           y="168.24312"
+           x="92.345253"
+           id="tspan4485"
+           sodipodi:role="line">calc</tspan></text>
+      <rect
+         style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.43079329;stroke-linecap:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="rect4487"
+         width="4.087697"
+         height="0.76839989"
+         x="118.85178"
+         y="164.05956" />
+      <rect
+         y="166.05429"
+         x="118.85178"
+         height="0.76839989"
+         width="4.087697"
+         id="rect4490"
+         style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.43079329;stroke-linecap:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>
