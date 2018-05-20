@@ -121,7 +121,6 @@ function lex(code) {
 
 function parse(tokens) {
 	var token_pointer = 0;
-	var ast = [];
 	
 	function parse_function() {
 		token_pointer++;
@@ -155,29 +154,44 @@ function parse(tokens) {
 			token_pointer++;
 		}
 		
-		var code = [];
+		var raw_variables = [];
+		var variable = [];
 		while(tokens[token_pointer].data != "}" && token_pointer < tokens.length) {
 			if(/symbol|number|string/.test(tokens[token_pointer].type)) {
-				code.push(tokens[token_pointer]);
+				variable.push(tokens[token_pointer]);
 				token_pointer++;
 			} else if(tokens[token_pointer].data != "{" && tokens[token_pointer].data != "[") {
-				if(!/,|\]|}|->/.test(tokens[token_pointer].data)) {
-					code.push(tokens[token_pointer]);
+				if(tokens[token_pointer].data == ";") {
+					raw_variables.push(variable);
+					variable = [];
 				} else {
-					throw `Unexpected context operator \`${tokens[token_pointer].data}\`.`;
+					variable.push(tokens[token_pointer]);
 				}
 				token_pointer++;
 			} else {
 				if(tokens[token_pointer].data == "{") {
-					code.push(parse_function());
+					variable.push(parse_function());
 				} else {
-					code.push(...parse_list());
+					variable.push(...parse_list());
 				}
 			}
 		}
+		var code = variable;
+		var variables = raw_variables.map(raw_variable => {
+			if(raw_variable.length < 2) {
+				throw "Error: variable definition too short.";
+			}
+			if(raw_variable[1].data != "=" || raw_variable[1].type != "operator") {
+				throw "Error: variable definition has no `=`.";
+			}
+			if(raw_variable[0].type != "symbol") {
+				throw `Error: variable name is a \`${raw_variable[0].type}\` when it should be a \`symbol\`.`;
+			}
+			return {name: raw_variable[0].data, data: raw_variable.slice(2)};
+		});
 		token_pointer++;
 		
-		return {args, data: code, type: "function"};
+		return {args, variables, data: code, type: "function"};
 	}
 
 	function parse_list() {
@@ -194,7 +208,7 @@ function parse(tokens) {
 				token_pointer++;
 			} else if(tokens[token_pointer].data != "{" && tokens[token_pointer].data != "[") {
 				if(!/,|\]|}|->/.test(tokens[token_pointer].data)) {
-					ast.push(tokens[token_pointer]);
+					variable.push(tokens[token_pointer]);
 				} else {
 					throw `Unexpected context operator \`${tokens[token_pointer].data}\`.`;
 				}
@@ -215,43 +229,53 @@ function parse(tokens) {
 		return [...code, {data: length, type: "list"}];
 	}
 	
+	var raw_variables = [];
+	var variable = [];
 	while(token_pointer < tokens.length) {
 		if(/symbol|number|string/.test(tokens[token_pointer].type)) {
-			ast.push(tokens[token_pointer]);
+			variable.push(tokens[token_pointer]);
 			token_pointer++;
 		} else if(tokens[token_pointer].data != "{" && tokens[token_pointer].data != "[") {
 			if(!/,|\]|}|->/.test(tokens[token_pointer].data)) {
-				ast.push(tokens[token_pointer]);
+				if(tokens[token_pointer].data == ";") {
+					raw_variables.push(variable);
+					variable = [];
+				} else {
+					variable.push(tokens[token_pointer]);
+				}
 			} else {
 				throw `Unexpected context operator \`${tokens[token_pointer].data}\`.`;
 			}
 			token_pointer++;
 		} else {
 			if(tokens[token_pointer].data == "{") {
-				ast.push(parse_function());
+				variable.push(parse_function());
 			} else {
-				ast.push(...parse_list());
+				variable.push(...parse_list());
 			}
 		}
 	}
+	var ast = variable;
+	var variables = raw_variables.map(raw_variable => {
+		if(raw_variable.length < 2) {
+			throw "Error: variable definition too short.";
+		}
+		if(raw_variable[1].data != "=" || raw_variable[1].type != "operator") {
+			throw "Error: variable definition has no `=`.";
+		}
+		if(raw_variable[0].type != "symbol") {
+			throw `Error: variable name is a \`${raw_variable[0].type}\` when it should be a \`symbol\`.`;
+		}
+		return {name: raw_variable[0].data, data: raw_variable.slice(2)};
+	});
 	
-	return ast;
+	return {variables, data: ast};
 }
 
 function run(ast, max_time = Infinity) {
-	var instruccion_pointer;
 	var stack = [];
 	
-	function run_function(func, outer_scopes) {
-		var scopes = outer_scopes;
-		function get_variable(variable_name) {
-			for(let cou; cou < scopes.length; cou++) {
-				if(scopes[cou].hasOwnProperty(variable_name)) {
-					return scopes[cou][variable_name];
-				}
-			}
-		}
-		
+	function run_function(func) {
 		switch(func.type) {
 			case "function":
 				var args = {};
@@ -259,7 +283,7 @@ function run(ast, max_time = Infinity) {
 				for(let cou = 0; cou < func.args.length; cou++) {
 					args[func.args[func.args.length - cou - 1]] = stack.pop();
 				}
-				scopes.unshift(args);
+				// scopes.unshift(args);
 				var code = func.data;
 				for(let code_pointer = 0; code_pointer < code.length; code_pointer++) {
 					if((new Date).getTime() - start_time > max_time) {
@@ -757,7 +781,7 @@ Demos!
 		"call, run, do"() {
 			run_function(stack.pop());
 		},
-		"iter, iterate, iterative"() {
+		"iter, iterate, iterative, loop, loopn"() {
 			var iter_cou = stack.pop().data;
 			var iterator = stack.pop();
 			
@@ -1012,43 +1036,116 @@ Demos!
 	
 	var start_time = (new Date).getTime();
 	
-	for(instruccion_pointer = 0; instruccion_pointer < ast.length; instruccion_pointer++) {
-		if((new Date).getTime() - start_time > max_time) {
-			throw "Error: code took too long to run, stopped.";
+	var variables = {};
+	for(let cou = 0; cou < ast.variables.length; cou++) {
+		for(let instruccion_pointer = 0; instruccion_pointer < ast.variables[cou].data.length; instruccion_pointer++) {
+			if((new Date).getTime() - start_time > max_time) {
+				throw "Error: code took too long to run, stopped.";
+			}
+			
+			switch(ast.variables[cou].data[instruccion_pointer].type) {
+				case "symbol":
+					if(variables[ast.variables[cou].data[instruccion_pointer].data]) {
+						switch(variables[ast.variables[cou].data[instruccion_pointer].data].type) {
+							case "function":
+								run_function(variables[ast.variables[cou].data[instruccion_pointer].data]);
+								break;
+							case "symbol":
+								built_ins[variables[ast.variables[cou].data[instruccion_pointer].data].data]();
+								break;
+							case "operator":
+								operators[variables[ast.variables[cou].data[instruccion_pointer].data].data]();
+								break;
+							default:
+								stack.push(variables[ast.variables[cou].data[instruccion_pointer].data]);
+								break;
+						}
+					} else if(built_ins[ast.variables[cou].data[instruccion_pointer].data]) {
+						built_ins[ast.variables[cou].data[instruccion_pointer].data]();
+					} else {
+						throw `Symbol \`${ast.variables[cou].data[instruccion_pointer].data}\` found in main expression without being a built-in function.`;
+					}
+					break;
+				case "number":
+				case "string":
+					stack.push(ast.variables[cou].data[instruccion_pointer]);
+					break;
+				case "list":
+					var list = [];
+					for(let cou = 0; cou < ast.variables[cou].data[instruccion_pointer].data; cou++) {
+						list.push(stack.pop());
+					}
+					stack.push({data: list.reverse(), type: "list"});
+					break;
+				case "function":
+					stack.push(ast.variables[cou].data[instruccion_pointer]);
+					break;
+				case "operator":
+					if(ast.variables[cou].data[instruccion_pointer].data != "$") {
+						operators[ast.variables[cou].data[instruccion_pointer].data]();
+					} else {
+						instruccion_pointer++;
+						stack.push(ast.variables[cou].data[instruccion_pointer]);
+					}
+					break;
+			}
 		}
-		
-		switch(ast[instruccion_pointer].type) {
-			case "symbol":
-				if(built_ins[ast[instruccion_pointer].data]) {
-					built_ins[ast[instruccion_pointer].data]();
-				} else {
-					throw `Symbol \`${ast[instruccion_pointer].data}\` found in main expression without being a built-in function.`;
-				}
-				break;
-			case "number":
-			case "string":
-				stack.push(ast[instruccion_pointer]);
-				break;
-			case "list":
-				var list = [];
-				for(let cou = 0; cou < ast[instruccion_pointer].data; cou++) {
-					list.push(stack.pop());
-				}
-				stack.push({data: list.reverse(), type: "list"});
-				break;
-			case "function":
-				stack.push(ast[instruccion_pointer]);
-				break;
-			case "operator":
-				if(ast[instruccion_pointer].data != "$") {
-					operators[ast[instruccion_pointer].data]();
-				} else {
-					instruccion_pointer++;
-					stack.push(ast[instruccion_pointer]);
-				}
-				break;
-		}
+		variables[ast.variables[cou].name] = stack.pop();
 	}
+	
+	for(let instruccion_pointer = 0; instruccion_pointer < ast.data.length; instruccion_pointer++) {
+			if((new Date).getTime() - start_time > max_time) {
+				throw "Error: code took too long to run, stopped.";
+			}
+			
+			switch(ast.data[instruccion_pointer].type) {
+				case "symbol":
+					if(variables[ast.data[instruccion_pointer].data]) {
+						switch(variables[ast.data[instruccion_pointer].data].type) {
+							case "function":
+								run_function(variables[ast.data[instruccion_pointer].data]);
+								break;
+							case "symbol":
+								built_ins[variables[ast.data[instruccion_pointer].data].data]();
+								break;
+							case "operator":
+								operators[variables[ast.data[instruccion_pointer].data].data]();
+								break;
+							default:
+								stack.push(variables[ast.data[instruccion_pointer].data]);
+								break;
+						}
+					} else if(built_ins[ast.data[instruccion_pointer].data]) {
+						built_ins[ast.data[instruccion_pointer].data]();
+					} else {
+						throw `Symbol \`${ast.data[instruccion_pointer].data}\` found in main expression without being a built-in function.`;
+					}
+					break;
+				case "number":
+				case "string":
+					stack.push(ast.data[instruccion_pointer]);
+					break;
+				case "list":
+					var list = [];
+					for(let cou = 0; cou < ast.data[instruccion_pointer].data; cou++) {
+						list.push(stack.pop());
+					}
+					stack.push({data: list.reverse(), type: "list"});
+					break;
+				case "function":
+					stack.push(ast.data[instruccion_pointer]);
+					break;
+				case "operator":
+					if(ast[instruccion_pointer].data != "$") {
+						operators[ast.data[instruccion_pointer].data]();
+					} else {
+						instruccion_pointer++;
+						stack.push(ast.data[instruccion_pointer]);
+					}
+					break;
+			}
+		}
+	
 	return stack;
 }
 
