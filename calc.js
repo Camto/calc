@@ -1078,7 +1078,9 @@ Demos!
 					stack.push({data: list.reverse(), type: "list"});
 					break;
 				case "function":
-					stack.push(ast.variables[cou].data[instruccion_pointer]);
+					var scoped_function = ast.variables[cou].data[instruccion_pointer];
+					scoped_function.scopes = variables;
+					stack.push(scoped_function);
 					break;
 				case "operator":
 					if(ast.variables[cou].data[instruccion_pointer].data != "$") {
@@ -1133,10 +1135,12 @@ Demos!
 					stack.push({data: list.reverse(), type: "list"});
 					break;
 				case "function":
-					stack.push(ast.data[instruccion_pointer]);
+					var scoped_function = ast.data[instruccion_pointer];
+					scoped_function.scopes = variables;
+					stack.push(scoped_function);
 					break;
 				case "operator":
-					if(ast[instruccion_pointer].data != "$") {
+					if(ast.data[instruccion_pointer].data != "$") {
 						operators[ast.data[instruccion_pointer].data]();
 					} else {
 						instruccion_pointer++;
