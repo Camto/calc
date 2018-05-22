@@ -357,7 +357,7 @@ function run(ast, max_time = Infinity) {
 					break;
 			}
 		} else {
-			
+			stack.push({data: JSON.parse(JSON.stringify(func.data)), type: func.type});
 		}
 	}
 
