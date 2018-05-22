@@ -4,7 +4,7 @@ var past = ["calc= "];
 var travel = 0;
 
 $(function() {
-	$("#log").append(escape_input(print(calc("calc= h", 10000))));
+	$("#log").append(escape_input(print(calc("calc= h", 10000))) + "<br />");
 	
 	$("#calc").keyup(function(key) {
 		switch(key.which) {
@@ -14,7 +14,7 @@ $(function() {
 				try {
 					result = print(calc($(this).val(), 10000));
 				} catch(err) {
-					result = err.toString();
+					result = err;
 				}
 				past.push($(this).val().replace(/[\n\r]/g, ""));
 				travel = past.length;

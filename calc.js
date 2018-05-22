@@ -7,7 +7,13 @@ function calc(code_, max_time) {
 	var code = code_.substr(5, code_.length);
 	var tokens = lex(code);
 	var ast = parse(tokens);
-	return run(ast, max_time);
+	try {
+		return run(ast, max_time);
+	} catch(err) {
+		throw "calc=" + (!(err instanceof Error)
+			? err
+			: err.stack.split("\n").slice(0, 2).join("\n"));
+	}
 }
 
 function lex(code) {
@@ -276,78 +282,82 @@ function run(ast, max_time = Infinity) {
 	var stack = [];
 	
 	function run_function(func) {
-		switch(func.type) {
-			case "function":
-				var args = {};
-				
-				for(let cou = 0; cou < func.args.length; cou++) {
-					args[func.args[func.args.length - cou - 1]] = stack.pop();
-				}
-				// scopes.unshift(args);
-				var code = func.data;
-				for(let code_pointer = 0; code_pointer < code.length; code_pointer++) {
-					if((new Date).getTime() - start_time > max_time) {
-						throw "Error: code took too long to run, stopped.";
+		if(!func.is_ref || /function|operator/.test(func.type)) {
+			switch(func.type) {
+				case "function":
+					var args = {};
+					
+					for(let cou = 0; cou < func.args.length; cou++) {
+						args[func.args[func.args.length - cou - 1]] = stack.pop();
 					}
 					
-					switch(code[code_pointer].type) {
-						case "symbol":
-							if(!built_ins[code[code_pointer].data]) {
-								if(args[code[code_pointer].data]) {
-									switch(args[code[code_pointer].data].type) {
-										case "function":
-											run_function(args[code[code_pointer].data]);
-											break;
-										case "symbol":
-											built_ins[args[code[code_pointer].data].data]();
-											break;
-										case "operator":
-											operators[args[code[code_pointer].data].data]();
-											break;
-										default:
-											stack.push(args[code[code_pointer].data]);
-											break;
+					var code = func.data;
+					for(let code_pointer = 0; code_pointer < code.length; code_pointer++) {
+						if((new Date).getTime() - start_time > max_time) {
+							throw "Error: code took too long to run, stopped.";
+						}
+						
+						switch(code[code_pointer].type) {
+							case "symbol":
+								if(!built_ins[code[code_pointer].data]) {
+									if(args[code[code_pointer].data]) {
+										switch(args[code[code_pointer].data].type) {
+											case "function":
+												run_function(args[code[code_pointer].data]);
+												break;
+											case "symbol":
+												built_ins[args[code[code_pointer].data].data]();
+												break;
+											case "operator":
+												operators[args[code[code_pointer].data].data]();
+												break;
+											default:
+												stack.push(args[code[code_pointer].data]);
+												break;
+										}
+									} else {
+										throw `Symbol \`${code[code_pointer].data}\` found in function without being a built-in function or a function parameter.`;
 									}
 								} else {
-									throw `Symbol \`${code[code_pointer].data}\` found in function without being a built-in function or a function parameter.`;
+									built_ins[code[code_pointer].data]();
 								}
-							} else {
-								built_ins[code[code_pointer].data]();
-							}
-							break;
-						case "number":
-						case "string":
-						case "function":
-							stack.push(code[code_pointer]);
-							break;
-						case "list":
-							var list = [];
-							for(let cou = 0; cou < code[code_pointer].data; cou++) {
-								list.push(stack.pop());
-							}
-							stack.push({data: list.reverse(), type: "list"});
-							break;
-						case "operator":
-							if(code[code_pointer].data != "$") {
-								operators[code[code_pointer].data]();
-							} else {
-								code_pointer++;
-								if(!args[code[code_pointer].data]) {
-									stack.push(code[code_pointer]);
+								break;
+							case "number":
+							case "string":
+							case "function":
+								stack.push(code[code_pointer]);
+								break;
+							case "list":
+								var list = [];
+								for(let cou = 0; cou < code[code_pointer].data; cou++) {
+									list.push(stack.pop());
+								}
+								stack.push({data: list.reverse(), type: "list"});
+								break;
+							case "operator":
+								if(code[code_pointer].data != "$") {
+									operators[code[code_pointer].data]();
 								} else {
-									stack.push(args[code[code_pointer].data]);
+									code_pointer++;
+									if(!args[code[code_pointer].data]) {
+										stack.push(code[code_pointer]);
+									} else {
+										stack.push(args[code[code_pointer].data]);
+									}
 								}
-							}
-							break;
+								break;
+						}
 					}
-				}
-				break;
-			case "symbol":
-				built_ins[func.data]();
-				break;
-			case "operator":
-				operators[func.data]();
-				break;
+					break;
+				case "symbol":
+					built_ins[func.data]();
+					break;
+				case "operator":
+					operators[func.data]();
+					break;
+			}
+		} else {
+			
 		}
 	}
 
@@ -359,10 +369,15 @@ function run(ast, max_time = Infinity) {
 			stack.push({data: `
 Demos!
     • Fibonacci: \`calc= [1, 1] {i -> i (i last (i 1 backn) +) +} 7 iter last\`
-    • Factorial: \`calc= 1 5 .. $* 1 fold\`
-`, type: "string"});
+    • Factorial: \`calc= 1 5 .. $* 1 fold\``, type: "string"});
 		},
-		"page, p, help_page, hp"() {
+		"page, p, help_page, hp, h_page, help_p"() {
+			
+		},
+		"tut, tutorial"() {
+			
+		},
+		"adv_tut, adv_tutorial, advanced_tutorial, advanced_tut"() {
 			
 		},
 		
@@ -778,7 +793,7 @@ Demos!
 		
 		// Function functions.
 		
-		"call, run, do"() {
+		"call, run, do, apply, get"() {
 			run_function(stack.pop());
 		},
 		"iter, iterate, iterative, loop, loopn"() {
@@ -1087,7 +1102,27 @@ Demos!
 						operators[ast.variables[cou].data[instruccion_pointer].data]();
 					} else {
 						instruccion_pointer++;
-						stack.push(ast.variables[cou].data[instruccion_pointer]);
+						switch(ast.variables[cou].data[instruccion_pointer].type) {
+							case "symbol":
+								if(variables[ast.variables[cou].data[instruccion_pointer].data]) {
+									var reference = variables[ast.variables[cou].data[instruccion_pointer].data];
+									reference.name = ast.variables[cou].data[instruccion_pointer].data;
+									reference.scopes = variables;
+									reference.is_ref = true;
+									stack.push(reference);
+								} else {
+									stack.push(ast.variables[cou].data[instruccion_pointer]);
+								}
+								break;
+							case "operator":
+								stack.push(ast.variables[cou].data[instruccion_pointer]);
+								break;
+							default:
+								var reference = ast.variables[cou].data[instruccion_pointer];
+								reference.is_ref = true;
+								stack.push(reference);
+								break;
+						}
 					}
 					break;
 			}
@@ -1144,7 +1179,28 @@ Demos!
 						operators[ast.data[instruccion_pointer].data]();
 					} else {
 						instruccion_pointer++;
-						stack.push(ast.data[instruccion_pointer]);
+						switch(ast.data[instruccion_pointer].type) {
+							case "symbol":
+								if(variables[ast.data[instruccion_pointer].data]) {
+									var passed_function = variables[ast.data[instruccion_pointer].data];
+									passed_function.name = ast.data[instruccion_pointer].data;
+									passed_function.scopes = variables;
+									passed_function.is_ref = true;
+									stack.push(passed_function);
+								} else {
+									stack.push(ast.data[instruccion_pointer]);
+								}
+								break;
+							case "operator":
+								stack.push(ast.data[instruccion_pointer]);
+								break;
+							default:
+								var reference = ast.data[instruccion_pointer];
+								reference.scopes = variables;
+								reference.is_ref = true;
+								stack.push(reference);
+								break;
+						}
 					}
 					break;
 			}
@@ -1206,7 +1262,11 @@ function expand(obj) {
 		var subkeys = key.split(/,\s?/);
 		var target = obj[key];
 		delete obj[key];
-		subkeys.forEach(key => obj[key] = target);
+		subkeys.forEach(key => {
+			obj[key] = target;
+			obj[key.replace("_", "")] = target;
+			obj[key.replace(/(_\w)/g, m => m[1].toUpperCase())] = target;
+		});
 	}
 	return obj;
 }
