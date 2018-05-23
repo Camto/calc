@@ -1,10 +1,17 @@
 "use strict";
 
 var past = ["calc= "];
-var travel = 0;
+var travel = 1;
 
 $(function() {
-	$("#log").append(escape_input(print(calc("calc= h", 10000))) + "<br />");
+	if(location.search.substring(6) == "") {
+		$("#log").append(escape_input(print(calc("calc= h", 10000))) + "<br />");
+		past.push("calc= h");
+		history.replaceState("", "", "?calc=calc%3D%20h");
+	} else {
+		$("#log").append(escape_input(print(calc(decodeURIComponent(location.search.substring(6)), 10000))) + "<br />");
+		past.push(decodeURIComponent(location.search.substring(6)));
+	}
 	
 	$("#calc").keyup(function(key) {
 		switch(key.which) {
@@ -18,6 +25,7 @@ $(function() {
 				}
 				past.push($(this).val().replace(/[\n\r]/g, ""));
 				travel = past.length;
+				history.replaceState("", "", "?calc=" + encodeURIComponent($(this).val().replace(/[\n\r]/g, "")));
 				
 				$("#log").append(escape_input(result));
 				$("#log").append("<br />");
