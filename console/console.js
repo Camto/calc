@@ -1,20 +1,21 @@
 "use strict";
 
 var past = ["calc= "];
-var travel = 0;
+var travel = 2;
 
 $(function() {
 	if(location.search.substring(6) == "") {
 		$("#log").append(escape_input(print(calc("calc= h", 10000))) + "<br />");
 		past.push("calc= h");
-		travel += 2;
 		history.replaceState("", "", "?calc=calc%3D%20h");
 	} else {
 		$("#log").append(escape_input(print(calc("calc= h", 10000))) + "<br />");
 		past.push("calc= h");
-		$("#log").append(escape_input(print(calc(decodeURIComponent(location.search.substring(6)), 10000))) + "<br />");
-		past.push(decodeURIComponent(location.search.substring(6)));
-		travel += 3;
+		if(decodeURIComponent(location.search.substring(6)) != "calc= h") {
+			$("#log").append(escape_input(print(calc(decodeURIComponent(location.search.substring(6)), 10000))) + "<br />");
+			past.push(decodeURIComponent(location.search.substring(6)));
+			travel++;
+		}
 	}
 	
 	$("#calc").keyup(function(key) {
