@@ -804,7 +804,7 @@ Demos!
 				run_function(iterator);
 			}
 		},
-		"id, identity"() {}
+		"id, identity, nop, noop"() {}
 		
 	});
 
