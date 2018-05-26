@@ -27,6 +27,7 @@ html, body, #console {
 	background: black;
 	border: none;
 	outline: none;
+	border-top: 1px solid white;
 }
 
 #log {
