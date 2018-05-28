@@ -325,7 +325,9 @@ function run(ast, max_time = Infinity) {
 							case "number":
 							case "string":
 							case "function":
-								stack.push(code[code_pointer]);
+								var scoped_function = code[code_pointer];
+								scoped_function.scopes = func.scopes.concat(args);
+								stack.push(scoped_function);
 								break;
 							case "list":
 								var list = [];
@@ -1094,7 +1096,7 @@ Demos!
 					break;
 				case "function":
 					var scoped_function = ast.variables[cou].data[instruccion_pointer];
-					scoped_function.scopes = variables;
+					scoped_function.scopes = [variables];
 					stack.push(scoped_function);
 					break;
 				case "operator":
@@ -1107,7 +1109,7 @@ Demos!
 								if(variables[ast.variables[cou].data[instruccion_pointer].data]) {
 									var reference = variables[ast.variables[cou].data[instruccion_pointer].data];
 									reference.name = ast.variables[cou].data[instruccion_pointer].data;
-									reference.scopes = variables;
+									reference.scopes = [variables];
 									reference.is_ref = true;
 									stack.push(reference);
 								} else {
@@ -1171,7 +1173,7 @@ Demos!
 					break;
 				case "function":
 					var scoped_function = ast.data[instruccion_pointer];
-					scoped_function.scopes = variables;
+					scoped_function.scopes = [variables];
 					stack.push(scoped_function);
 					break;
 				case "operator":
@@ -1184,7 +1186,7 @@ Demos!
 								if(variables[ast.data[instruccion_pointer].data]) {
 									var passed_function = variables[ast.data[instruccion_pointer].data];
 									passed_function.name = ast.data[instruccion_pointer].data;
-									passed_function.scopes = variables;
+									passed_function.scopes = [variables];
 									passed_function.is_ref = true;
 									stack.push(passed_function);
 								} else {
@@ -1196,7 +1198,7 @@ Demos!
 								break;
 							default:
 								var reference = ast.data[instruccion_pointer];
-								reference.scopes = variables;
+								reference.scopes = [variables];
 								reference.is_ref = true;
 								stack.push(reference);
 								break;
