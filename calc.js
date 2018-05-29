@@ -285,11 +285,29 @@ function run(ast, max_time = Infinity) {
 		if(!func.is_ref || /function|operator/.test(func.type)) {
 			switch(func.type) {
 				case "function":
-					var args = {};
+					console.log(func);
 					
+					function get_variable(name) {
+						if(variables[name]) {
+							return variables[name];
+						} else if(args[name]) {
+							return args[name];
+						} else {
+							for(let cou = func.scopes.length - 1; cou >= 0; cou--) {
+								if(func.scopes[cou][name]) {
+									return func.scopes[cou][name];
+								}
+							}
+							return undefined;
+						}
+ 					}
+					
+					var args = {};
 					for(let cou = 0; cou < func.args.length; cou++) {
 						args[func.args[func.args.length - cou - 1]] = stack.pop();
 					}
+					
+					var variables = {};
 					
 					var code = func.data;
 					for(let code_pointer = 0; code_pointer < code.length; code_pointer++) {
