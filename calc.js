@@ -285,8 +285,6 @@ function run(ast, max_time = Infinity) {
 		if(!func.is_ref || /function|operator/.test(func.type)) {
 			switch(func.type) {
 				case "function":
-					console.log(func);
-					
 					function get_variable(name) {
 						if(variables[name]) {
 							return variables[name];
