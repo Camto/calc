@@ -49,7 +49,7 @@ $(function() {
 			case 40:
 				travel++;
 				if(travel > past.length - 1) {
-					travel = past.length - 1;
+					travel = past.length;
 					$(this).val("calc= ");
 					setTimeout(() => this.setSelectionRange(6, 6), 1);
 				} else {
