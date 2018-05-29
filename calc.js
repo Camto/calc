@@ -308,6 +308,83 @@ function run(ast, max_time = Infinity) {
 					}
 					
 					var variables = {};
+					for(let cou = 0; cou < func.variables.length; cou++) {
+						for(let instruccion_pointer = 0; instruccion_pointer < func.variables[cou].data.length; instruccion_pointer++) {
+							if((new Date).getTime() - start_time > max_time) {
+								throw "Error: code took too long to run, stopped.";
+							}
+							
+							switch(func.variables[cou].data[instruccion_pointer].type) {
+								case "symbol":
+									if(get_variable(func.variables[cou].data[instruccion_pointer].data)) {
+										switch(get_variable(func.variables[cou].data[instruccion_pointer].data).type) {
+											case "function":
+												run_function(get_variable(func.variables[cou].data[instruccion_pointer].data));
+												break;
+											case "symbol":
+												built_ins[get_variable(func.variables[cou].data[instruccion_pointer].data).data]();
+												break;
+											case "operator":
+												operators[get_variable(func.variables[cou].data[instruccion_pointer].data).data]();
+												break;
+											default:
+												stack.push(get_variable(func.variables[cou].data[instruccion_pointer].data));
+												break;
+										}
+									} else if(built_ins[func.variables[cou].data[instruccion_pointer].data]) {
+										built_ins[func.variables[cou].data[instruccion_pointer].data]();
+									} else {
+										throw `Symbol \`${func.variables[cou].data[instruccion_pointer].data}\` found in main expression without being a built-in function.`;
+									}
+									break;
+								case "number":
+								case "string":
+									stack.push(func.variables[cou].data[instruccion_pointer]);
+									break;
+								case "list":
+									var list = [];
+									for(let cou = 0; cou < func.variables[cou].data[instruccion_pointer].data; cou++) {
+										list.push(stack.pop());
+									}
+									stack.push({data: list.reverse(), type: "list"});
+									break;
+								case "function":
+									var scoped_function = func.variables[cou].data[instruccion_pointer];
+									scoped_function.scopes = [variables];
+									stack.push(scoped_function);
+									break;
+								case "operator":
+									if(func.variables[cou].data[instruccion_pointer].data != "$") {
+										operators[func.variables[cou].data[instruccion_pointer].data]();
+									} else {
+										instruccion_pointer++;
+										switch(func.variables[cou].data[instruccion_pointer].type) {
+											case "symbol":
+												if(variables[func.variables[cou].data[instruccion_pointer].data]) {
+													var reference = variables[func.variables[cou].data[instruccion_pointer].data];
+													reference.name = func.variables[cou].data[instruccion_pointer].data;
+													reference.scopes = [variables];
+													reference.is_ref = true;
+													stack.push(reference);
+												} else {
+													stack.push(func.variables[cou].data[instruccion_pointer]);
+												}
+												break;
+											case "operator":
+												stack.push(func.variables[cou].data[instruccion_pointer]);
+												break;
+											default:
+												var reference = func.variables[cou].data[instruccion_pointer];
+												reference.is_ref = true;
+												stack.push(reference);
+												break;
+										}
+									}
+									break;
+							}
+						}
+						variables[func.variables[cou].name] = stack.pop();
+					}
 					
 					var code = func.data;
 					for(let code_pointer = 0; code_pointer < code.length; code_pointer++) {
@@ -318,19 +395,19 @@ function run(ast, max_time = Infinity) {
 						switch(code[code_pointer].type) {
 							case "symbol":
 								if(!built_ins[code[code_pointer].data]) {
-									if(args[code[code_pointer].data]) {
-										switch(args[code[code_pointer].data].type) {
+									if(get_variable(code[code_pointer].data)) {
+										switch(get_variable(code[code_pointer].data).type) {
 											case "function":
-												run_function(args[code[code_pointer].data]);
+												run_function(get_variable(code[code_pointer].data));
 												break;
 											case "symbol":
-												built_ins[args[code[code_pointer].data].data]();
+												built_ins[get_variable(code[code_pointer].data).data]();
 												break;
 											case "operator":
-												operators[args[code[code_pointer].data].data]();
+												operators[get_variable(code[code_pointer].data).data]();
 												break;
 											default:
-												stack.push(args[code[code_pointer].data]);
+												stack.push(get_variable(code[code_pointer].data));
 												break;
 										}
 									} else {
