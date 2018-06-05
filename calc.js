@@ -417,6 +417,8 @@ function run(ast, max_time = Infinity) {
 								break;
 							case "number":
 							case "string":
+								stack.push(code[code_pointer]);
+								break;	
 							case "function":
 								var scoped_function = code[code_pointer];
 								scoped_function.scopes = func.scopes.concat(args);
