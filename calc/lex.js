@@ -1,3 +1,5 @@
+"use strict";
+
 function lex(code) {
 	var pointer = 0;
 	var tokens = [];

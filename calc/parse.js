@@ -1,3 +1,5 @@
+"use strict";
+
 function parse(tokens) {
 	var token_pointer = 0;
 	
