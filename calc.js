@@ -457,7 +457,13 @@ function run(ast, max_time = Infinity) {
 			stack.push({data: JSON.parse(JSON.stringify(func.data)), type: func.type});
 		}
 	}
-
+	
+	var require_scope = [
+		"set",
+		"inc", "increment",
+		"dec", "decrement"
+	];
+	
 	var built_ins = expand({
 		
 		// Help functions.
