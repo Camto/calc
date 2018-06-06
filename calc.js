@@ -281,31 +281,27 @@ function parse(tokens) {
 function run(ast, max_time = Infinity) {
 	var stack = [];
 	
+	function get_variable(name, scopes) {
+		for(let cou = scopes.length - 1; cou >= 0; cou--) {
+			if(scopes[cou][name]) {
+				return scopes[cou][name];
+			}
+		}
+		return undefined;
+	}
+	
 	function run_function(func) {
 		if(!func.is_ref || /function|operator/.test(func.type)) {
 			switch(func.type) {
 				case "function":
-					function get_variable(name) {
-						if(variables[name]) {
-							return variables[name];
-						} else if(args[name]) {
-							return args[name];
-						} else {
-							for(let cou = func.scopes.length - 1; cou >= 0; cou--) {
-								if(func.scopes[cou][name]) {
-									return func.scopes[cou][name];
-								}
-							}
-							return undefined;
-						}
- 					}
-					
 					var args = {};
+					var variables = {};
+					var scopes = func.scopes.concat(args, variables);
+					
 					for(let cou = 0; cou < func.args.length; cou++) {
 						args[func.args[func.args.length - cou - 1]] = stack.pop();
 					}
 					
-					var variables = {};
 					for(let cou = 0; cou < func.variables.length; cou++) {
 						for(let instruccion_pointer = 0; instruccion_pointer < func.variables[cou].data.length; instruccion_pointer++) {
 							if((new Date).getTime() - start_time > max_time) {
@@ -314,19 +310,19 @@ function run(ast, max_time = Infinity) {
 							
 							switch(func.variables[cou].data[instruccion_pointer].type) {
 								case "symbol":
-									if(get_variable(func.variables[cou].data[instruccion_pointer].data)) {
+									if(get_variable(func.variables[cou].data[instruccion_pointer].data, scopes)) {
 										switch(get_variable(func.variables[cou].data[instruccion_pointer].data).type) {
 											case "function":
-												run_function(get_variable(func.variables[cou].data[instruccion_pointer].data));
+												run_function(get_variable(func.variables[cou].data[instruccion_pointer].data, scopes));
 												break;
 											case "symbol":
-												built_ins[get_variable(func.variables[cou].data[instruccion_pointer].data).data]();
+												built_ins[get_variable(func.variables[cou].data[instruccion_pointer].data, scopes).data]();
 												break;
 											case "operator":
-												operators[get_variable(func.variables[cou].data[instruccion_pointer].data).data]();
+												operators[get_variable(func.variables[cou].data[instruccion_pointer].data, scopes).data]();
 												break;
 											default:
-												stack.push(get_variable(func.variables[cou].data[instruccion_pointer].data));
+												stack.push(get_variable(func.variables[cou].data[instruccion_pointer].data, scopes));
 												break;
 										}
 									} else if(built_ins[func.variables[cou].data[instruccion_pointer].data]) {
@@ -361,7 +357,7 @@ function run(ast, max_time = Infinity) {
 												if(variables[func.variables[cou].data[instruccion_pointer].data]) {
 													var reference = variables[func.variables[cou].data[instruccion_pointer].data];
 													reference.name = func.variables[cou].data[instruccion_pointer].data;
-													reference.scopes = [variables];
+													reference.scopes = func.scopes.concat(args, variables);
 													reference.is_ref = true;
 													stack.push(reference);
 												} else {
@@ -393,19 +389,19 @@ function run(ast, max_time = Infinity) {
 						switch(code[code_pointer].type) {
 							case "symbol":
 								if(!built_ins[code[code_pointer].data]) {
-									if(get_variable(code[code_pointer].data)) {
-										switch(get_variable(code[code_pointer].data).type) {
+									if(get_variable(code[code_pointer].data, scopes)) {
+										switch(get_variable(code[code_pointer].data, scopes).type) {
 											case "function":
-												run_function(get_variable(code[code_pointer].data));
+												run_function(get_variable(code[code_pointer].data), scopes);
 												break;
 											case "symbol":
-												built_ins[get_variable(code[code_pointer].data).data]();
+												built_ins[get_variable(code[code_pointer].data, scopes).data]();
 												break;
 											case "operator":
-												operators[get_variable(code[code_pointer].data).data]();
+												operators[get_variable(code[code_pointer].data, scopes).data]();
 												break;
 											default:
-												stack.push(get_variable(code[code_pointer].data));
+												stack.push(get_variable(code[code_pointer].data, scopes));
 												break;
 										}
 									} else {
@@ -457,6 +453,8 @@ function run(ast, max_time = Infinity) {
 			stack.push({data: JSON.parse(JSON.stringify(func.data)), type: func.type});
 		}
 	}
+	
+	// Built-ins that require the scope.
 	
 	var require_scope = [
 		"set",
@@ -907,8 +905,13 @@ Demos!
 				run_function(iterator);
 			}
 		},
-		"id, identity, nop, noop"() {}
+		"id, identity, nop, noop"() {},
 		
+		// Scope-needing functions.
+		
+		set(scopes) {
+			
+		}
 	});
 
 	var operators = {
