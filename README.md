@@ -1,6 +1,7 @@
 ![calc= logo.](Logos/calc_Logo_GitHub.png)
 
 **TODOLIST:**
+* [ ] **MAKE CLOSURES.**
 * [ ] Make web main page.
 * [ ] Make those dang help pages.
 * [ ] Continue the standard library.
