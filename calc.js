@@ -348,7 +348,7 @@ function run(ast, max_time = Infinity) {
 									break;
 								case "function":
 									var scoped_function = func.variables[cou].data[instruccion_pointer];
-									scoped_function.scopes = [variables];
+									scoped_function.scopes = func.scopes.concat(args, variables);
 									stack.push(scoped_function);
 									break;
 								case "operator":
@@ -421,7 +421,7 @@ function run(ast, max_time = Infinity) {
 								break;
 							case "function":
 								var scoped_function = code[code_pointer];
-								scoped_function.scopes = func.scopes.concat(args);
+								scoped_function.scopes = func.scopes.concat(args, variables);
 								stack.push(scoped_function);
 								break;
 							case "list":
