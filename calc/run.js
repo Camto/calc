@@ -10,7 +10,6 @@ function run(ast, max_time = Infinity) {
 	];
 	
 	var built_ins = built_ins_template(stack, start_time);
-	
 	var operators = operators_template(stack);
 	
 	var start_time = (new Date).getTime();
