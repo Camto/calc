@@ -1,5 +1,9 @@
 "use strict";
 
+try {
+	var run_function = require("./run_function");
+} catch(err) {}
+
 // Built-ins that require the scope.
 
 var require_scope = [
