@@ -344,55 +344,6 @@ function get_variable(name, scopes) {
 	return undefined;
 }
 
-// Taken from https://stackoverflow.com/questions/14743536/multiple-key-names-same-pair-value .
-function expand(obj) {
-	var keys = Object.keys(obj);
-	for(let cou = 0; cou < keys.length; cou++) {
-		var key = keys[cou];
-		var subkeys = key.split(/,\s?/);
-		var target = obj[key];
-		delete obj[key];
-		subkeys.forEach(key => {
-			obj[key] = target;
-			obj[key.replace("_", "")] = target;
-			obj[key.replace(/(_\w)/g, m => m[1].toUpperCase())] = target;
-		});
-	}
-	return obj;
-}
-
-// Taken from https://gist.github.com/nicbell/6081098 .
-Object.compare = function(obj1, obj2) {
-	for(var p in obj1) {
-		if(obj1.hasOwnProperty(p) !== obj2.hasOwnProperty(p)) {
-			return false;
-		}
-		switch(typeof (obj1[p])) {
-			case "object":
-				if(!Object.compare(obj1[p], obj2[p])) {
-					return false;
-				}
-				break;
-			case "function":
-				if(typeof (obj2[p]) == "undefined" || (p != "compare" && obj1[p].toString() != obj2[p].toString())) {
-					return false;
-				}
-				break;
-			default:
-				if(obj1[p] != obj2[p]) {
-					return false;
-				}
-				break;
-		}
-	}
-	for(var p in obj2) {
-		if(typeof (obj1[p]) == "undefined") {
-			return false;
-		}
-	}
-	return true;
-};
-
 try {
 	module.exports = run;
 } catch(err) {}
