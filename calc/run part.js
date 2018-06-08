@@ -171,7 +171,7 @@ function get_variable(name, scopes) {
 	return undefined;
 }
 
-function run_block(block, scope, end_time) {
+function run_block(block, scopes, end_time) {
 	for(let instruccion_pointer = 0; instruccion_pointer < block.length; instruccion_pointer++) {
 		if(Date.now() > end_time) {
 			throw "Error: code took too long to run, stopped.";
@@ -179,19 +179,19 @@ function run_block(block, scope, end_time) {
 		
 		switch(block[instruccion_pointer].type) {
 			case "symbol":
-				if(get_variable(block[instruccion_pointer].data)) {
-					switch(variables[block[instruccion_pointer].data].type) {
+				if(get_variable(block[instruccion_pointer].data, scopes)) {
+					switch(get_variable(block[instruccion_pointer].data, scopes).type) {
 						case "function":
-							run_function(variables[block[instruccion_pointer].data], stack, built_ins, operators, end_time);
+							run_function(get_variable(block[instruccion_pointer].data, scopes), stack, built_ins, operators, end_time);
 							break;
 						case "symbol":
-							built_ins[variables[block[instruccion_pointer].data].data]();
+							built_ins[get_variable(block[instruccion_pointer].data, scopes).data]();
 							break;
 						case "operator":
-							operators[variables[block[instruccion_pointer].data].data]();
+							operators[get_variable(block[instruccion_pointer].data, scopes).data]();
 							break;
 						default:
-							stack.push(variables[block[instruccion_pointer].data]);
+							stack.push(get_variable(block[instruccion_pointer].data, scopes));
 							break;
 					}
 				} else if(built_ins[block[instruccion_pointer].data]) {
@@ -213,7 +213,7 @@ function run_block(block, scope, end_time) {
 				break;
 			case "function":
 				var blockd_function = block[instruccion_pointer];
-				scoped_function.scopes = [variables];
+				scoped_function.scopes = scopes;
 				stack.push(scoped_function);
 				break;
 			case "operator":
@@ -223,10 +223,10 @@ function run_block(block, scope, end_time) {
 					instruccion_pointer++;
 					switch(block[instruccion_pointer].type) {
 						case "symbol":
-							if(variables[block[instruccion_pointer].data]) {
-								var passed_function = variables[block[instruccion_pointer].data];
+							if(get_variable(block[instruccion_pointer].data, scopes)) {
+								var passed_function = get_variable(block[instruccion_pointer].data, scopes);
 								passed_function.name = block[instruccion_pointer].data;
-								passed_function.scopes = [variables];
+								passed_function.scopes = get_variable;
 								passed_function.is_ref = true;
 								stack.push(passed_function);
 							} else {
@@ -238,7 +238,7 @@ function run_block(block, scope, end_time) {
 							break;
 						default:
 							var reference = block[instruccion_pointer];
-							reference.scopes = [variables];
+							reference.scopes = get_variable;
 							reference.is_ref = true;
 							stack.push(reference);
 							break;
