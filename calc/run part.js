@@ -171,7 +171,7 @@ function get_variable(name, scopes) {
 	return undefined;
 }
 
-function run_block(block, scopes, built_ins, operators, end_time) {
+function run_block(block, stack, scopes, built_ins, operators, end_time) {
 	for(let instruccion_pointer = 0; instruccion_pointer < block.length; instruccion_pointer++) {
 		if(Date.now() > end_time) {
 			throw "Error: code took too long to run, stopped.";
@@ -212,7 +212,7 @@ function run_block(block, scopes, built_ins, operators, end_time) {
 				stack.push({data: list.reverse(), type: "list"});
 				break;
 			case "function":
-				var blockd_function = block[instruccion_pointer];
+				var scoped_function = block[instruccion_pointer];
 				scoped_function.scopes = scopes;
 				stack.push(scoped_function);
 				break;
@@ -250,5 +250,5 @@ function run_block(block, scopes, built_ins, operators, end_time) {
 }
 
 try {
-	module.exports = {run_function};
+	module.exports = {run_function, run_block};
 } catch(err) {}
