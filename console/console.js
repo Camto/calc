@@ -12,7 +12,13 @@ $(function() {
 		$("#log").append(escape_input(print(calc("calc= h", 10000))) + "<br />");
 		past.push("calc= h");
 		if(decodeURIComponent(location.search.substring(6)) != "calc= h") {
-			$("#log").append(escape_input(print(calc(decodeURIComponent(location.search.substring(6)), 10000))) + "<br />");
+			var result;
+			try {
+				result = print(calc(decodeURIComponent(location.search.substring(6)), 10000));
+			} catch(err) {
+				result = err;
+			}
+			$("#log").append(escape_input(result) + "<br />");
 			past.push(decodeURIComponent(location.search.substring(6)));
 			travel++;
 		}
