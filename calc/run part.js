@@ -171,6 +171,10 @@ function get_variable(name, scopes) {
 	return undefined;
 }
 
+function run_block(block, scope) {
+	
+}
+
 try {
-	module.exports = run_function;
+	module.exports = {run_function};
 } catch(err) {}

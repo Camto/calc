@@ -1,7 +1,8 @@
 "use strict";
 
 try {
-	var run_function = require("./run_function");
+	var run_part = require("./run part");
+	Object.assign(global, run_part);
 } catch(err) {}
 
 // Built-ins that require the scope.
