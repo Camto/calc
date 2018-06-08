@@ -177,67 +177,67 @@ function run_block(block, scope, end_time) {
 			throw "Error: code took too long to run, stopped.";
 		}
 		
-		switch(scope[instruccion_pointer].type) {
+		switch(block[instruccion_pointer].type) {
 			case "symbol":
-				if(variables[scope[instruccion_pointer].data]) {
-					switch(variables[scope[instruccion_pointer].data].type) {
+				if(get_variable(block[instruccion_pointer].data)) {
+					switch(variables[block[instruccion_pointer].data].type) {
 						case "function":
-							run_function(variables[scope[instruccion_pointer].data], stack, built_ins, operators, end_time);
+							run_function(variables[block[instruccion_pointer].data], stack, built_ins, operators, end_time);
 							break;
 						case "symbol":
-							built_ins[variables[scope[instruccion_pointer].data].data]();
+							built_ins[variables[block[instruccion_pointer].data].data]();
 							break;
 						case "operator":
-							operators[variables[scope[instruccion_pointer].data].data]();
+							operators[variables[block[instruccion_pointer].data].data]();
 							break;
 						default:
-							stack.push(variables[scope[instruccion_pointer].data]);
+							stack.push(variables[block[instruccion_pointer].data]);
 							break;
 					}
-				} else if(built_ins[scope[instruccion_pointer].data]) {
-					built_ins[scope[instruccion_pointer].data]();
+				} else if(built_ins[block[instruccion_pointer].data]) {
+					built_ins[block[instruccion_pointer].data]();
 				} else {
-					throw `Symbol \`${scope[instruccion_pointer].data}\` found in main expression without being a built-in function.`;
+					throw `Symbol \`${block[instruccion_pointer].data}\` found in main expression without being a built-in function.`;
 				}
 				break;
 			case "number":
 			case "string":
-				stack.push(scope[instruccion_pointer]);
+				stack.push(block[instruccion_pointer]);
 				break;
 			case "list":
 				var list = [];
-				for(let cou = 0; cou < scope[instruccion_pointer].data; cou++) {
+				for(let cou = 0; cou < block[instruccion_pointer].data; cou++) {
 					list.push(stack.pop());
 				}
 				stack.push({data: list.reverse(), type: "list"});
 				break;
 			case "function":
-				var scoped_function = scope[instruccion_pointer];
+				var blockd_function = block[instruccion_pointer];
 				scoped_function.scopes = [variables];
 				stack.push(scoped_function);
 				break;
 			case "operator":
-				if(scope[instruccion_pointer].data != "$") {
-					operators[scope[instruccion_pointer].data]();
+				if(block[instruccion_pointer].data != "$") {
+					operators[block[instruccion_pointer].data]();
 				} else {
 					instruccion_pointer++;
-					switch(scope[instruccion_pointer].type) {
+					switch(block[instruccion_pointer].type) {
 						case "symbol":
-							if(variables[scope[instruccion_pointer].data]) {
-								var passed_function = variables[scope[instruccion_pointer].data];
-								passed_function.name = scope[instruccion_pointer].data;
+							if(variables[block[instruccion_pointer].data]) {
+								var passed_function = variables[block[instruccion_pointer].data];
+								passed_function.name = block[instruccion_pointer].data;
 								passed_function.scopes = [variables];
 								passed_function.is_ref = true;
 								stack.push(passed_function);
 							} else {
-								stack.push(scope[instruccion_pointer]);
+								stack.push(block[instruccion_pointer]);
 							}
 							break;
 						case "operator":
-							stack.push(scope[instruccion_pointer]);
+							stack.push(block[instruccion_pointer]);
 							break;
 						default:
-							var reference = scope[instruccion_pointer];
+							var reference = block[instruccion_pointer];
 							reference.scopes = [variables];
 							reference.is_ref = true;
 							stack.push(reference);
