@@ -80,5 +80,5 @@ function escape_input(string) {
 		.replace(/"/g, "&quot;")
 		.replace(/'/g, "&apos;")
 		.replace(/ /g, "&nbsp;")
-		.replace(/\n/g, "<br />")
+		.replace(/\n/g, "<br />");
 }
