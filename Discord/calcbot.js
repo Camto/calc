@@ -1,6 +1,6 @@
 "use strict";
 
-var calc = require("./../calc.js");
+var calc = require("./../calc/calc");
 
 var Discord = require("discord.io");
 var logger = require("winston");
