@@ -1,9 +1,6 @@
 "use strict";
 
-try {
-	var run_part = require("./run part");
-	Object.assign(global, run_part);
-} catch(err) {}
+var run_part = require("./run part");
 
 // Built-ins that require the scope.
 
@@ -13,10 +10,10 @@ var require_scope = [
 	"dec", "decrement"
 ];
 
-// Generate built-ins based on a stack and a start time.
+// Generate built-ins based on a stack, operators, and an end time.
 
-function built_ins_template(stack, operators, end_time) {
-	var built_ins = expand({
+function built_ins(stack, operators, end_time) {
+	var made_built_ins = expand({
 		
 		// Help functions.
 		
@@ -166,7 +163,7 @@ Demos!
 			
 			var mapped = list.map(item => {
 				stack.push(item);
-				run_function(mapper, stack, built_ins, operators, end_time);
+				run_part.run_function(mapper, stack, made_built_ins, operators, end_time);
 				return stack.pop();
 			});
 			
@@ -180,7 +177,7 @@ Demos!
 			
 			for(let cou = 0; cou < list.length; cou++) {
 				stack.push(list[cou]);
-				run_function(reducer, stack, built_ins, operators, end_time);
+				run_part.run_function(reducer, stack, made_built_ins, operators, end_time);
 			}
 		},
 		"anti_reduce, anti_fold, foldr, fold_right"() {
@@ -191,7 +188,7 @@ Demos!
 			
 			for(let cou = list.length - 1; cou > -1; cou--) {
 				stack.push(list[cou]);
-				run_function(reducer, stack, built_ins, operators, end_time);
+				run_part.run_function(reducer, stack, made_built_ins, operators, end_time);
 			}
 		},
 		filter() {
@@ -200,7 +197,7 @@ Demos!
 			
 			var filtered = list.filter(item => {
 				stack.push(item);
-				run_function(filter, stack, built_ins, operators, end_time);
+				run_part.run_function(filter, stack, made_built_ins, operators, end_time);
 				return stack.pop().data;
 			});
 			
@@ -449,14 +446,14 @@ Demos!
 		// Function functions.
 		
 		"call, run, do, apply, get"() {
-			run_function(stack.pop(), stack, built_ins, operators, end_time);
+			run_part.run_function(stack.pop(), stack, made_built_ins, operators, end_time);
 		},
 		"iter, iterate, iterative, loop, loopn"() {
 			var iter_cou = stack.pop().data;
 			var iterator = stack.pop();
 			
 			for(let cou = 0; cou < iter_cou; cou++) {
-				run_function(iterator, stack, built_ins, operators, end_time);
+				run_part.run_function(iterator, stack, made_built_ins, operators, end_time);
 			}
 		},
 		"id, identity, nop, noop"() {},
@@ -468,12 +465,12 @@ Demos!
 		}
 	});
 	
-	return built_ins;
+	return made_built_ins;
 }
 
 // Generate operators based on a stack.
 
-function operators_template(stack) {
+function operators(stack) {
 	return {
 		
 		"+"() {
@@ -765,6 +762,4 @@ Object.compare = function(obj1, obj2) {
 	return true;
 };
 
-try {
-	module.exports = {require_scope, built_ins_template, operators_template};
-} catch(err) {}
+module.exports = {require_scope, built_ins, operators};

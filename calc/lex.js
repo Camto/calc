@@ -109,6 +109,4 @@ function lex(code) {
 	return tokens;
 }
 
-try {
-	module.exports = lex;
-} catch(err) {}
+module.exports = lex;

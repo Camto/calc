@@ -153,6 +153,4 @@ function parse(tokens) {
 	return {variables, data: ast};
 }
 
-try {
-	module.exports = parse;
-} catch(err) {}
+module.exports = parse;

@@ -1,20 +1,20 @@
 "use strict";
 
+var calc = require("calc");
+
 var past = ["calc= "];
 var travel = 2;
 
 $(function() {
+	$("#log").append(escape_input(calc.print(calc.calc("calc= h", 10000))) + "<br />");
+	past.push("calc= h");
 	if(location.search.substring(6) == "") {
-		$("#log").append(escape_input(print(calc("calc= h", 10000))) + "<br />");
-		past.push("calc= h");
 		history.replaceState("", "", "?calc=calc%3D%20h");
 	} else {
-		$("#log").append(escape_input(print(calc("calc= h", 10000))) + "<br />");
-		past.push("calc= h");
 		if(decodeURIComponent(location.search.substring(6)) != "calc= h") {
 			var result;
 			try {
-				result = print(calc(decodeURIComponent(location.search.substring(6)), 10000));
+				result = calc.print(calc.calc(decodeURIComponent(location.search.substring(6)), 10000));
 			} catch(err) {
 				result = err;
 			}
@@ -30,7 +30,7 @@ $(function() {
 				$(this).val($(this).val().replace(/[\n\r]/g, ""));
 				var result = "";
 				try {
-					result = print(calc($(this).val(), 10000));
+					result = calc.print(calc.calc($(this).val(), 10000));
 				} catch(err) {
 					result = err;
 				}

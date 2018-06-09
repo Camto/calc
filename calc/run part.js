@@ -176,6 +176,4 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 	}
 }
 
-try {
-	module.exports = {run_function, run_block};
-} catch(err) {}
+module.exports = {run_function, run_block};
