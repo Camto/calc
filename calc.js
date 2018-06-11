@@ -873,6 +873,12 @@ Demos!
 			var value = variable_manipulation.get_variable(name, scopes);
 			value.data++;
 			variable_manipulation.set_variable(name, value, scopes);
+		},
+		"dec, decrement"(scopes) {
+			var name = stack.pop().name;
+			var value = variable_manipulation.get_variable(name, scopes);
+			value.data--;
+			variable_manipulation.set_variable(name, value, scopes);
 		}
 	});
 	
@@ -942,6 +948,18 @@ function operators(stack) {
 					stack.push({
 						data: left.data * right.data,
 						type: "number"
+					});
+					break;
+				case "stringnumber":
+					stack.push({
+						data: left.data.repeat(right.data),
+						type: "string"
+					});
+					break;
+				case "numberstring":
+					stack.push({
+						data: right.data.repeat(left.data),
+						type: "string"
 					});
 					break;
 			}

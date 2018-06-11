@@ -540,6 +540,18 @@ function operators(stack) {
 						type: "number"
 					});
 					break;
+				case "stringnumber":
+					stack.push({
+						data: left.data.repeat(right.data),
+						type: "string"
+					});
+					break;
+				case "numberstring":
+					stack.push({
+						data: right.data.repeat(left.data),
+						type: "string"
+					});
+					break;
 			}
 		},
 		"/"() {
