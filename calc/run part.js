@@ -51,7 +51,7 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 							operators[variable_manipulation.get_variable(block[instruccion_pointer].data, scopes).data]();
 							break;
 						default:
-							stack.push(variable_manipulation.get_variable(block[instruccion_pointer].data, scopes));
+							stack.push(JSON.parse(JSON.stringify(variable_manipulation.get_variable(block[instruccion_pointer].data, scopes))));
 							break;
 					}
 				} else if(built_ins[block[instruccion_pointer].data]) {

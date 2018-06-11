@@ -457,6 +457,18 @@ Demos!
 			var value = stack.pop();
 			var name = stack.pop().name;
 			variable_manipulation.set_variable(name, value, scopes);
+		},
+		"inc, increment"(scopes) {
+			var name = stack.pop().name;
+			var value = variable_manipulation.get_variable(name, scopes);
+			value.data++;
+			variable_manipulation.set_variable(name, value, scopes);
+		},
+		"dec, decrement"(scopes) {
+			var name = stack.pop().name;
+			var value = variable_manipulation.get_variable(name, scopes);
+			value.data--;
+			variable_manipulation.set_variable(name, value, scopes);
 		}
 	});
 	
