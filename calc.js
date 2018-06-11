@@ -269,6 +269,8 @@ function parse(tokens) {
 
 module.exports = parse;
 },{}],3:[function(require,module,exports){
+var variable_manipulation = require("./variable manipulation");
+
 function run_function(func, stack, built_ins, operators, end_time) {
 	if(!func.is_ref || /function|operator/.test(func.type)) {
 		switch(func.type) {
@@ -286,70 +288,10 @@ function run_function(func, stack, built_ins, operators, end_time) {
 					variables[func.variables[cou].name] = stack.pop();
 				}
 				
-				var code = func.data;
-				for(let code_pointer = 0; code_pointer < code.length; code_pointer++) {
-					if(Date.now() > end_time) {
-						throw "Error: code took too long to run, stopped.";
-					}
-					
-					switch(code[code_pointer].type) {
-						case "symbol":
-							if(!built_ins[code[code_pointer].data]) {
-								if(get_variable(code[code_pointer].data, scopes)) {
-									switch(get_variable(code[code_pointer].data, scopes).type) {
-										case "function":
-											run_function(get_variable(code[code_pointer].data, scopes), stack, built_ins, operators, end_time);
-											break;
-										case "symbol":
-											built_ins[get_variable(code[code_pointer].data, scopes).data]();
-											break;
-										case "operator":
-											operators[get_variable(code[code_pointer].data, scopes).data]();
-											break;
-										default:
-											stack.push(get_variable(code[code_pointer].data, scopes));
-											break;
-									}
-								} else {
-									throw `Symbol \`${code[code_pointer].data}\` found in function without being a built-in function or a function parameter.`;
-								}
-							} else {
-								built_ins[code[code_pointer].data]();
-							}
-							break;
-						case "number":
-						case "string":
-							stack.push(code[code_pointer]);
-							break;
-						case "function":
-							var scoped_function = code[code_pointer];
-							scoped_function.scopes = func.scopes.concat(args, variables);
-							stack.push(scoped_function);
-							break;
-						case "list":
-							var list = [];
-							for(let cou = 0; cou < code[code_pointer].data; cou++) {
-								list.push(stack.pop());
-							}
-							stack.push({data: list.reverse(), type: "list"});
-							break;
-						case "operator":
-							if(code[code_pointer].data != "$") {
-								operators[code[code_pointer].data]();
-							} else {
-								code_pointer++;
-								if(!args[code[code_pointer].data]) {
-									stack.push(code[code_pointer]);
-								} else {
-									stack.push(args[code[code_pointer].data]);
-								}
-							}
-							break;
-					}
-				}
+				run_block(func.data, stack, scopes, built_ins, operators, end_time);
 				break;
 			case "symbol":
-				built_ins[func.data]();
+				built_ins[func.data](scopes);
 				break;
 			case "operator":
 				operators[func.data]();
@@ -360,15 +302,6 @@ function run_function(func, stack, built_ins, operators, end_time) {
 	}
 }
 
-function get_variable(name, scopes) {
-	for(let cou = scopes.length - 1; cou >= 0; cou--) {
-		if(scopes[cou][name]) {
-			return scopes[cou][name];
-		}
-	}
-	return undefined;
-}
-
 function run_block(block, stack, scopes, built_ins, operators, end_time) {
 	for(let instruccion_pointer = 0; instruccion_pointer < block.length; instruccion_pointer++) {
 		if(Date.now() > end_time) {
@@ -377,23 +310,23 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 		
 		switch(block[instruccion_pointer].type) {
 			case "symbol":
-				if(get_variable(block[instruccion_pointer].data, scopes)) {
-					switch(get_variable(block[instruccion_pointer].data, scopes).type) {
+				if(variable_manipulation.get_variable(block[instruccion_pointer].data, scopes)) {
+					switch(variable_manipulation.get_variable(block[instruccion_pointer].data, scopes).type) {
 						case "function":
-							run_function(get_variable(block[instruccion_pointer].data, scopes), stack, built_ins, operators, end_time);
+							run_function(variable_manipulation.get_variable(block[instruccion_pointer].data, scopes), stack, built_ins, operators, end_time);
 							break;
 						case "symbol":
-							built_ins[get_variable(block[instruccion_pointer].data, scopes).data]();
+							built_ins[variable_manipulation.get_variable(block[instruccion_pointer].data, scopes).data](scopes);
 							break;
 						case "operator":
-							operators[get_variable(block[instruccion_pointer].data, scopes).data]();
+							operators[variable_manipulation.get_variable(block[instruccion_pointer].data, scopes).data]();
 							break;
 						default:
-							stack.push(get_variable(block[instruccion_pointer].data, scopes));
+							stack.push(variable_manipulation.get_variable(block[instruccion_pointer].data, scopes));
 							break;
 					}
 				} else if(built_ins[block[instruccion_pointer].data]) {
-					built_ins[block[instruccion_pointer].data]();
+					built_ins[block[instruccion_pointer].data](scopes);
 				} else {
 					throw `Symbol \`${block[instruccion_pointer].data}\` found in main expression without being a built-in function.`;
 				}
@@ -421,10 +354,10 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 					instruccion_pointer++;
 					switch(block[instruccion_pointer].type) {
 						case "symbol":
-							if(get_variable(block[instruccion_pointer].data, scopes)) {
-								var passed_function = get_variable(block[instruccion_pointer].data, scopes);
+							if(variable_manipulation.get_variable(block[instruccion_pointer].data, scopes)) {
+								var passed_function = variable_manipulation.get_variable(block[instruccion_pointer].data, scopes);
 								passed_function.name = block[instruccion_pointer].data;
-								passed_function.scopes = get_variable;
+								passed_function.scopes = variable_manipulation.get_variable;
 								passed_function.is_ref = true;
 								stack.push(passed_function);
 							} else {
@@ -436,7 +369,7 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 							break;
 						default:
 							var reference = block[instruccion_pointer];
-							reference.scopes = get_variable;
+							reference.scopes = variable_manipulation.get_variable;
 							reference.is_ref = true;
 							stack.push(reference);
 							break;
@@ -448,7 +381,7 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 }
 
 module.exports = {run_function, run_block};
-},{}],4:[function(require,module,exports){
+},{"./variable manipulation":6}],4:[function(require,module,exports){
 "use strict";
 
 var run_part = require("./run part");	
@@ -478,14 +411,7 @@ module.exports = run;
 "use strict";
 
 var run_part = require("./run part");
-
-// Built-ins that require the scope.
-
-var require_scope = [
-	"set",
-	"inc", "increment",
-	"dec", "decrement"
-];
+var variable_manipulation = require("./variable manipulation");
 
 // Generate built-ins based on a stack, operators, and an end time.
 
@@ -938,7 +864,9 @@ Demos!
 		// Scope-needing functions.
 		
 		set(scopes) {
-			
+			var value = stack.pop();
+			var name = stack.pop().name;
+			variable_manipulation.set_variable(name, value, scopes);
 		}
 	});
 	
@@ -1239,8 +1167,29 @@ Object.compare = function(obj1, obj2) {
 	return true;
 };
 
-module.exports = {require_scope, built_ins, operators};
-},{"./run part":3}],"calc":[function(require,module,exports){
+module.exports = {built_ins, operators};
+},{"./run part":3,"./variable manipulation":6}],6:[function(require,module,exports){
+function get_variable(name, scopes) {
+	for(let cou = scopes.length - 1; cou >= 0; cou--) {
+		if(scopes[cou][name]) {
+			return scopes[cou][name];
+		}
+	}
+	return undefined;
+}
+
+function set_variable(name, value, scopes) {
+	for(let cou = scopes.length - 1; cou >= 0; cou--) {
+		if(scopes[cou][name]) {
+			scopes[cou][name] = value;
+			return scopes[cou][name];
+		}
+	}
+	return undefined;
+}
+
+module.exports = {get_variable, set_variable};
+},{}],"calc":[function(require,module,exports){
 "use strict";
 
 var lex = require("./lex");

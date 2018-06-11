@@ -1,14 +1,7 @@
 "use strict";
 
 var run_part = require("./run part");
-
-// Built-ins that require the scope.
-
-var require_scope = [
-	"set",
-	"inc", "increment",
-	"dec", "decrement"
-];
+var variable_manipulation = require("./variable manipulation");
 
 // Generate built-ins based on a stack, operators, and an end time.
 
@@ -461,7 +454,9 @@ Demos!
 		// Scope-needing functions.
 		
 		set(scopes) {
-			
+			var value = stack.pop();
+			var name = stack.pop().name;
+			variable_manipulation.set_variable(name, value, scopes);
 		}
 	});
 	
@@ -762,4 +757,4 @@ Object.compare = function(obj1, obj2) {
 	return true;
 };
 
-module.exports = {require_scope, built_ins, operators};
+module.exports = {built_ins, operators};
