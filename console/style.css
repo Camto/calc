@@ -37,4 +37,5 @@ html, body, #console {
 	position: relative;
 	overflow: auto;
 	overflow-wrap: break-word;
+	word-break: break-all;
 }

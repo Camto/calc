@@ -14,13 +14,22 @@ function built_ins(stack, operators, end_time) {
 			stack.push({data: `
 Demos!
     • Fibonacci: \`calc= [1, 1] {i -> i (i last (i 1 backn) +) +} 7 iter last\`
-    • Factorial: \`calc= 1 5 .. $* 1 fold\``, type: "string"});
+    • Factorial: \`calc= 1 5 .. $* 1 fold\`
+For a basic tutorial, type \`calc= tut\`. If you already know stack based programming, use \`calc= adv_tut\`.`, type: "string"});
 		},
 		"page, p, help_page, hp, h_page, help_p"() {
-			
+			stack.push({data: "The help pages are still a work in progress.", type: "string"});
 		},
 		"tut, tutorial"() {
-			
+			if(stack.length == 0) {
+				stack.push({data: `
+
+INTRODUCTION
+
+calc= is a programming language made for doing maths in chats. Every program starts with \`calc=\` and has a series of instruccions to execute. Since calc= is stack based or concatenative, you put things on top of the stack, then remove them to do math. For example, \`calc= 3\` will result in \`3\`. You can do simple operations like \`calc= 3 4 +\`, which results in \`7\` because \`3\` and \`4\` get pushed onto the stack and \`+\` pops them off, adds them, and pushes the result back onto the stack, which is the result you see in the end. The basic operators are \`+\` (addition), \`-\` (subtraction), \`*\` (multiplication), and \`/\` (division). For example, the amount of seconds in a year would be \`calc= 365 24 60 60 * * *\`, to see how it works, just remember that the number get pushed onto the stack and \`*\` takes them off to put the result back. For different pages of this tutorial, use \`calc= 1 tut\`, \`calc= 2 tut\`, and so on.`, type: "string"});
+			} else {
+				
+			}
 		},
 		"adv_tut, adv_tutorial, advanced_tutorial, advanced_tut"() {
 			
