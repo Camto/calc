@@ -79,6 +79,6 @@ function escape_input(string) {
 		.replace(/>/g, "&gt;")
 		.replace(/"/g, "&quot;")
 		.replace(/'/g, "&apos;")
-		.replace(/ /g, "&#32;")
+		.replace(/ /g, "&nbsp;")
 		.replace(/\n/g, "<br />");
 }
