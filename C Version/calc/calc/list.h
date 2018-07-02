@@ -28,4 +28,17 @@
 	contained_type prefix##pop(container_name* list) { \
 		list->length--; \
 		return list->list[list->length]; \
+	} \
+	\
+	void prefix##unshift(container_name* list, contained_type item) { \
+		if(list->length >= list->capacity) { \
+			list->capacity *= 2; \
+			list->list = (contained_type*) realloc(list->list, list->capacity * sizeof(contained_type)); \
+		} \
+		\
+		for(size_t cou = list->length; cou > 0; cou--) { \
+			list->list[cou] = list->list[cou - 1]; \
+		} \
+		list->list[0] = item; \
+		list->length++; \
 	}

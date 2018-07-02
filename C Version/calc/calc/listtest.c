@@ -9,10 +9,8 @@ int main(int argc, char** argv) {
 	i_init(&numbers);
 	
 	for(int cou = 0; cou < 40; cou++) {
-		i_push(&numbers, cou);
+		i_unshift(&numbers, cou);
 	}
-	
-	printf("%d, %d\n", numbers.length, numbers.capacity);
 	
 	size_t limit = numbers.length;
 	for(int cou = 0; cou < limit; cou++) {
