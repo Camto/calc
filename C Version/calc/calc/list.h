@@ -41,4 +41,13 @@
 		} \
 		list->list[0] = item; \
 		list->length++; \
+	} \
+	\
+	contained_type prefix##shift(container_name* list) { \
+		contained_type item = list->list[0]; \
+		for(size_t cou = 1; cou < list->length; cou++) { \
+			list->list[cou - 1] = list->list[cou]; \
+		} \
+		list->length--; \
+		return item; \
 	}
