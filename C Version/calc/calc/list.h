@@ -50,4 +50,26 @@
 		} \
 		list->length--; \
 		return item; \
+	} \
+	\
+	void prefix##insert(container_name* list, contained_type item, size_t index) { \
+		if(list->length >= list->capacity) { \
+			list->capacity *= 2; \
+			list->list = (contained_type*) realloc(list->list, list->capacity * sizeof(contained_type)); \
+		} \
+		\
+		for(size_t cou = list->length; cou > index; cou--) { \
+			list->list[cou] = list->list[cou - 1]; \
+		} \
+		list->list[index] = item; \
+		list->length++; \
+	} \
+	\
+	contained_type prefix##delete(container_name* list, size_t index) { \
+		contained_type item = list->list[index]; \
+		for(size_t cou = index + 1; cou < list->length; cou++) { \
+			list->list[cou - 1] = list->list[cou]; \
+		} \
+		list->length--; \
+		return item; \
 	}

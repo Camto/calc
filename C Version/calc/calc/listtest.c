@@ -14,6 +14,10 @@ int main(int argc, char** argv) {
 		i_unshift(&numbers, cou);
 	}
 	
+	i_insert(&numbers, -1000, 20);
+	printf("\nInserted: %d", numbers.list[20]);
+	printf("\nDeleted: %d", i_delete(&numbers, 30));
+	
 	printf("\nLength: %d, Capacity: %d", numbers.length, numbers.capacity);
 	
 	printf("\nShifted: ");
