@@ -72,4 +72,17 @@
 		} \
 		list->length--; \
 		return item; \
+	} \
+	\
+	void prefix##reverse(container_name* list) { \
+		size_t beginning = 0; \
+		size_t end = list->length - 1; \
+		\
+		while(end > beginning) { \
+			contained_type temp = list->list[end]; \
+			list->list[end] = list->list[beginning]; \
+			list->list[beginning] = temp; \
+			beginning++; \
+			end--; \
+		} \
 	}

@@ -20,6 +20,9 @@ int main(int argc, char** argv) {
 	
 	printf("\nLength: %d, Capacity: %d", numbers.length, numbers.capacity);
 	
+	i_reverse(&numbers);
+	printf("\nReversed.");
+	
 	printf("\nShifted: ");
 	size_t limit = numbers.length;
 	for(int cou = 0; cou < limit; cou++) {
