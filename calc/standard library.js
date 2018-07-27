@@ -135,32 +135,6 @@ For a basic tutorial, type \`calc= tut\`. If you already know stack based progra
 			stack.push(first);
 			stack.push(second);
 		},
-		"stack_first, stack_cat, stack_top, stack_head"() {
-			stack = stack[0];
-		},
-		"stack_last, stack_bottom, stack_butt"() {
-			stack = stack[stack.length - 1];
-		},
-		"stack_frontn, stack_index, stack_front_index, stack_middlen, stack_middle_index"() {
-			var index = stack.pop().data;
-			stack = stack[index];
-		},
-		"stack_lastn, stack_backn, stack_back_index"() {
-			var index = stack.pop().data;
-			stack = stack[stack.length - index - 1];
-		},
-		"stack_front, stack_init"() {
-			stack = stack.slice(0, -1);
-		},
-		"stack_back, stack_cdr, stack_tail, stack_rest"() {
-			stack = stack.slice(1);
-		},
-		"stack_body, stack_middle"() {
-			stack = stack.slice(1, -1);
-		},
-		"stack_reverse, stack_invert"() {
-			stack.reverse();
-		},
 		
 		// List functions.
 		
