@@ -84,7 +84,7 @@ For a basic tutorial, type \`calc= tut\`. If you already know stack based progra
 			stack.push(third);
 			stack.push(second);
 		},
-		"anti_rot, anti_rotate, reverse_rot, reverse_rotate, counter_rot, counter_rotate"() {
+		"reverse_rot, reverse_rotate, counter_rot, counter_rotate"() {
 			var first = stack.pop();
 			var second = stack.pop();
 			var third = stack.pop();
@@ -104,7 +104,7 @@ For a basic tutorial, type \`calc= tut\`. If you already know stack based progra
 				stack.push(rolled);
 			}
 		},
-		"anti_roll, reverse_roll, counter_roll, anti_rotn, anti_rotaten, reverse_rotn, reverse_rotaten, counter_rotn, counter_rotaten"() {
+		"reverse_roll, counter_roll, reverse_rotn, reverse_rotaten, counter_rotn, counter_rotaten"() {
 			var n = stack.pop().data;
 			
 			if(n > 0) {
@@ -145,7 +145,7 @@ For a basic tutorial, type \`calc= tut\`. If you already know stack based progra
 			var index = stack.pop().data;
 			stack = stack[index];
 		},
-		"stack_lastn, stack_backn, stack_anti_index, stack_reverse_index, stack_back_index"() {
+		"stack_lastn, stack_backn, stack_back_index"() {
 			var index = stack.pop().data;
 			stack = stack[stack.length - index - 1];
 		},
@@ -187,7 +187,7 @@ For a basic tutorial, type \`calc= tut\`. If you already know stack based progra
 				run_part.run_function(reducer, stack, made_built_ins, operators, end_time);
 			}
 		},
-		"anti_reduce, anti_fold, foldr, fold_right"() {
+		"foldr, fold_right"() {
 			var accumulator = stack.pop();
 			var reducer = stack.pop();
 			var list = stack.pop().data;
@@ -217,7 +217,7 @@ For a basic tutorial, type \`calc= tut\`. If you already know stack based progra
 			var list = stack.pop().data;
 			stack.push(list[0]);
 		},
-		"last, bottom, butt"() {
+		"last, bottom"() {
 			var list = stack.pop().data;
 			stack.push(list[list.length - 1]);
 		},
@@ -226,7 +226,7 @@ For a basic tutorial, type \`calc= tut\`. If you already know stack based progra
 			var list = stack.pop().data;
 			stack.push(list[index]);
 		},
-		"lastn, backn, anti_index, reverse_index, back_index"() {
+		"lastn, backn, back_index"() {
 			var index = stack.pop().data;
 			var list = stack.pop().data;
 			stack.push(list[list.length - index - 1]);
@@ -323,7 +323,7 @@ For a basic tutorial, type \`calc= tut\`. If you already know stack based progra
 			list.push(second);
 			stack.push({data: list, type: "list"});
 		},
-		"list_anti_rot, list_anti_rotate, list_reverse_rot, list_reverse_rotate, list_counter_rot, list_counter_rotate"() {
+		"list_reverse_rot, list_reverse_rotate, list_counter_rot, list_counter_rotate"() {
 			var list = stack.pop().data;
 			var first = list.pop();
 			var second = list.pop();
@@ -348,7 +348,7 @@ For a basic tutorial, type \`calc= tut\`. If you already know stack based progra
 			
 			stack.push({data: list, type: "list"});
 		},
-		"list_anti_roll, list_reverse_roll, list_counter_roll, list_anti_rotn, list_anti_rotaten, list_reverse_rotn, list_reverse_rotaten, list_counter_rotn, list_counter_rotaten"() {
+		"list_reverse_roll, list_counter_roll, list_reverse_rotn, list_reverse_rotaten, list_counter_rotn, list_counter_rotaten"() {
 			var n = stack.pop().data;
 			var list = stack.pop().data;
 			
