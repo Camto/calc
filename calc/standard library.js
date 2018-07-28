@@ -438,6 +438,19 @@ For a basic tutorial, type \`calc= tut\`. If you already know stack based progra
 			}
 		},
 		"id, identity, nop, noop"() {},
+		"dot, comp, compose"(scopes) {
+			var second = stack.pop();
+			var first = stack.pop();
+			var run = {data: "run", type: "symbol"};
+			
+			stack.push({
+				args: [],
+				data: [first, run, second, run],
+				scopes,
+				type: "function",
+				variables: []
+			});
+		},
 		
 		// Scope-needing functions.
 		
