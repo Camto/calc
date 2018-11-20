@@ -1,4 +1,4 @@
-require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+require=(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 
 function lex(code) {
@@ -423,11 +423,11 @@ function built_ins(stack, operators, end_time) {
 		"help, h"() {
 			stack.push({data: `
 
-    calc=
+	calc=
 
 Demos!
-    • Fibonacci: \`calc= [1, 1] {i -> i (i last (i 1 backn) +) +} 7 iter last\`
-    • Factorial: \`calc= 1 5 .. $* 1 fold\`
+	• Fibonacci: \`calc= [1, 1] {i -> i (i last (i 1 backn) +) +} 7 iter last\`
+	• Factorial: \`calc= 1 5 .. $* 1 fold\`
 For a basic tutorial, type \`calc= tut\`. If you already know stack based programming, use \`calc= adv_tut\`.
 `, type: "string"});
 		},
@@ -888,7 +888,7 @@ For a basic tutorial, type \`calc= tut\`. If you already know stack based progra
 
 var tut_pages = [`
 
-    INTRODUCTION
+	INTRODUCTION
 
 calc= is a programming language made for doing maths in chats. Every program starts with \`calc=\` and has a series of instruccions to execute. Since calc= is stack based or concatenative, you put things on top of the stack, then remove them to do math. For example, \`calc= 3\` will result in \`3\`. You can do simple operations like \`calc= 3 4 +\`, which results in \`7\` because \`3\` and \`4\` get pushed onto the stack and \`+\` pops them off, adds them, and pushes the result back onto the stack, which is the result you see in the end. The basic operators are \`+\` (addition), \`-\` (subtraction), \`*\` (multiplication), and \`/\` (division). For example, the amount of seconds in a year would be \`calc= 365 24 60 60 * * *\`, to see how it works, just remember that the number get pushed onto the stack and \`*\` takes them off to put the result back. For different pages of this tutorial, use \`calc= 1 tut\`, \`calc= 2 tut\`, and so on.
 `];
