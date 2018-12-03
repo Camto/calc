@@ -86,7 +86,6 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 							if(variable_manipulation.get_variable(block[instruccion_pointer].data, scopes)) {
 								var passed_function = variable_manipulation.get_variable(block[instruccion_pointer].data, scopes);
 								passed_function.name = block[instruccion_pointer].data;
-								passed_function.scopes = variable_manipulation.get_variable;
 								passed_function.is_ref = true;
 								stack.push(passed_function);
 							} else {
@@ -98,7 +97,6 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 							break;
 						default:
 							var reference = block[instruccion_pointer];
-							reference.scopes = variable_manipulation.get_variable;
 							reference.is_ref = true;
 							stack.push(reference);
 							break;
