@@ -84,7 +84,7 @@ For a basic tutorial, type \`calc= tut\`. If you already know stack based progra
 			stack.push(third);
 			stack.push(second);
 		},
-		"reverse_rot, reverse_rotate, counter_rot, counter_rotate"() {
+		"unrot, unrotate, reverse_rot, reverse_rotate, counter_rot, counter_rotate"() {
 			var first = stack.pop();
 			var second = stack.pop();
 			var third = stack.pop();
