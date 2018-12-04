@@ -45,10 +45,10 @@ For a basic tutorial, type \`calc= tut\`. If you already know stack based progra
 		"type, typeof, instance, instanceof"() {
 			stack.push({data: stack.pop().type, type: "string"});
 		},
-		"true, t, yes, on"() {
+		"true, yes, on"() {
 			stack.push({data: 1, type: "number"});
 		},
-		"false, f, no, off"() {
+		"false, no, off"() {
 			stack.push({data: 0, type: "number"});
 		},
 		
