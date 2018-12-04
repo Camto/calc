@@ -21,7 +21,7 @@ Demos!
 For a basic tutorial, type \`calc= tut\`. If you already know stack based programming, use \`calc= adv_tut\`.
 `, type: "string"});
 		},
-		"page, p, help_page, hp, h_page, help_p"() {
+		"page, help_page, hp, h_page, help_p"() {
 			stack.push({data: "The help pages are still a work in progress.", type: "string"});
 		},
 		"tut, tutorial"() {
