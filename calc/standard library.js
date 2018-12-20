@@ -622,7 +622,7 @@ function operators(stack) {
 			var right = stack.pop();
 			var left = stack.pop();
 			switch(left.type + right.type) {
-				case "number":
+				case "numbernumber":
 					stack.push({
 						data: left.data || right.data,
 						type: "number"
