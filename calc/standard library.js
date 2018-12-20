@@ -590,12 +590,7 @@ function operators(stack) {
 			var end = Math.floor(stack.pop().data);
 			var beginning = Math.floor(stack.pop().data);
 			
-			var gets_bigger;
-			if(beginning < end) {
-				gets_bigger = true;
-			} else {
-				gets_bigger = false;
-			}
+			var gets_bigger = beginning < end;
 			
 			var list = [];
 			for(let cou = (gets_bigger ? beginning : end); cou < (gets_bigger ? end + 1 : beginning + 1); cou++) {
