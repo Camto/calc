@@ -479,12 +479,12 @@ Demos:
 
 var tut_pages = [`
 
-	INTRODUCTION (1)
+	INTRODUCTION (0)
 
 calc= is a programming language for chats. Every program starts with \`calc=\` and then has a series of instruccions to follow. calc= is a stack based (or concatenative) language, which means all of it's computations will be done using a stack. You can push things on top, then pop them off to use them. Try the program \`calc= 5 1 -\`, then proceed to the next page of the tutorial. To access a page use \`calc= number tut\`, where you replace \`number\` by the page number.
 `,`
 
-	FIRST EXAMPLE (2)
+	FIRST EXAMPLE (1)
 
 As you can see, \`calc= 5 1 -\` gives back \`calc= 4\`. This is because \`5\` pushed a \`5\` on top of the stack, then \`1\` pushed a \`1\`. Finally \`-\` popped the top two elements from the stack, \`5\` and \`1\`, and subtracted them to form \`4\`.
 `];
