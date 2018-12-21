@@ -423,10 +423,11 @@ function built_ins(stack, operators, end_time) {
 
 	calc=
 
-Demos!
-	• Fibonacci: \`calc= [1, 1] {i -> i (i last (i 1 backn) +) +} 7 iter last\`
-	• Factorial: \`calc= 1 5 .. $* 1 fold\`
-For a basic tutorial, type \`calc= tut\`. If you already know stack based programming, use \`calc= adv_tut\`.
+Welcome the calc=, the stack language for chats! For a basic tutorial, type \`calc= tut\`. If you already know stack based programming, use \`calc= adv_tut\`.
+
+Demos:
+	* Fibonacci: \`calc= [1, 1] {i -> i (i last (i 1 backn) +) +} 7 iter last\`
+	* Factorial: \`calc= 1 5 .. $* 1 fold\`
 `, type: "string"});
 		},
 		"page, help_page, hp, h_page, help_p"() {
