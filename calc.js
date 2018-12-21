@@ -429,7 +429,7 @@ Demos!
 For a basic tutorial, type \`calc= tut\`. If you already know stack based programming, use \`calc= adv_tut\`.
 `, type: "string"});
 		},
-		"page, p, help_page, hp, h_page, help_p"() {
+		"page, help_page, hp, h_page, help_p"() {
 			stack.push({data: "The help pages are still a work in progress.", type: "string"});
 		},
 		"tut, tutorial"() {
@@ -453,10 +453,10 @@ For a basic tutorial, type \`calc= tut\`. If you already know stack based progra
 		"type, typeof, instance, instanceof"() {
 			stack.push({data: stack.pop().type, type: "string"});
 		},
-		"true, t, yes, on"() {
+		"true, yes, on"() {
 			stack.push({data: 1, type: "number"});
 		},
-		"false, f, no, off"() {
+		"false, no, off"() {
 			stack.push({data: 0, type: "number"});
 		},
 		
@@ -492,7 +492,7 @@ For a basic tutorial, type \`calc= tut\`. If you already know stack based progra
 			stack.push(third);
 			stack.push(second);
 		},
-		"reverse_rot, reverse_rotate, counter_rot, counter_rotate"() {
+		"unrot, unrotate, reverse_rot, reverse_rotate, counter_rot, counter_rotate"() {
 			var first = stack.pop();
 			var second = stack.pop();
 			var third = stack.pop();
@@ -886,9 +886,14 @@ For a basic tutorial, type \`calc= tut\`. If you already know stack based progra
 
 var tut_pages = [`
 
-	INTRODUCTION
+	INTRODUCTION (1)
 
-calc= is a programming language made for doing maths in chats. Every program starts with \`calc=\` and has a series of instruccions to execute. Since calc= is stack based or concatenative, you put things on top of the stack, then remove them to do math. For example, \`calc= 3\` will result in \`3\`. You can do simple operations like \`calc= 3 4 +\`, which results in \`7\` because \`3\` and \`4\` get pushed onto the stack and \`+\` pops them off, adds them, and pushes the result back onto the stack, which is the result you see in the end. The basic operators are \`+\` (addition), \`-\` (subtraction), \`*\` (multiplication), and \`/\` (division). For example, the amount of seconds in a year would be \`calc= 365 24 60 60 * * *\`, to see how it works, just remember that the number get pushed onto the stack and \`*\` takes them off to put the result back. For different pages of this tutorial, use \`calc= 1 tut\`, \`calc= 2 tut\`, and so on.
+calc= is a programming language for chats. Every program starts with \`calc=\` and then has a series of instruccions to follow. calc= is a stack based (or concatenative) language, which means all of it's computations will be done using a stack. You can push things on top, then pop them off to use them. Try the program \`calc= 5 1 -\`, then proceed to the next page of the tutorial. To access a page use \`calc= number tut\`, where you replace \`number\` by the page number.
+`,`
+
+	FIRST EXAMPLE (2)
+
+As you can see, \`calc= 5 1 -\` gives back \`calc= 4\`. This is because \`5\` pushed a \`5\` on top of the stack, then \`1\` pushed a \`1\`. Finally \`-\` popped the top two elements from the stack, \`5\` and \`1\`, and subtracted them to form \`4\`.
 `];
 
 // Generate operators based on a stack.
@@ -998,12 +1003,7 @@ function operators(stack) {
 			var end = Math.floor(stack.pop().data);
 			var beginning = Math.floor(stack.pop().data);
 			
-			var gets_bigger;
-			if(beginning < end) {
-				gets_bigger = true;
-			} else {
-				gets_bigger = false;
-			}
+			var gets_bigger = beginning < end;
 			
 			var list = [];
 			for(let cou = (gets_bigger ? beginning : end); cou < (gets_bigger ? end + 1 : beginning + 1); cou++) {
@@ -1030,7 +1030,7 @@ function operators(stack) {
 			var right = stack.pop();
 			var left = stack.pop();
 			switch(left.type + right.type) {
-				case "number":
+				case "numbernumber":
 					stack.push({
 						data: left.data || right.data,
 						type: "number"
