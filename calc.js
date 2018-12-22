@@ -970,13 +970,22 @@ function operators(stack) {
 		"-"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			switch(left.type + right.type) {
-				case "numbernumber":
-					stack.push({
-						data: left.data - right.data,
-						type: types.num
-					});
-					break;
+			
+			if(left.type == types.num && right.type == types.num) {
+				stack.push({
+					data: left.data - right.data,
+					type: types.num
+				});
+			} else if(left.type == types.str && right.type == types.num) {
+				var cut_string = right.data > 0
+					? left.data.slice(0, -right.data)
+					: right.data < 0
+						? left.data.slice(-right.data)
+						: left.data;
+				stack.push({
+					data: cut_string,
+					type: types.str
+				});
 			}
 		},
 		"*"() {
