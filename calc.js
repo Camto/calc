@@ -1239,7 +1239,7 @@ function calc(code_, max_time) {
 	} catch(err) {
 		throw "calc=" + (!(err instanceof Error)
 			? err
-			: err.stack.split("\n").slice(0, 2).join("\n"));
+			: "\n" + err.stack.split("\n").slice(0, 2).join("\n\t"));
 	}
 }
 
@@ -1262,7 +1262,7 @@ function print(value) {
 				return value.data;
 				break;
 			case "number":
-				return Math.floor(value.data * 100000) / 100000
+				return Math.floor(value.data * 100000) / 100000;
 			case "list":
 				var list = "[";
 				for(let cou = 0; cou < value.data.length; cou++) {
@@ -1275,7 +1275,7 @@ function print(value) {
 				return list;
 				break;
 			case "function":
-				return `{${value.args.join(" ")} -> <function definition>}`
+				return `{${value.args.join(" ")} -> <function definition>}`;
 				break;
 		}
 		
