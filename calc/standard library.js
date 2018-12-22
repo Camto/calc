@@ -18,7 +18,7 @@ function built_ins(stack, operators, end_time) {
 Welcome to calc=, the stack language for chats! For a basic tutorial, type "calc= tut". If you already know stack based programming, use "calc= adv_tut".
 
 Demos:
-	* Fibonacci: "calc= [1, 1] {i -> i (i last (i 1 backn) +) +} 7 iter"
+	* Fibonacci: "calc= fib = {n -> 0 1 {x y -> y x y +} n iter drop} ; 0 9 .. $fib map"
 	* Factorial: "calc= 1 5 .. $* 1 fold"
 `, type: "string"});
 		},
