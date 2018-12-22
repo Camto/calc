@@ -991,25 +991,39 @@ function operators(stack) {
 		"*"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			switch(left.type + right.type) {
-				case "numbernumber":
-					stack.push({
-						data: left.data * right.data,
-						type: types.num
-					});
-					break;
-				case "stringnumber":
-					stack.push({
-						data: left.data.repeat(right.data),
-						type: types.str
-					});
-					break;
-				case "numberstring":
-					stack.push({
-						data: right.data.repeat(left.data),
-						type: types.str
-					});
-					break;
+			
+			var cartesian_prod = (col, row) => col.reduce(
+				(acc, i) => [...acc, ...row.map(j => [i, j])],
+				[]
+			);
+			
+			if(left.type == types.num && right.type == types.num) {
+				stack.push({
+					data: left.data * right.data,
+					type: types.num
+				});
+			} else if(left.type == types.str && right.type == types.num) {
+				stack.push({
+					data: left.data.repeat(right.data),
+					type: types.str
+				});
+			} else if(left.type == types.num && right.type == types.str) {
+				stack.push({
+					data: right.data.repeat(left.data),
+					type: types.str
+				});
+			} else if(left.type == types.str && right.type == types.str) {
+				var prod = cartesian_prod(left.data.split(""), right.data.split(""));
+				stack.push({
+					data: prod.map(pair => ({data: pair.join(""), type: types.str})),
+					type: types.list
+				});
+			} else if(left.type == types.list && right.type == types.list) {
+				var prod = cartesian_prod(left.data, right.data);
+				stack.push({
+					data: prod.map(pair => ({data: pair, type: types.list})),
+					type: types.list
+				});
 			}
 		},
 		"/"() {
