@@ -6,7 +6,7 @@ var run = require("./run");
 
 function calc(code_, max_time) {
 	if(code_.substr(0, 5) != "calc=") {
-		throw "There is no `calc=`.";
+		throw "There is no \"calc=\".";
 	}
 	var code = code_.substr(5, code_.length);
 	var tokens = lex(code);
