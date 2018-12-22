@@ -1,5 +1,7 @@
 "use strict";
 
+var types = require("./types");
+
 function lex(code) {
 	var pointer = 0;
 	var tokens = [];
@@ -13,7 +15,7 @@ function lex(code) {
 			}
 			var symbol = code.substr(pointer, end - pointer);
 			pointer = end;
-			return {data: symbol, type: "symbol"};
+			return {data: symbol, type: types.sym};
 		},
 		
 		number() {
@@ -29,7 +31,7 @@ function lex(code) {
 			}
 			var number = code.substr(pointer, end - pointer);
 			pointer = end;
-			return {data: parseFloat(number), type: "number"};
+			return {data: parseFloat(number), type: types.num};
 		},
 		
 		string() {
@@ -60,7 +62,7 @@ function lex(code) {
 			}
 			
 			pointer++;
-			return {data: string, type: "string"};
+			return {data: string, type: types.str};
 		},
 		
 		operator() {
@@ -81,7 +83,7 @@ function lex(code) {
 			end++;
 			var operator = code.substr(pointer, end - pointer);
 			pointer = end;
-			return {data: operator, type: "operator"};
+			return {data: operator, type: types.op};
 		}
 		
 	};

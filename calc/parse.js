@@ -1,5 +1,7 @@
 "use strict";
 
+var types = require("./types");
+
 function parse(tokens) {
 	var token_pointer = 0;
 	
@@ -23,7 +25,7 @@ function parse(tokens) {
 		
 		if(has_arrow) {
 			while(!is_op(tokens[token_pointer], "->") && token_pointer < tokens.length) {
-				if(tokens[token_pointer].type == "symbol") {
+				if(tokens[token_pointer].type == types.sym) {
 					args.push(tokens[token_pointer].data);
 				} else {
 					throw `Parameter name \`${tokens[token_pointer].data}\` is of type \`${tokens[token_pointer].type}\` when it should be of type \`symbol\`.`;
@@ -36,7 +38,7 @@ function parse(tokens) {
 		var raw_variables = [];
 		var variable = [];
 		while(!is_op(tokens[token_pointer], "}") && token_pointer < tokens.length) {
-			if(/symbol|number|string/.test(tokens[token_pointer].type)) {
+			if([types.sym, types.num, types.str].includes(tokens[token_pointer].type)) {
 				variable.push(tokens[token_pointer]);
 				token_pointer++;
 			} else if(!is_op(tokens[token_pointer], "{") && !is_op(tokens[token_pointer], "[")) {
@@ -63,14 +65,14 @@ function parse(tokens) {
 			if(!is_op(raw_variable[1], "=")) {
 				throw "Error: variable definition has no `=`.";
 			}
-			if(raw_variable[0].type != "symbol") {
+			if(raw_variable[0].type != types.sym) {
 				throw `Error: variable name is a \`${raw_variable[0].type}\` when it should be a \`symbol\`.`;
 			}
 			return {name: raw_variable[0].data, data: raw_variable.slice(2)};
 		});
 		token_pointer++;
 		
-		return {args, variables, data: code, type: "function"};
+		return {args, variables, data: code, type: types.func};
 	}
 
 	function parse_list() {
@@ -82,7 +84,7 @@ function parse(tokens) {
 			if(is_op(tokens[token_pointer], ",")) {
 				length++;
 				token_pointer++;
-			} else if(/symbol|number|string/.test(tokens[token_pointer].type)) {
+			} else if([types.sym, types.num, types.str].includes(tokens[token_pointer].type)) {
 				code.push(tokens[token_pointer]);
 				token_pointer++;
 			} else if(!is_op(tokens[token_pointer], "{") && !is_op(tokens[token_pointer], "[")) {
@@ -105,13 +107,13 @@ function parse(tokens) {
 		}
 		token_pointer++;
 		
-		return [...code, {data: length, type: "list"}];
+		return [...code, {data: length, type: types.list}];
 	}
 	
 	var raw_variables = [];
 	var variable = [];
 	while(token_pointer < tokens.length) {
-		if(/symbol|number|string/.test(tokens[token_pointer].type)) {
+		if([types.sym, types.num, types.str].includes(tokens[token_pointer].type)) {
 			variable.push(tokens[token_pointer]);
 			token_pointer++;
 		} else if(!is_op(tokens[token_pointer], "{") && !is_op(tokens[token_pointer], "[")) {
@@ -142,7 +144,7 @@ function parse(tokens) {
 		if(!is_op(raw_variable[1], "=")) {
 			throw "Error: variable definition has no `=`.";
 		}
-		if(raw_variable[0].type != "symbol") {
+		if(raw_variable[0].type != types.sym) {
 			throw `Error: variable name is a \`${raw_variable[0].type}\` when it should be a \`symbol\`.`;
 		}
 		return {name: raw_variable[0].data, data: raw_variable.slice(2)};
@@ -151,6 +153,6 @@ function parse(tokens) {
 	return {variables, data: ast};
 }
 
-var is_op = (token, op) => token.data == op && token.type == "operator";
+var is_op = (token, op) => token.data == op && token.type == types.op;
 
 module.exports = parse;
