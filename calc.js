@@ -423,11 +423,11 @@ function built_ins(stack, operators, end_time) {
 
 	calc=
 
-Welcome the calc=, the stack language for chats! For a basic tutorial, type \`calc= tut\`. If you already know stack based programming, use \`calc= adv_tut\`.
+Welcome the calc=, the stack language for chats! For a basic tutorial, type "calc= tut". If you already know stack based programming, use "calc= adv_tut".
 
 Demos:
-	* Fibonacci: \`calc= [1, 1] {i -> i (i last (i 1 backn) +) +} 7 iter last\`
-	* Factorial: \`calc= 1 5 .. $* 1 fold\`
+	* Fibonacci: "calc= [1, 1] {i -> i (i last (i 1 backn) +) +} 7 iter last"
+	* Factorial: "calc= 1 5 .. $* 1 fold"
 `, type: "string"});
 		},
 		"page, help_page, hp, h_page, help_p"() {
@@ -889,12 +889,12 @@ var tut_pages = [`
 
 	INTRODUCTION (0)
 
-calc= is a programming language for chats. Every program starts with \`calc=\` and then has a series of instruccions to follow. calc= is a stack based (or concatenative) language, which means all of it's computations will be done using a stack. You can push things on top, then pop them off to use them. Try the program \`calc= 5 1 -\`, then proceed to the next page of the tutorial. To access a page use \`calc= number tut\`, where you replace \`number\` by the page number.
+calc= is a programming language for chats. Every program starts with "calc=" and then has a series of instruccions to follow. calc= is a stack based (or concatenative) language, which means all of it's computations will be done using a stack. You can push things on top, then pop them off to use them. Try the program "calc= 5 1 -", then proceed to the next page of the tutorial. To access a page use "calc= number tut", where you replace "number" by the page number.
 `,`
 
 	FIRST EXAMPLE (1)
 
-As you can see, \`calc= 5 1 -\` gives back \`calc= 4\`. This is because \`5\` pushed a \`5\` on top of the stack, then \`1\` pushed a \`1\`. Finally \`-\` popped the top two elements from the stack, \`5\` and \`1\`, and subtracted them to form \`4\`.
+As you can see, "calc= 5 1 -" gives back "calc= 4". This is because "5" pushed a "5" on top of the stack, then "1" pushed a "1". Finally "-" popped the top two elements from the stack, "5" and "1", and subtracted them to form "4".
 `];
 
 // Generate operators based on a stack.
