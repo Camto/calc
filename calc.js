@@ -446,7 +446,7 @@ Demos:
 			}
 		},
 		"adv_tut, adv_tutorial, advanced_tutorial, advanced_tut"() {
-			
+			stack.push({data: "The advanced tutorial is still a work in progress.", type: "string"});
 		},
 		
 		// Basic functions.
@@ -459,6 +459,34 @@ Demos:
 		},
 		"false, no, off"() {
 			stack.push({data: 0, type: "number"});
+		},
+		
+		// Flow control.
+		
+		"if, iff"() {
+			var if_false = stack.pop();
+			var if_true = stack.pop();
+			var cond = stack.pop();
+			
+			var is_true;
+			switch(cond.type) {
+				case "number":
+				case "string":
+					is_true = cond.data;
+					break;
+				case "function":
+				case "symbol":
+					is_true = true;
+					break;
+				case "list":
+					is_true = cond.data.length;
+					break;
+			}
+			if(is_true) {
+				run_part.run_function(if_true, stack, made_built_ins, operators, end_time);
+			} else {
+				run_part.run_function(if_false, stack, made_built_ins, operators, end_time);
+			}
 		},
 		
 		// Stack functions.
@@ -593,7 +621,7 @@ Demos:
 			
 			stack.push({data: filtered, type: "list"});
 		},
-		"size, length"() {
+		"size, length, len"() {
 			stack.push({data: stack.pop().data.length, type: "number"});
 		},
 		"first, cat, top, head, pop"() {
