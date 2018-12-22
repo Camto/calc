@@ -25,7 +25,7 @@ function run_function(func, stack, built_ins, operators, end_time) {
 			case types.sym:
 				built_ins[func.data](scopes);
 				break;
-			case types.sym:
+			case types.op:
 				operators[func.data]();
 				break;
 		}
