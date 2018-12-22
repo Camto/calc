@@ -1290,6 +1290,7 @@ module.exports = {get_variable, set_variable};
 var lex = require("./lex");
 var parse = require("./parse");
 var run = require("./run");
+var types = require("./types");
 
 function calc(code_, max_time) {
 	if(code_.substr(0, 5) != "calc=") {
@@ -1318,14 +1319,14 @@ function print(value) {
 	} else {
 		
 		switch(value.type) {
-			case "string":
-			case "symbol":
-			case "operator":
+			case types.str:
+			case types.sym:
+			case types.op:
 				return value.data;
 				break;
-			case "number":
+			case types.num:
 				return Math.floor(value.data * 100000) / 100000;
-			case "list":
+			case types.list:
 				var list = "[";
 				for(let cou = 0; cou < value.data.length; cou++) {
 					list += print(value.data[cou]);
@@ -1336,7 +1337,7 @@ function print(value) {
 				list += "]";
 				return list;
 				break;
-			case "function":
+			case types.func:
 				return `{${value.args.join(" ")} -> <function definition>}`;
 				break;
 		}
@@ -1349,4 +1350,4 @@ var err_to_string = err => "calc=" + (!(err instanceof Error)
 	: "\n" + err.stack.split("\n").slice(0, 2).join("\n\t"));
 
 module.exports = {calc, print, err_to_string};
-},{"./lex":1,"./parse":2,"./run":4}]},{},[]);
+},{"./lex":1,"./parse":2,"./run":4,"./types":6}]},{},[]);
