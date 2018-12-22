@@ -16,7 +16,9 @@ $(function() {
 			try {
 				result = calc.print(calc.calc(decodeURIComponent(location.search.substring(6)), 10000));
 			} catch(err) {
-				result = err;
+				result = "calc=" + (!(err instanceof Error)
+					? err
+					: "\n" + err.stack.split("\n").slice(0, 2).join("\n\t"));
 			}
 			$("#log").append(escape_input(result) + "<br />");
 			past.push(decodeURIComponent(location.search.substring(6)));
