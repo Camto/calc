@@ -32,7 +32,9 @@ $(function() {
 				try {
 					result = calc.print(calc.calc($(this).val(), 10000));
 				} catch(err) {
-					result = err;
+					result = "calc=" + (!(err instanceof Error)
+						? err
+						: "\n" + err.stack.split("\n").slice(0, 2).join("\n\t"));
 				}
 				past.push($(this).val().replace(/[\n\r]/g, ""));
 				travel = past.length;
