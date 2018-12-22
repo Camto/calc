@@ -10,21 +10,19 @@ function parse(tokens) {
 		var has_arrow = false;
 		var end = token_pointer;
 		var function_depth = 0;
-		while(tokens[end].data != "}" && end < tokens.length) {
-			if(tokens[end].type == "operator") {
-				if(tokens[end].data == "->" && !function_depth) {
-					has_arrow = true;
-				} else if(tokens[end].data == "{") {
-					function_depth++;
-				} else if(tokens[end].data == "}") {
-					function_depth--;
-				}
+		while(!is_op(tokens[end], "}") && end < tokens.length) {
+			if(is_op(tokens[end], "->") && !function_depth) {
+				has_arrow = true;
+			} else if(is_op(tokens[end], "{")) {
+				function_depth++;
+			} else if(is_op(tokens[end], "}")) {
+				function_depth--;
 			}
 			end++;
 		}
 		
 		if(has_arrow) {
-			while(!(tokens[token_pointer].data == "->" && tokens[token_pointer].type == "operator") && token_pointer < tokens.length) {
+			while(!is_op(tokens[token_pointer], "->") && token_pointer < tokens.length) {
 				if(tokens[token_pointer].type == "symbol") {
 					args.push(tokens[token_pointer].data);
 				} else {
@@ -37,12 +35,12 @@ function parse(tokens) {
 		
 		var raw_variables = [];
 		var variable = [];
-		while(tokens[token_pointer].data != "}" && token_pointer < tokens.length) {
+		while(!is_op(tokens[token_pointer], "}") && token_pointer < tokens.length) {
 			if(/symbol|number|string/.test(tokens[token_pointer].type)) {
 				variable.push(tokens[token_pointer]);
 				token_pointer++;
-			} else if(tokens[token_pointer].data != "{" && tokens[token_pointer].data != "[") {
-				if(tokens[token_pointer].data == ";") {
+			} else if(!is_op(tokens[token_pointer], "{") && !is_op(tokens[token_pointer], "[")) {
+				if(is_op(tokens[token_pointer], ";")) {
 					raw_variables.push(variable);
 					variable = [];
 				} else {
@@ -50,7 +48,7 @@ function parse(tokens) {
 				}
 				token_pointer++;
 			} else {
-				if(tokens[token_pointer].data == "{") {
+				if(is_op(tokens[token_pointer], "{")) {
 					variable.push(parse_function());
 				} else {
 					variable.push(...parse_list());
@@ -62,7 +60,7 @@ function parse(tokens) {
 			if(raw_variable.length < 2) {
 				throw "Error: variable definition too short.";
 			}
-			if(raw_variable[1].data != "=" || raw_variable[1].type != "operator") {
+			if(!is_op(raw_variable[1], "=")) {
 				throw "Error: variable definition has no `=`.";
 			}
 			if(raw_variable[0].type != "symbol") {
@@ -80,14 +78,14 @@ function parse(tokens) {
 		
 		var code = [];
 		var length = 0;
-		while(tokens[token_pointer].data != "]" && token_pointer < tokens.length) {
-			if(tokens[token_pointer].data == ",") {
+		while(!is_op(tokens[token_pointer], "]") && token_pointer < tokens.length) {
+			if(is_op(tokens[token_pointer], ",")) {
 				length++;
 				token_pointer++;
 			} else if(/symbol|number|string/.test(tokens[token_pointer].type)) {
 				code.push(tokens[token_pointer]);
 				token_pointer++;
-			} else if(tokens[token_pointer].data != "{" && tokens[token_pointer].data != "[") {
+			} else if(!is_op(tokens[token_pointer], "{") && !is_op(tokens[token_pointer], "[")) {
 				if(!/,|\]|}|->/.test(tokens[token_pointer].data)) {
 					variable.push(tokens[token_pointer]);
 				} else {
@@ -95,7 +93,7 @@ function parse(tokens) {
 				}
 				token_pointer++;
 			} else {
-				if(tokens[token_pointer].data == "{") {
+				if(is_op(tokens[token_pointer], "{")) {
 					code.push(parse_function());
 				} else {
 					code.push(...parse_list());
@@ -116,9 +114,9 @@ function parse(tokens) {
 		if(/symbol|number|string/.test(tokens[token_pointer].type)) {
 			variable.push(tokens[token_pointer]);
 			token_pointer++;
-		} else if(tokens[token_pointer].data != "{" && tokens[token_pointer].data != "[") {
+		} else if(!is_op(tokens[token_pointer], "{") && !is_op(tokens[token_pointer], "[")) {
 			if(!/,|\]|}|->/.test(tokens[token_pointer].data)) {
-				if(tokens[token_pointer].data == ";") {
+				if(is_op(tokens[token_pointer], ";")) {
 					raw_variables.push(variable);
 					variable = [];
 				} else {
@@ -141,7 +139,7 @@ function parse(tokens) {
 		if(raw_variable.length < 2) {
 			throw "Error: variable definition too short.";
 		}
-		if(raw_variable[1].data != "=" || raw_variable[1].type != "operator") {
+		if(!is_op(raw_variable[1], "=")) {
 			throw "Error: variable definition has no `=`.";
 		}
 		if(raw_variable[0].type != "symbol") {
@@ -152,5 +150,7 @@ function parse(tokens) {
 	
 	return {variables, data: ast};
 }
+
+var is_op = (token, op) => token.data == op && token.type == "operator";
 
 module.exports = parse;
