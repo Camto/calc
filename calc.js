@@ -941,7 +941,7 @@ function operators(stack) {
 		"+"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			switch(left.type + right.type) {
+			/*switch(left.type + right.type) {
 				case "numbernumber":
 					stack.push({
 						data: left.data + right.data,
@@ -974,6 +974,30 @@ function operators(stack) {
 						type: types.list
 					});
 					break;
+			}*/
+			if(
+				left.type == types.num && right.type == types.num ||
+				left.type == types.str && right.type == types.str
+			) {
+				stack.push({
+					data: left.data + right.data,
+					type: left.type
+				});
+			} else if(left.type == types.list && right.type != types.list) {
+				stack.push({
+					data: [...left.data, right],
+					type: types.list
+				});
+			} else if(left.type != types.list && right.type == types.list) {
+				stack.push({
+					data: [left, ...right.data],
+					type: types.list
+				});
+			} else if(left.type == types.list && right.type == types.list) {
+				stack.push({
+					data: [...left.data, ...right.data],
+					type: types.list
+				});
 			}
 		},
 		"-"() {
