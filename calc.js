@@ -1237,9 +1237,7 @@ function calc(code_, max_time) {
 	try {
 		return run(ast, max_time);
 	} catch(err) {
-		throw "calc=" + (!(err instanceof Error)
-			? err
-			: "\n" + err.stack.split("\n").slice(0, 2).join("\n\t"));
+		throw err_to_string(err);
 	}
 }
 
@@ -1282,5 +1280,9 @@ function print(value) {
 	}
 }
 
-module.exports = {calc, print};
+var err_to_string = err => "calc=" + (!(err instanceof Error)
+	? err
+	: "\n" + err.stack.split("\n").slice(0, 2).join("\n\t"));
+
+module.exports = {calc, print, err_to_string};
 },{"./lex":1,"./parse":2,"./run":4}]},{},[]);
