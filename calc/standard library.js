@@ -13,12 +13,12 @@ function built_ins(stack, operators, end_time) {
 		"help, h"() {
 			stack.push({data: `
 
-	calc=
+	CALC=
 
-Welcome the calc=, the stack language for chats! For a basic tutorial, type "calc= tut". If you already know stack based programming, use "calc= adv_tut".
+Welcome to calc=, the stack language for chats! For a basic tutorial, type "calc= tut". If you already know stack based programming, use "calc= adv_tut".
 
 Demos:
-	* Fibonacci: "calc= [1, 1] {i -> i (i last (i 1 backn) +) +} 7 iter last"
+	* Fibonacci: "calc= [1, 1] {i -> i (i last (i 1 backn) +) +} 7 iter"
 	* Factorial: "calc= 1 5 .. $* 1 fold"
 `, type: "string"});
 		},
