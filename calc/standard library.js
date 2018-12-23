@@ -428,6 +428,9 @@ Demos:
 			var left = stack.pop();
 			stack.push({data: Math.min(left, right), type: types.num});
 		},
+		"sgn, sign"() {
+			stack.push({data: Math.sign(stack.pop().data), type: types.num});
+		},
 		"rand, random"() {
 			var min = stack.pop().data;
 			var max = stack.pop().data;
