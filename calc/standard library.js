@@ -727,77 +727,77 @@ function operators(stack) {
 		"<"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			switch(left.type + right.type) {
-				case "numbernumber":
-					stack.push({
-						data: left.data < right.data | 0,
-						type: types.num
-					});
-					break;
-				case "stringstring":
-				case "listlist":
-					stack.push({
-						data: left.data.length < right.data.length | 0,
-						type: types.num
-					});
-					break;
+			
+			if(left.type == types.num && right.type == types.num) {
+				stack.push({
+					data: left.data < right.data | 0,
+					type: types.num
+				});
+			} else if(
+				left.type == types.str && right.type == types.str ||
+				left.type == types.list && right.type == types.list
+			) {
+				stack.push({
+					data: left.data.length < right.data.length | 0,
+					type: types.num
+				});
 			}
 		},
 		">"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			switch(left.type + right.type) {
-				case "numbernumber":
-					stack.push({
-						data: left.data > right.data | 0,
-						type: types.num
-					});
-					break;
-				case "stringstring":
-				case "listlist":
-					stack.push({
-						data: left.data.length > right.data.length | 0,
-						type: types.num
-					});
-					break;
+			
+			if(left.type == types.num && right.type == types.num) {
+				stack.push({
+					data: left.data > right.data | 0,
+					type: types.num
+				});
+			} else if(
+				left.type == types.str && right.type == types.str ||
+				left.type == types.list && right.type == types.list
+			) {
+				stack.push({
+					data: left.data.length > right.data.length | 0,
+					type: types.num
+				});
 			}
 		},
 		"<="() {
 			var right = stack.pop();
 			var left = stack.pop();
-			switch(left.type + right.type) {
-				case "numbernumber":
-					stack.push({
-						data: left.data <= right.data | 0,
-						type: types.num
-					});
-					break;
-				case "stringstring":
-				case "listlist":
-					stack.push({
-						data: left.data.length <= right.data.length | 0,
-						type: types.num
-					});
-					break;
+			
+			if(left.type == types.num && right.type == types.num) {
+				stack.push({
+					data: left.data <= right.data | 0,
+					type: types.num
+				});
+			} else if(
+				left.type == types.str && right.type == types.str ||
+				left.type == types.list && right.type == types.list
+			) {
+				stack.push({
+					data: left.data.length <= right.data.length | 0,
+					type: types.num
+				});
 			}
 		},
 		">="() {
 			var right = stack.pop();
 			var left = stack.pop();
-			switch(left.type + right.type) {
-				case "numbernumber":
-					stack.push({
-						data: left.data >= right.data | 0,
-						type: types.num
-					});
-					break;
-				case "stringstring":
-				case "listlist":
-					stack.push({
-						data: left.data.length >= right.data.length | 0,
-						type: types.num
-					});
-					break;
+			
+			if(left.type == types.num && right.type == types.num) {
+				stack.push({
+					data: left.data >= right.data | 0,
+					type: types.num
+				});
+			} else if(
+				left.type == types.str && right.type == types.str ||
+				left.type == types.list && right.type == types.list
+			) {
+				stack.push({
+					data: left.data.length >= right.data.length | 0,
+					type: types.num
+				});
 			}
 		}
 		
