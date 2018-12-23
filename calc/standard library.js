@@ -107,10 +107,10 @@ Demos:
 			var n = stack.pop().data;
 			stack = stack.concat(stack.splice(stack.length - n, n).reverse());
 		},
-		"stack_pop, drop"() {
+		"drop, stack_pop"() {
 			stack.pop();
 		},
-		"stack_popn, dropn"() {
+		"dropn, stack_popn"() {
 			var n = stack.pop().data;
 			for(let cou = 0; cou < n; cou++) {
 				stack.pop();
