@@ -693,6 +693,10 @@ Demos:
 			var list = stack.pop().data;
 			stack.push(list[list.length - 1]);
 		},
+		"back_second, back_snd, before_last"() {
+			var list = stack.pop().data;
+			stack.push(list[list.length - 2]);
+		},
 		"item, nth, frontn, index, front_index, middlen, middle_index"() {
 			var index = stack.pop().data;
 			var list = stack.pop().data;
