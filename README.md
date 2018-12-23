@@ -1,25 +1,9 @@
 ![calc= logo.](Logos/calc_Logo_GitHub.png)
 
-**TODOLIST:**
- * [ ] Make those dang help pages.
- * [ ] Continue the standard library.
+Click [here](https://camto.github.io/calc/console) to go to the calc= console, where you can try it out and get the documentation.
 
-## Examples
+Welcome to calc=, the stack language for chats! For a basic tutorial, type `calc= tut`. If you already know stack based programming, use `calc= adv_tut`.
 
-```
-calc= [1, 1] {i -> i (i last (i 1 lastn) +) +} 7 iter last
-calc=34
-```
-
-```
-calc= 1 5 .. $* 1 fold
-calc=120
-```
-
-```
-calc= ["Hey", "'Sup", "Yo"] {+ "!\n" +} "\n" fold
-calc=
-Hey!
-'Sup!
-Yo!
-```
+Demos:
+ * Fibonacci: `calc= fib = {n -> 0 1 {x y -> y x y +} n iter drop} ; 0 9 .. $fib map`
+ * Factorial: `calc= 1 5 .. $* 1 fold`
