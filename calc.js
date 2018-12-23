@@ -808,7 +808,7 @@ Demos:
 			list.push(second);
 			stack.push({data: list, type: types.list});
 		},
-		"list_reverse_rot, list_reverse_rotate, list_counter_rot, list_counter_rotate"() {
+		"list_unrot, list_unrotate, list_reverse_rot, list_reverse_rotate, list_counter_rot, list_counter_rotate"() {
 			var list = stack.pop().data;
 			var first = list.pop();
 			var second = list.pop();
