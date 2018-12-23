@@ -518,7 +518,7 @@ Demos:
 		// Basic functions.
 		
 		"type, typeof, instance, instanceof"() {
-			stack.push({data: types.type_to_string(stack.pop().type), type: types.str});
+			stack.push({data: types.type_to_str(stack.pop().type), type: types.str});
 		},
 		"true, yes, on"() {
 			stack.push({data: 1, type: types.num});
@@ -1306,7 +1306,6 @@ function operators(stack) {
 	};
 }
 
-/*
 var help_pages = {
 	help: aliases => `
 
@@ -1314,15 +1313,63 @@ var help_pages = {
 
 Usage: "calc= help"
 
-Aliases: {aliases}
+Aliases: {aliases}.
 
 It shows the main calc= menu.
 
 `,
-	page
-	tut
-	adv_tut
-	type
+	page: aliases => `
+
+	BUILT-IN/OPERATOR DOCUMENTATION
+
+Usage: "calc= page" or "calc= $command page", where "command" is the name of a built-in or an operator.
+
+Aliases: {aliases}.
+
+Examples:
+	* "calc= $+ page"
+	* "calc= $page page"
+
+Without any arguments, it shows how to use the documentation. It shows the help page of the built-in or operator.
+
+`,
+	tut: aliases => `
+
+	BASIC TUTORIAL
+
+Usage: "calc= tut" or "calc= n tut", where "n" is the tutorial page number.
+
+Aliases: {aliases}.
+
+It shows the basic tutorial page.
+
+`,
+	adv_tut: aliases => `
+
+	ADVANCED TUTORIAL
+
+Usage: "calc= adv_tut" or "calc= n adv_tut", where "n" is the tutorial page number.
+
+Aliases: {aliases}.
+
+It shows the advanced tutorial page.
+
+`,
+	type: aliases => `
+
+	TYPE
+
+Usage: "calc= value type", where "value" is any value.
+
+Aliases: {aliases}.
+
+Examples:
+	* "calc= 1 type" -> "calc=number"
+	* "calc= {} type" -> "calc=function"
+
+Returns the type of any given value. These can be: number, string, list, function, symbol, or operator.
+
+`,/*
 	"true"
 	"false"
 	"if"
@@ -1392,9 +1439,8 @@ It shows the main calc= menu.
 	dot
 	set
 	inc
-	dec
+	dec*/
 };
-*/
 
 // Taken from https://stackoverflow.com/questions/14743536/multiple-key-names-same-pair-value .
 function expand(obj) {
