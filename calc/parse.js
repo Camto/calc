@@ -66,7 +66,7 @@ function parse(tokens) {
 				throw "Error: variable definition has no \"=\".";
 			}
 			if(raw_variable[0].type != types.sym) {
-				throw `Error: variable name is a ${raw_variable[0].type} when it should be a symbol.`;
+				throw `Error: variable name is a ${types.type_to_str(raw_variable[0].type)} when it should be a symbol.`;
 			}
 			return {name: raw_variable[0].data, data: raw_variable.slice(2)};
 		});
@@ -145,7 +145,7 @@ function parse(tokens) {
 			throw "Error: variable definition has no \"=\".";
 		}
 		if(raw_variable[0].type != types.sym) {
-			throw `Error: variable name is a ${raw_variable[0].type} when it should be a symbol.`;
+			throw `Error: variable name is a ${types.type_to_str(raw_variable[0].type)} when it should be a symbol.`;
 		}
 		return {name: raw_variable[0].data, data: raw_variable.slice(2)};
 	});
