@@ -622,25 +622,23 @@ function operators(stack) {
 		"/"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			switch(left.type + right.type) {
-				case "numbernumber":
-					stack.push({
-						data: left.data / right.data,
-						type: types.num
-					});
-					break;
+			
+			if(left.type == types.num && right.type == types.num) {
+				stack.push({
+					data: left.data / right.data,
+					type: types.num
+				});
 			}
 		},
 		"^"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			switch(left.type + right.type) {
-				case "numbernumber":
-					stack.push({
-						data: left.data ** right.data,
-						type: types.num
-					});
-					break;
+			
+			if(left.type == types.num && right.type == types.num) {
+				stack.push({
+					data: left.data ** right.data,
+					type: types.num
+				});
 			}
 		},
 		".."() {
@@ -679,36 +677,32 @@ function operators(stack) {
 		"&"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			switch(left.type + right.type) {
-				case "numbernumber":
-					stack.push({
-						data: left.data && right.data,
-						type: types.num
-					});
-					break;
+			
+			if(left.type == types.num && right.type == types.num) {
+				stack.push({
+					data: left.data && right.data,
+					type: types.num
+				});
 			}
 		},
 		"|"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			switch(left.type + right.type) {
-				case "numbernumber":
-					stack.push({
-						data: left.data || right.data,
-						type: types.num
-					});
-					break;
+			
+			if(left.type == types.num && right.type == types.num) {
+				stack.push({
+					data: left.data || right.data,
+					type: types.num
+				});
 			}
 		},
 		"!"() {
 			var bool = stack.pop();
-			switch(bool.type) {
-				case types.num:
-					stack.push({
-						data: !bool.data | 0,
-						type: types.num
-					});
-					break;
+			if(bool.type == types.num) {
+				stack.push({
+					data: !bool.data | 0,
+					type: types.num
+				});
 			}
 		},
 		"="() {
