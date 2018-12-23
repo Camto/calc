@@ -227,11 +227,11 @@ Demos:
 		"length, size, len"() {
 			stack.push({data: stack.pop().data.length, type: types.num});
 		},
-		"first, cat, top, head, pop, fst"() {
+		"head, first, cat, top, pop, fst"() {
 			var list = stack.pop().data;
 			stack.push(list[0]);
 		},
-		"second, snd"() {
+		"snd, second"() {
 			var list = stack.pop().data;
 			stack.push(list[1]);
 		},
@@ -239,16 +239,16 @@ Demos:
 			var list = stack.pop().data;
 			stack.push(list[list.length - 1]);
 		},
-		"back_second, back_snd, before_last"() {
+		"back_snd, back_second, before_last"() {
 			var list = stack.pop().data;
 			stack.push(list[list.length - 2]);
 		},
-		"item, nth, frontn, index, front_index, middlen, middle_index"() {
+		"nth, item, frontn, index, front_index, middlen, middle_index"() {
 			var index = stack.pop().data;
 			var list = stack.pop().data;
 			stack.push(list[index]);
 		},
-		"back_item, back_nth, lastn, backn, back_index"() {
+		"back_nth, back_item, lastn, backn, back_index"() {
 			var index = stack.pop().data;
 			var list = stack.pop().data;
 			stack.push(list[list.length - index - 1]);
