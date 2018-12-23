@@ -230,12 +230,12 @@ Demos:
 			var list = stack.pop().data;
 			stack.push(list[list.length - 1]);
 		},
-		"frontn, index, front_index, middlen, middle_index"() {
+		"item, nth, frontn, index, front_index, middlen, middle_index"() {
 			var index = stack.pop().data;
 			var list = stack.pop().data;
 			stack.push(list[index]);
 		},
-		"lastn, backn, back_index"() {
+		"back_item, back_nth, lastn, backn, back_index"() {
 			var index = stack.pop().data;
 			var list = stack.pop().data;
 			stack.push(list[list.length - index - 1]);
