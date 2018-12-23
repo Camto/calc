@@ -1207,6 +1207,25 @@ function operators(stack) {
 				});
 			}
 		},
+		"!="() {
+			var right = stack.pop();
+			var left = stack.pop();
+			
+			if(
+				left.type == types.num && right.type == types.num ||
+				left.type == types.str && right.type == types.str
+			) {
+				stack.push({
+					data: left.data != right.data | 0,
+					type: types.num
+				});
+			} else if(left.type == types.list && right.type == types.list) {
+				stack.push({
+					data: !Object.compare(left.data, right.data) | 0,
+					type: types.num
+				});
+			}
+		},
 		"<"() {
 			var right = stack.pop();
 			var left = stack.pop();
