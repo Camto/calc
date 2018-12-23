@@ -40,7 +40,16 @@ Demos:
 			}
 		},
 		"adv_tut, adv_tutorial, advanced_tutorial, advanced_tut"() {
-			stack.push({data: "The advanced tutorial is still a work in progress.", type: types.str});
+			if(stack.length == 0) {
+				stack.push({data: adv_tut_pages[0], type: types.str});
+			} else {
+				var page = stack.pop().data;
+				if(page < adv_tut_pages.length) {
+					stack.push({data: adv_tut_pages[page], type: types.str});
+				} else {
+					stack.push({data: `Error: advanced tutorial page ${page} does not exist.`, type: types.str});
+				}
+			}
 		},
 		
 		// Basic functions.
@@ -528,6 +537,13 @@ calc= is a programming language for chats. Every program starts with "calc=" and
 	FIRST EXAMPLE (1)
 
 As you can see, "calc= 5 1 -" gives back "calc= 4". This is because "5" pushed a "5" on top of the stack, then "1" pushed a "1". Finally "-" popped the top two elements from the stack, "5" and "1", and subtracted them to form "4".
+`];
+
+var adv_tut_pages = [`
+
+	WIP (0)
+
+Advanced tutorial pages are still a work in progress.
 `];
 
 // Generate operators based on a stack.

@@ -503,7 +503,16 @@ Demos:
 			}
 		},
 		"adv_tut, adv_tutorial, advanced_tutorial, advanced_tut"() {
-			stack.push({data: "The advanced tutorial is still a work in progress.", type: types.str});
+			if(stack.length == 0) {
+				stack.push({data: adv_tut_pages[0], type: types.str});
+			} else {
+				var page = stack.pop().data;
+				if(page < adv_tut_pages.length) {
+					stack.push({data: adv_tut_pages[page], type: types.str});
+				} else {
+					stack.push({data: `Error: advanced tutorial page ${page} does not exist.`, type: types.str});
+				}
+			}
 		},
 		
 		// Basic functions.
@@ -985,12 +994,19 @@ var tut_pages = [`
 
 	INTRODUCTION (0)
 
-calc= is a programming language for chats. Every program starts with "calc=" and then has a series of instruccions to follow. calc= is a stack based (or concatenative) language, which means all of it's computations will be done using a stack. You can push things on top, then pop them off to use them. Try the program "calc= 5 1 -", then proceed to the next page of the tutorial. To access a page use "calc= number tut", where you replace "number" by the page number.
+calc= is a programming language for chats. Every program starts with "calc=" and then has a series of instruccions to follow. calc= is a stack based (or concatenative) language, which means all of it's computations will be done using a stack. You can push things on top, then pop them off to use them. Try the program "calc= 5 1 -", then proceed to the next page of the tutorial. To access a page use "calc= number tut", where you replace "number" by the page number. The next page of this tutorial is at "calc= 1 tut".
 `,`
 
 	FIRST EXAMPLE (1)
 
 As you can see, "calc= 5 1 -" gives back "calc= 4". This is because "5" pushed a "5" on top of the stack, then "1" pushed a "1". Finally "-" popped the top two elements from the stack, "5" and "1", and subtracted them to form "4".
+`];
+
+var adv_tut_pages = [`
+
+	WIP (0)
+
+Advanced tutorial pages are still a work in progress.
 `];
 
 // Generate operators based on a stack.
