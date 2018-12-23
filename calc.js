@@ -1100,9 +1100,29 @@ function operators(stack) {
 			var right = stack.pop();
 			var left = stack.pop();
 			
+			if(left.type == types.num && right.type == types.num) {
+				var beginning = Math.floor(left.data);
+				var end = Math.floor(right.data);
+			} else if(left.type == types.str && right.type == types.str) {
+				if(left.data.length != 1 || right.data.length != 1) {
+					throw `".." found the strings "${beginning}" of length ${beginning.length} and "${end}" of length ${end.length}. ".." expected both to be length 1 (characters).`;
+				}
+				
+				var beginning = left.data.charCodeAt();
+				var end = right.data.charCodeAt();
+			} else {
+				throw `".." expected two numbers or two strings, instead found a ${types.type_to_str(left.type)} "${print(left)}" and a ${types.type_to_str(right.type)} "${print(right)}".`
+			}
+			
+			var gets_bigger = beginning < end;
+			
 			var list = [];
 			for(let cou = (gets_bigger ? beginning : end); cou < (gets_bigger ? end + 1 : beginning + 1); cou++) {
 				list.push({data: cou, type: types.num});
+			}
+			
+			if(left.type == types.str) {
+				list = list.map(n => ({data: String.fromCharCode(n.data), type: types.str}));
 			}
 			stack.push({
 				data: (gets_bigger ? list : list.reverse()),
