@@ -1319,12 +1319,12 @@ Object.compare = function(obj1, obj2) {
 module.exports = {built_ins, operators};
 },{"./print":3,"./run part":4,"./types":7,"./variable manipulation":8}],7:[function(require,module,exports){
 var types = {
-	num: "number",
-	str: "string",
-	list: "list",
-	func: "function",
-	sym: "symbol",
-	op: "operator"
+	num: 0,
+	str: 1,
+	list: 2,
+	func: 3,
+	sym: 4,
+	op: 5
 };
 
 function type_to_str(type) {

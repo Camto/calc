@@ -1,10 +1,6 @@
 var types = {
-	num: "number",
-	str: "string",
-	list: "list",
-	func: "function",
-	sym: "symbol",
-	op: "operator"
+	num: 0, str: 1, list: 2,
+	func: 3, sym: 4, op: 5
 };
 
 function type_to_str(type) {
