@@ -65,6 +65,11 @@ function lex(code) {
 			return {data: str, type: types.str};
 		},
 		
+		char() {
+			pointer += 2;
+			return {data: code[pointer - 1], type: types.str}
+		},
+		
 		op() {
 			var end = pointer;
 			switch(code[end]) {
@@ -101,6 +106,8 @@ function lex(code) {
 			}
 		} else if(code[pointer] == '"') {
 			tokens.push(expect.str());
+		} else if(code[pointer] == "'") {
+			tokens.push(expect.char());
 		} else if(/\[|,|\]|{|}|\$|;|\+|\*|\/|\^|\.|=|<|>|&|\||!/.test(code[pointer])) {
 			tokens.push(expect.op());
 		} else {

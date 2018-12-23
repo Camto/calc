@@ -9,17 +9,17 @@ function lex(code) {
 	
 	var expect = {
 		
-		symbol() {
+		sym() {
 			var end = pointer + 1;
 			while(/[A-Za-z_0-9]/.test(code[end]) && end < code.length) {
 				end++;
 			}
-			var symbol = code.substr(pointer, end - pointer);
+			var sym = code.substr(pointer, end - pointer);
 			pointer = end;
-			return {data: symbol, type: types.sym};
+			return {data: sym, type: types.sym};
 		},
 		
-		number() {
+		num() {
 			var end = pointer + 1;
 			while(/[0-9]/.test(code[end]) && end < code.length) {
 				end++;
@@ -30,20 +30,20 @@ function lex(code) {
 					end++;
 				}
 			}
-			var number = code.substr(pointer, end - pointer);
+			var num = code.substr(pointer, end - pointer);
 			pointer = end;
-			return {data: parseFloat(number), type: types.num};
+			return {data: parseFloat(num), type: types.num};
 		},
 		
-		string() {
+		str() {
 			pointer++;
 			
-			var string = "";
+			var str = "";
 			var escaped = false;
 			while(code[pointer] != '"' || escaped) {
 				if(!escaped) {
 					if(code[pointer] != "\\") {
-						string += code[pointer];
+						str += code[pointer];
 					} else {
 						escaped = true;
 					}
@@ -51,22 +51,22 @@ function lex(code) {
 					escaped = false;
 					switch(code[pointer]) {
 						case "n":
-							string += "\n";
+							str += "\n";
 							break;
 						case "t":
-							string += "\t";
+							str += "\t";
 						default:
-							string += code[pointer];
+							str += code[pointer];
 					}
 				}
 				pointer++;
 			}
 			
 			pointer++;
-			return {data: string, type: types.str};
+			return {data: str, type: types.str};
 		},
 		
-		operator() {
+		op() {
 			var end = pointer;
 			switch(code[end]) {
 				case "-":
@@ -82,28 +82,28 @@ function lex(code) {
 					break;
 			}
 			end++;
-			var operator = code.substr(pointer, end - pointer);
+			var op = code.substr(pointer, end - pointer);
 			pointer = end;
-			return {data: operator, type: types.op};
+			return {data: op, type: types.op};
 		}
 		
 	};
 	
 	while(pointer < code.length) {
 		if(/[A-Za-z_]/.test(code[pointer])) {
-			tokens.push(expect.symbol());
+			tokens.push(expect.sym());
 		} else if(/\d/.test(code[pointer])) {
-			tokens.push(expect.number());
+			tokens.push(expect.num());
 		} else if(code[pointer] == "-") {
 			if(/\d/.test(code[pointer + 1])) {
-				tokens.push(expect.number());
+				tokens.push(expect.num());
 			} else {
-				tokens.push(expect.operator());
+				tokens.push(expect.op());
 			}
 		} else if(code[pointer] == '"') {
-			tokens.push(expect.string());
+			tokens.push(expect.str());
 		} else if(/\[|,|\]|{|}|\$|;|\+|\*|\/|\^|\.|=|<|>|&|\||!/.test(code[pointer])) {
-			tokens.push(expect.operator());
+			tokens.push(expect.op());
 		} else {
 			pointer++;
 		}
