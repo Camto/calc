@@ -189,7 +189,7 @@ function parse(tokens) {
 				throw "Error: variable definition has no \"=\".";
 			}
 			if(raw_variable[0].type != types.sym) {
-				throw `Error: variable name is a ${raw_variable[0].type} when it should be a symbol.`;
+				throw `Error: variable name is a ${types.type_to_str(raw_variable[0].type)} when it should be a symbol.`;
 			}
 			return {name: raw_variable[0].data, data: raw_variable.slice(2)};
 		});
@@ -268,7 +268,7 @@ function parse(tokens) {
 			throw "Error: variable definition has no \"=\".";
 		}
 		if(raw_variable[0].type != types.sym) {
-			throw `Error: variable name is a ${raw_variable[0].type} when it should be a symbol.`;
+			throw `Error: variable name is a ${types.type_to_str(raw_variable[0].type)} when it should be a symbol.`;
 		}
 		return {name: raw_variable[0].data, data: raw_variable.slice(2)};
 	});
@@ -1319,12 +1319,8 @@ Object.compare = function(obj1, obj2) {
 module.exports = {built_ins, operators};
 },{"./print":3,"./run part":4,"./types":7,"./variable manipulation":8}],7:[function(require,module,exports){
 var types = {
-	num: 0,
-	str: 1,
-	list: 2,
-	func: 3,
-	sym: 4,
-	op: 5
+	num: 0, str: 1, list: 2,
+	func: 3, sym: 4, op: 5
 };
 
 function type_to_str(type) {
