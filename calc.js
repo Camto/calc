@@ -752,7 +752,7 @@ Demos:
 			}
 			stack.push({data: list, type: types.list});
 		},
-		"extr, extract, expl, explode, spr, spread"() {
+		"expl, explode, extr, extract, spr, spread"() {
 			var list = stack.pop().data;
 			for(let cou = 0; cou < list.length; cou++) {
 				stack.push(list[cou]);
