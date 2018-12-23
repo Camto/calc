@@ -224,7 +224,7 @@ Demos:
 			
 			stack.push({data: filtered, type: types.list});
 		},
-		"size, length, len"() {
+		"length, size, len"() {
 			stack.push({data: stack.pop().data.length, type: types.num});
 		},
 		"first, cat, top, head, pop, fst"() {
