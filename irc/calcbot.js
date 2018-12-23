@@ -5,7 +5,7 @@ var calc = require("./../calc/calc");
 var irc = require("irc");
 
 var config = {
-	channels: ["#tst"],
+	channels: ["#calc"],
 	server: "irc.freenode.net",
 	name: "calcbot"
 };
