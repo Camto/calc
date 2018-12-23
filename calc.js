@@ -1306,6 +1306,10 @@ function operators(stack) {
 	};
 }
 
+var help_pages = {
+	
+};
+
 // Taken from https://stackoverflow.com/questions/14743536/multiple-key-names-same-pair-value .
 function expand(obj) {
 	var keys = Object.keys(obj);
