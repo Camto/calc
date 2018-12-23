@@ -28,7 +28,7 @@ function parse(tokens) {
 				if(tokens[token_pointer].type == types.sym) {
 					args.push(tokens[token_pointer].data);
 				} else {
-					throw `Parameter name \`${tokens[token_pointer].data}\` is of type \`${tokens[token_pointer].type}\` when it should be of type \`symbol\`.`;
+					throw `Parameter name "${tokens[token_pointer].data}" is a ${types.type_to_str(tokens[token_pointer].type)} when it should be a symbol.`;
 				}
 				token_pointer++;
 			}
@@ -63,10 +63,10 @@ function parse(tokens) {
 				throw "Error: variable definition too short.";
 			}
 			if(!is_op(raw_variable[1], "=")) {
-				throw "Error: variable definition has no `=`.";
+				throw "Error: variable definition has no \"=\".";
 			}
 			if(raw_variable[0].type != types.sym) {
-				throw `Error: variable name is a \`${raw_variable[0].type}\` when it should be a \`symbol\`.`;
+				throw `Error: variable name is a ${raw_variable[0].type} when it should be a symbol.`;
 			}
 			return {name: raw_variable[0].data, data: raw_variable.slice(2)};
 		});
@@ -91,7 +91,7 @@ function parse(tokens) {
 				if(!/,|\]|}|->/.test(tokens[token_pointer].data)) {
 					variable.push(tokens[token_pointer]);
 				} else {
-					throw `Unexpected context operator \`${tokens[token_pointer].data}\`.`;
+					throw `Unexpected context operator "${tokens[token_pointer].data}".`;
 				}
 				token_pointer++;
 			} else {
@@ -125,7 +125,7 @@ function parse(tokens) {
 					variable.push(tokens[token_pointer]);
 				}
 			} else {
-				throw `Unexpected context operator \`${tokens[token_pointer].data}\`.`;
+				throw `Unexpected context operator "${tokens[token_pointer].data}".`;
 			}
 			token_pointer++;
 		} else {
@@ -142,10 +142,10 @@ function parse(tokens) {
 			throw "Error: variable definition too short.";
 		}
 		if(!is_op(raw_variable[1], "=")) {
-			throw "Error: variable definition has no `=`.";
+			throw "Error: variable definition has no \"=\".";
 		}
 		if(raw_variable[0].type != types.sym) {
-			throw `Error: variable name is a \`${raw_variable[0].type}\` when it should be a \`symbol\`.`;
+			throw `Error: variable name is a ${raw_variable[0].type} when it should be a symbol.`;
 		}
 		return {name: raw_variable[0].data, data: raw_variable.slice(2)};
 	});

@@ -60,7 +60,7 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 				} else if(built_ins[block[instruccion_pointer].data]) {
 					built_ins[block[instruccion_pointer].data](scopes);
 				} else {
-					throw `Symbol \`${block[instruccion_pointer].data}\` found in main expression without being a built-in function.`;
+					throw `Symbol "${block[instruccion_pointer].data}" found in main expression without being a built-in function.`;
 				}
 				break;
 			case types.num:

@@ -144,7 +144,7 @@ function parse(tokens) {
 				if(tokens[token_pointer].type == types.sym) {
 					args.push(tokens[token_pointer].data);
 				} else {
-					throw `Parameter name \`${tokens[token_pointer].data}\` is of type \`${tokens[token_pointer].type}\` when it should be of type \`symbol\`.`;
+					throw `Parameter name "${tokens[token_pointer].data}" is a ${types.type_to_str(tokens[token_pointer].type)} when it should be a symbol.`;
 				}
 				token_pointer++;
 			}
@@ -179,10 +179,10 @@ function parse(tokens) {
 				throw "Error: variable definition too short.";
 			}
 			if(!is_op(raw_variable[1], "=")) {
-				throw "Error: variable definition has no `=`.";
+				throw "Error: variable definition has no \"=\".";
 			}
 			if(raw_variable[0].type != types.sym) {
-				throw `Error: variable name is a \`${raw_variable[0].type}\` when it should be a \`symbol\`.`;
+				throw `Error: variable name is a ${raw_variable[0].type} when it should be a symbol.`;
 			}
 			return {name: raw_variable[0].data, data: raw_variable.slice(2)};
 		});
@@ -207,7 +207,7 @@ function parse(tokens) {
 				if(!/,|\]|}|->/.test(tokens[token_pointer].data)) {
 					variable.push(tokens[token_pointer]);
 				} else {
-					throw `Unexpected context operator \`${tokens[token_pointer].data}\`.`;
+					throw `Unexpected context operator "${tokens[token_pointer].data}".`;
 				}
 				token_pointer++;
 			} else {
@@ -241,7 +241,7 @@ function parse(tokens) {
 					variable.push(tokens[token_pointer]);
 				}
 			} else {
-				throw `Unexpected context operator \`${tokens[token_pointer].data}\`.`;
+				throw `Unexpected context operator "${tokens[token_pointer].data}".`;
 			}
 			token_pointer++;
 		} else {
@@ -258,10 +258,10 @@ function parse(tokens) {
 			throw "Error: variable definition too short.";
 		}
 		if(!is_op(raw_variable[1], "=")) {
-			throw "Error: variable definition has no `=`.";
+			throw "Error: variable definition has no \"=\".";
 		}
 		if(raw_variable[0].type != types.sym) {
-			throw `Error: variable name is a \`${raw_variable[0].type}\` when it should be a \`symbol\`.`;
+			throw `Error: variable name is a ${raw_variable[0].type} when it should be a symbol.`;
 		}
 		return {name: raw_variable[0].data, data: raw_variable.slice(2)};
 	});
@@ -376,7 +376,7 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 				} else if(built_ins[block[instruccion_pointer].data]) {
 					built_ins[block[instruccion_pointer].data](scopes);
 				} else {
-					throw `Symbol \`${block[instruccion_pointer].data}\` found in main expression without being a built-in function.`;
+					throw `Symbol "${block[instruccion_pointer].data}" found in main expression without being a built-in function.`;
 				}
 				break;
 			case types.num:
@@ -1380,13 +1380,13 @@ function calc(code_, max_time) {
 	try {
 		return run(ast, max_time);
 	} catch(err) {
-		throw "calc=" + err_to_string(err);
+		throw err_to_string(err);
 	}
 }
 
-var err_to_string = err => !(err instanceof Error)
+var err_to_string = err => "calc=" + (!(err instanceof Error)
 	? err
-	: "\n" + err.stack.split("\n").slice(0, 2).join("\n\t");
+	: "\n" + err.stack.split("\n").slice(0, 2).join("\n\t"));
 
 module.exports = {calc, print, err_to_string};
 },{"./lex":1,"./parse":2,"./print":3,"./run":5}]},{},[]);
