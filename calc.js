@@ -570,10 +570,10 @@ Demos:
 			var n = stack.pop().data;
 			stack = stack.concat(stack.splice(stack.length - n, n).reverse());
 		},
-		"stack_pop, drop"() {
+		"drop, stack_pop"() {
 			stack.pop();
 		},
-		"stack_popn, dropn"() {
+		"dropn, stack_popn"() {
 			var n = stack.pop().data;
 			for(let cou = 0; cou < n; cou++) {
 				stack.pop();
@@ -1306,9 +1306,95 @@ function operators(stack) {
 	};
 }
 
+/*
 var help_pages = {
-	
+	help: aliases => `
+
+	HELP COMMAND
+
+Usage: "calc= help"
+
+Aliases: {aliases}
+
+It shows the main calc= menu.
+
+`,
+	page
+	tut
+	adv_tut
+	type
+	"true"
+	"false"
+	"if"
+	dup
+	swap
+	swapn
+	drop
+	dropn
+	rot
+	unrot
+	roll
+	reverse_roll
+	nip
+	tuck
+	over
+	map
+	fold
+	foldr
+	filter
+	length
+	head
+	snd
+	last
+	back_snd
+	nth
+	back_nth
+	init
+	tail
+	body
+	reverse
+	reversen
+	popn
+	expl
+	group
+	copy_group
+	group_all
+	copy_group_all
+	list_dup
+	list_swap
+	list_rot
+	list_unrot
+	list_roll
+	list_reverse_roll
+	list_nip
+	list_tuck
+	list_over
+	pi
+	e
+	abs
+	round
+	ceil
+	floor
+	max
+	main
+	sgn
+	rand
+	cos
+	sin
+	tan
+	sqrt
+	cbrt
+	root
+	log
+	call
+	iter
+	id
+	dot
+	set
+	inc
+	dec
 };
+*/
 
 // Taken from https://stackoverflow.com/questions/14743536/multiple-key-names-same-pair-value .
 function expand(obj) {
