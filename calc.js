@@ -113,7 +113,7 @@ function lex(code) {
 }
 
 module.exports = lex;
-},{"./types":6}],2:[function(require,module,exports){
+},{"./types":7}],2:[function(require,module,exports){
 "use strict";
 
 var types = require("./types");
@@ -272,7 +272,48 @@ function parse(tokens) {
 var is_op = (token, op) => token.data == op && token.type == types.op;
 
 module.exports = parse;
-},{"./types":6}],3:[function(require,module,exports){
+},{"./types":7}],3:[function(require,module,exports){
+var types = require("./types");
+
+module.exports = function print(value) {
+	if(value instanceof Array) {
+		var result = "calc=";
+		for(let cou = 0; cou < value.length; cou++) {
+			result += print(value[cou]);
+			if(cou < value.length - 1) {
+				result += " ";
+			}
+		}
+		return result;
+	} else {
+		
+		switch(value.type) {
+			case types.str:
+			case types.sym:
+			case types.op:
+				return value.data;
+				break;
+			case types.num:
+				return Math.floor(value.data * 100000) / 100000;
+			case types.list:
+				var list = "[";
+				for(let cou = 0; cou < value.data.length; cou++) {
+					list += print(value.data[cou]);
+					if(cou < value.data.length - 1) {
+						list += ", ";
+					}
+				}
+				list += "]";
+				return list;
+				break;
+			case types.func:
+				return `{${value.args.join(" ")} -> <function definition>}`;
+				break;
+		}
+		
+	}
+}
+},{"./types":7}],4:[function(require,module,exports){
 "use strict";
 
 var types = require("./types");
@@ -386,7 +427,7 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 }
 
 module.exports = {run_function, run_block};
-},{"./types":6,"./variable manipulation":7}],4:[function(require,module,exports){
+},{"./types":7,"./variable manipulation":8}],5:[function(require,module,exports){
 "use strict";
 
 var run_part = require("./run part");	
@@ -412,10 +453,11 @@ function run(ast, max_time = Infinity) {
 }
 
 module.exports = run;
-},{"./run part":3,"./standard library":5}],5:[function(require,module,exports){
+},{"./run part":4,"./standard library":6}],6:[function(require,module,exports){
 "use strict";
 
 var types = require("./types");
+var print = require("./print");
 var run_part = require("./run part");
 var variable_manipulation = require("./variable manipulation");
 
@@ -1055,10 +1097,8 @@ function operators(stack) {
 			}
 		},
 		".."() {
-			var end = Math.floor(stack.pop().data);
-			var beginning = Math.floor(stack.pop().data);
-			
-			var gets_bigger = beginning < end;
+			var right = stack.pop();
+			var left = stack.pop();
 			
 			var list = [];
 			for(let cou = (gets_bigger ? beginning : end); cou < (gets_bigger ? end + 1 : beginning + 1); cou++) {
@@ -1253,7 +1293,7 @@ Object.compare = function(obj1, obj2) {
 };
 
 module.exports = {built_ins, operators};
-},{"./run part":3,"./types":6,"./variable manipulation":7}],6:[function(require,module,exports){
+},{"./print":3,"./run part":4,"./types":7,"./variable manipulation":8}],7:[function(require,module,exports){
 var types = {
 	num: "number",
 	str: "string",
@@ -1281,7 +1321,7 @@ function type_to_str(type) {
 }
 
 module.exports = {...types, type_to_str};
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 function get_variable(name, scopes) {
 	for(let cou = scopes.length - 1; cou >= 0; cou--) {
 		if(scopes[cou][name]) {
@@ -1308,7 +1348,7 @@ module.exports = {get_variable, set_variable};
 var lex = require("./lex");
 var parse = require("./parse");
 var run = require("./run");
-var types = require("./types");
+var print = require("./print");
 
 function calc(code_, max_time) {
 	if(code_.substr(0, 5) != "calc=") {
@@ -1320,52 +1360,13 @@ function calc(code_, max_time) {
 	try {
 		return run(ast, max_time);
 	} catch(err) {
-		throw err_to_string(err);
+		throw "calc=" + err_to_string(err);
 	}
 }
 
-function print(value) {
-	if(value instanceof Array) {
-		var result = "calc=";
-		for(let cou = 0; cou < value.length; cou++) {
-			result += print(value[cou]);
-			if(cou < value.length - 1) {
-				result += " ";
-			}
-		}
-		return result;
-	} else {
-		
-		switch(value.type) {
-			case types.str:
-			case types.sym:
-			case types.op:
-				return value.data;
-				break;
-			case types.num:
-				return Math.floor(value.data * 100000) / 100000;
-			case types.list:
-				var list = "[";
-				for(let cou = 0; cou < value.data.length; cou++) {
-					list += print(value.data[cou]);
-					if(cou < value.data.length - 1) {
-						list += ", ";
-					}
-				}
-				list += "]";
-				return list;
-				break;
-			case types.func:
-				return `{${value.args.join(" ")} -> <function definition>}`;
-				break;
-		}
-		
-	}
-}
-
-var err_to_string = err => "calc=" + (!(err instanceof Error)
+var err_to_string = err => !(err instanceof Error)
 	? err
-	: "\n" + err.stack.split("\n").slice(0, 2).join("\n\t"));
+	: "\n" + err.stack.split("\n").slice(0, 2).join("\n\t");
 
 module.exports = {calc, print, err_to_string};
-},{"./lex":1,"./parse":2,"./run":4,"./types":6}]},{},[]);
+},{"./lex":1,"./parse":2,"./print":3,"./run":5}]},{},[]);

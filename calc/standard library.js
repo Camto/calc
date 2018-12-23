@@ -1,6 +1,7 @@
 "use strict";
 
 var types = require("./types");
+var print = require("./print");
 var run_part = require("./run part");
 var variable_manipulation = require("./variable manipulation");
 
