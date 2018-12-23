@@ -488,7 +488,23 @@ Demos:
 `, type: types.str});
 		},
 		"page, help_page, hp, h_page, help_p"() {
-			stack.push({data: "The help pages are still a work in progress.", type: types.str});
+			if(stack.length == 0) {
+				stack.push({data: "Help page usage not done yet.", type: types.str});
+			} else {
+				var page = stack.pop();
+				if(page.type == types.sym) {
+					var found = made_built_ins[page.data];
+					if(found) {
+						stack.push({data: help_pages[found.main_alias](found.aliases), type: types.str});
+					} else {
+						stack.push({data: `Error: "${page.data}" is not a built-in.`, type: types.str});
+					}
+				} else if(page.type == types.op) {
+					
+				} else {
+					stack.push({data: `Error: cannot get help page for value "${print(page)}" of type ${types.type_to_str(page.type)}.`, type: types.str});
+				}
+			}
 		},
 		"tut, tutorial"() {
 			if(stack.length == 0) {
@@ -1455,9 +1471,13 @@ function expand(obj) {
 			obj[key.replace("_", "")] = target;
 			obj[key.replace(/(_\w)/g, m => m[1].toUpperCase())] = target;
 			
-			obj[key].names = subkeys;
-			obj[key.replace("_", "")].names = subkeys;
-			obj[key.replace(/(_\w)/g, m => m[1].toUpperCase())].names = subkeys;
+			obj[key].main_alias = subkeys[0];
+			obj[key.replace("_", "")].main_alias = subkeys[0];
+			obj[key.replace(/(_\w)/g, m => m[1].toUpperCase())].main_alias = subkeys[0];
+			
+			obj[key].aliases = subkeys;
+			obj[key.replace("_", "")].aliases = subkeys;
+			obj[key.replace(/(_\w)/g, m => m[1].toUpperCase())].aliases = subkeys;
 		});
 	}
 	return obj;
