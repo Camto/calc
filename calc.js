@@ -632,9 +632,13 @@ Demos:
 		"size, length, len"() {
 			stack.push({data: stack.pop().data.length, type: types.num});
 		},
-		"first, cat, top, head, pop"() {
+		"first, cat, top, head, pop, fst"() {
 			var list = stack.pop().data;
 			stack.push(list[0]);
+		},
+		"second, snd"() {
+			var list = stack.pop().data;
+			stack.push(list[1]);
 		},
 		"last, bottom"() {
 			var list = stack.pop().data;
