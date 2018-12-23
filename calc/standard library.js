@@ -836,6 +836,10 @@ function expand(obj) {
 			obj[key] = target;
 			obj[key.replace("_", "")] = target;
 			obj[key.replace(/(_\w)/g, m => m[1].toUpperCase())] = target;
+			
+			obj[key].names = subkeys;
+			obj[key.replace("_", "")].names = subkeys;
+			obj[key.replace(/(_\w)/g, m => m[1].toUpperCase())].names = subkeys;
 		});
 	}
 	return obj;
