@@ -253,13 +253,13 @@ Demos:
 			var list = stack.pop().data;
 			stack.push(list[list.length - index - 1]);
 		},
-		"front, init, list_drop"() {
+		"init, front, list_drop"() {
 			stack.push({
 				data: stack.pop().data.slice(0, -1),
 				type: types.list
 			});
 		},
-		"back, cdr, tail, rest"() {
+		"tail, back, cdr, rest"() {
 			stack.push({
 				data: stack.pop().data.slice(1),
 				type: types.list
