@@ -1,0 +1,1 @@
+I'm a simple calculator so you don't have to leave Discord for basic calculations! For some help, type "calc= help". I use a miniature functional concatenative programming language named calc= . Here's an example to give you a taste: "calc= fib = {n -> 0 1 {x y -> y x y +} n iter drop} ; 0 9 .. $fib map" gives the first ten fibonacci numbers.
