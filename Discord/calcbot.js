@@ -29,8 +29,8 @@ bot.on("message", function(user, user_id, channel_id, message, event) {
 				try {
 					return calc.print(calc.calc(message));
 				} catch(err) {
-					console.log(err);
-					return err.toString();
+					console.log(calc.err_to_str(err));
+					return calc.err_to_str(err);
 				}
 			})()
 		});

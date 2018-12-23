@@ -15,12 +15,12 @@ function calc(code_, max_time) {
 	try {
 		return run(ast, max_time);
 	} catch(err) {
-		throw err_to_string(err);
+		throw "calc=" + err_to_str(err);
 	}
 }
 
-var err_to_string = err => "calc=" + (!(err instanceof Error)
+var err_to_str = err => !(err instanceof Error)
 	? err
-	: "\n" + err.stack.split("\n").slice(0, 2).join("\n\t"));
+	: "\n" + err.stack.split("\n").slice(0, 2).join("\n\t");
 
-module.exports = {calc, print, err_to_string};
+module.exports = {calc, print, err_to_str};

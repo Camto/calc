@@ -16,7 +16,7 @@ $(function() {
 			try {
 				result = calc.print(calc.calc(decodeURIComponent(location.search.substring(6)), 10000));
 			} catch(err) {
-				result = calc.err_to_string(err);
+				result = calc.err_to_str(err);
 			}
 			$("#log").append(escape_input(result) + "<br />");
 			past.push(decodeURIComponent(location.search.substring(6)));
@@ -32,7 +32,7 @@ $(function() {
 				try {
 					result = calc.print(calc.calc($(this).val(), 10000));
 				} catch(err) {
-					result = calc.err_to_string(err);
+					result = calc.err_to_str(err);
 				}
 				past.push($(this).val().replace(/[\n\r]/g, ""));
 				travel = past.length;
