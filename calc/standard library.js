@@ -862,14 +862,13 @@ function operators(stack) {
 var help_pages = {
 	help: aliases => `
 
-	HELP COMMAND
+	HELP MENU
 
 Usage: "calc= help"
 
 Aliases: ${aliases}.
 
 It shows the main calc= menu.
-
 `,
 	page: aliases => `
 
@@ -884,7 +883,6 @@ Examples:
 	* "calc= $page page"
 
 Without any arguments, it shows how to use the documentation. It shows the help page of the built-in or operator.
-
 `,
 	tut: aliases => `
 
@@ -895,7 +893,6 @@ Usage: "calc= tut" or "calc= n tut", where "n" is the tutorial page number.
 Aliases: ${aliases}.
 
 It shows the basic tutorial page.
-
 `,
 	adv_tut: aliases => `
 
@@ -906,7 +903,6 @@ Usage: "calc= adv_tut" or "calc= n adv_tut", where "n" is the tutorial page numb
 Aliases: ${aliases}.
 
 It shows the advanced tutorial page.
-
 `,
 	type: aliases => `
 
@@ -921,11 +917,55 @@ Examples:
 	* "calc= {} type" -> "calc=function"
 
 Returns the type of any given value. These can be: number, string, list, function, symbol, or operator.
+`,
+	"true": aliases => `
 
-`,/*
-	"true"
-	"false"
-	"if"
+	TRUE
+
+Usage: "calc= true".
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= true" -> "calc=1"
+
+Returns the simplest truthy value, 1.
+`,
+	"false": aliases => `
+
+	FALSE
+
+Usage: "calc= false".
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= false" -> "calc=0"
+
+Returns the simplest falsy value, 0.
+`,
+	"if": aliases => `
+
+	IF/ELSE STATEMENT
+
+Usage: "calc= bool if_true if_false if", where "bool" is a truthy of falsy value, "if_true" is the branch for if the condition is true, and "if_false" is the alternate branch.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 3 true {1+} {1-} if" -> "calc=4"
+	* "calc= 3 0 {1+} {1-} if" -> "calc=2"
+	* "calc= "oigb" $5 $3 if" -> "calc=5"
+	* "calc= false $5 $3 if" -> "calc=3"
+
+If the condition is true, it executes the first branch, if not, then it executes the other branch. 
+
+For different types, there are different ways to test if it is truthy:
+	* Numbers that are 0 are falsy others are truthy.
+	* String and Lists are treated as a number of their length, emptiness being 0, or falsy.
+	* Functions, symbols, and operators are all truthy.
+`,
+/*
 	dup
 	swap
 	swapn
