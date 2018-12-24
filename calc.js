@@ -1428,9 +1428,35 @@ For different types, there are different ways to test if it is truthy:
 	* String and Lists are treated as a number of their length, emptiness being 0, or falsy.
 	* Functions, symbols, and operators are all truthy.
 `,
+	dup: aliases => `
+
+	DUPLICATE
+
+Usage: "calc= a dup", where "a" is any value.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 5 dup" -> "calc=5 5"
+	* "calc= "str" "str" dup" -> "calc=str str"
+
+It duplicates the top value of the stack. You can use dup to use some value without discarding it.
+`,
+	swap: aliases => `
+
+	SWAP
+
+Usage: "calc= a b swap", where "a" and "b" can be any value.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 2 5 swap" -> "calc=5 2"
+	* "calc= "gh" [1, 2, 3] swap" -> "calc=[1, 2, 3] gh"
+
+It swaps the top 2 values of the stack. This means you can use a value underneath another.
+`,
 /*
-	dup
-	swap
 	swapn
 	drop
 	dropn
