@@ -1345,7 +1345,7 @@ Examples:
 	* "calc= $+ page"
 	* "calc= $page page"
 
-Without any arguments, it shows how to use the documentation. It shows the help page of the built-in or operator.
+Without any arguments, it shows how to use the documentation. With a symbol or operator, it shows the help page of the built-in or operator.
 `,
 	tut: aliases => `
 
