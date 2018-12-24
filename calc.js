@@ -584,7 +584,8 @@ Demos:
 		},
 		"stack_reversen, stack_invertn"() {
 			var n = stack.pop().data;
-			stack = stack.concat(stack.splice(stack.length - n, n).reverse());
+			var reversed_vals = stack.splice(stack.length - n, n).reverse();
+			stack.push.apply(stack, reversed_vals);
 		},
 		"drop, stack_pop"() {
 			stack.pop();
