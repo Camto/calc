@@ -32,7 +32,7 @@ Demos:
 				if(page.type == types.sym) {
 					var found = made_built_ins[page.data];
 					if(found) {
-						stack.push({data: help_pages[found.main_alias](found.aliases), type: types.str});
+						stack.push({data: help_pages[found.main_alias](found.aliases.join(", ")), type: types.str});
 					} else {
 						stack.push({data: `Error: "${page.data}" is not a built-in.`, type: types.str});
 					}
@@ -866,7 +866,7 @@ var help_pages = {
 
 Usage: "calc= help"
 
-Aliases: {aliases}.
+Aliases: ${aliases}.
 
 It shows the main calc= menu.
 
@@ -877,7 +877,7 @@ It shows the main calc= menu.
 
 Usage: "calc= page" or "calc= $command page", where "command" is the name of a built-in or an operator.
 
-Aliases: {aliases}.
+Aliases: ${aliases}.
 
 Examples:
 	* "calc= $+ page"
@@ -892,7 +892,7 @@ Without any arguments, it shows how to use the documentation. It shows the help 
 
 Usage: "calc= tut" or "calc= n tut", where "n" is the tutorial page number.
 
-Aliases: {aliases}.
+Aliases: ${aliases}.
 
 It shows the basic tutorial page.
 
@@ -903,7 +903,7 @@ It shows the basic tutorial page.
 
 Usage: "calc= adv_tut" or "calc= n adv_tut", where "n" is the tutorial page number.
 
-Aliases: {aliases}.
+Aliases: ${aliases}.
 
 It shows the advanced tutorial page.
 
@@ -914,7 +914,7 @@ It shows the advanced tutorial page.
 
 Usage: "calc= value type", where "value" is any value.
 
-Aliases: {aliases}.
+Aliases: ${aliases}.
 
 Examples:
 	* "calc= 1 type" -> "calc=number"
