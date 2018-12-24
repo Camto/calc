@@ -623,7 +623,7 @@ Demos:
 				stack.push(rolled);
 			}
 		},
-		"reverse_roll, counter_roll, reverse_rotn, reverse_rotaten, counter_rotn, counter_rotaten"() {
+		"unroll, unrotn, unrotaten, reverse_roll, counter_roll, reverse_rotn, reverse_rotaten, counter_rotn, counter_rotaten"() {
 			var n = stack.pop().data;
 			
 			if(n > 0) {
@@ -1463,7 +1463,7 @@ It swaps the top 2 values of the stack. This means you can use a value underneat
 	rot
 	unrot
 	roll
-	reverse_roll
+	unroll
 	nip
 	tuck
 	over
