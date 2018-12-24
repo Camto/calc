@@ -994,8 +994,23 @@ Examples:
 
 It swaps the top 2 values of the stack. This means you can use a value underneath another.
 `,
+	stack_reversen: aliases => `
+
+	REVERSE TOP N ITEMS
+
+${built_in_warning}
+
+Usage: "calc= n ... m num stack_reversen", where "num" is the amount of items you want to reverse and "n ... m" are the items.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 'a 'd 'y 'f 4 stack_reversen" -> "calc=f y d a"
+	* "calc= 10 6 .. expl 1 5 .. expl 10 stack_reversen" -> "calc= 5 4 3 2 1 6 7 8 9 10"
+
+It reverses the top num items of the stack.
+`,
 /*
-	stack_reversen
 	drop
 	dropn
 	rot
@@ -1061,6 +1076,8 @@ It swaps the top 2 values of the stack. This means you can use a value underneat
 	inc
 	dec*/
 };
+
+var built_in_warning = "!WARNING: This function is discouraged from being used, the only reason it is here is for the few cases in which it is necessary!";
 
 // Taken from https://stackoverflow.com/questions/14743536/multiple-key-names-same-pair-value .
 function expand(obj) {
