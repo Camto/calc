@@ -582,7 +582,7 @@ Demos:
 			stack.push(first);
 			stack.push(second);
 		},
-		"swapn, stack_reversen, stack_invertn"() {
+		"stack_reversen, stack_invertn"() {
 			var n = stack.pop().data;
 			stack = stack.concat(stack.splice(stack.length - n, n).reverse());
 		},
@@ -754,7 +754,7 @@ Demos:
 			var list = stack.pop().data;
 			stack.push({data: list.reverse(), type: types.list});
 		},
-		"reversen, invertn, list_swapn"() {
+		"reversen, invertn"() {
 			var list = stack.pop().data;
 			var n = list.pop().data;
 			list = list.concat(list.splice(list.length - n, n).reverse());
@@ -1457,7 +1457,7 @@ Examples:
 It swaps the top 2 values of the stack. This means you can use a value underneath another.
 `,
 /*
-	swapn
+	stack_reversen
 	drop
 	dropn
 	rot
