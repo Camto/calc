@@ -239,10 +239,24 @@ Examples:
 
 It rotates the top num items of the stack to the right. If you want to roll backward 2 or 3 three items, please check out swap and unrot.
 `,
+	nip: aliases => `
+
+	NIP
+
+Usage: "calc= a b nip", where "a" and "b" can be any value.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 'a 'b 'c nip" -> "calc=a c"
+	* "calc= 6 1 78 2 nip" -> "calc=6 1 2"
+
+It removes the item under the top one. Equivalent to "swap drop".
+`,
 /*
-	nip
 	tuck
 	over
+/*
 	map
 	fold
 	foldr
