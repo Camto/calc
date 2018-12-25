@@ -1473,9 +1473,35 @@ Examples:
 
 It reverses the top num items of the stack.
 `,
+	drop: aliases => `
+
+	DROP
+
+Usage: "calc= a drop", where "a" is any value.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 1 2 3 drop" -> "calc=1 2"
+	* "calc= 'a 'b [] drop" -> "calc=a b"
+
+It removes the top item of the stack.
+`,
+	dropn: aliases => `
+
+	DROP N ITEMS
+
+Usage: "calc= n ... m num dropn", where "num" is the amount of items you want to drop and "n ... m" are the items.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 'a 'b 'c 'd 2 dropn" -> "calc=a b"
+	* "calc= 10 1 .. expl 5 dropn" -> "calc=10 9 8 7 6"
+
+It drops the top num items of the stack. It should be called with a known, fixed number or you could remove the wrong items, which would cause very strange bugs. Only call it with an arbitrary number when absolutey necessary.
+`,
 /*
-	drop
-	dropn
 	rot
 	unrot
 	roll
@@ -1549,19 +1575,13 @@ function expand(obj) {
 		var key = keys[cou];
 		var subkeys = key.split(/,\s?/);
 		var target = obj[key];
+		target.main_alias = subkeys[0];
+		target.aliases = subkeys;
 		delete obj[key];
 		subkeys.forEach(key => {
 			obj[key] = target;
 			obj[key.replace("_", "")] = target;
 			obj[key.replace(/(_\w)/g, m => m[1].toUpperCase())] = target;
-			
-			obj[key].main_alias = subkeys[0];
-			obj[key.replace("_", "")].main_alias = subkeys[0];
-			obj[key.replace(/(_\w)/g, m => m[1].toUpperCase())].main_alias = subkeys[0];
-			
-			obj[key].aliases = subkeys;
-			obj[key.replace("_", "")].aliases = subkeys;
-			obj[key.replace(/(_\w)/g, m => m[1].toUpperCase())].aliases = subkeys;
 		});
 	}
 	return obj;
