@@ -241,7 +241,7 @@ It rotates the top num items of the stack to the right. If you want to roll back
 `,
 	nip: aliases => `
 
-	NIP
+	NIP UNDER
 
 Usage: "calc= a b nip", where "a" and "b" can be any value.
 
@@ -253,8 +253,21 @@ Examples:
 
 It removes the item under the top one. Equivalent to "swap drop".
 `,
+	tuck: aliases => `
+
+	TUCK UNDER
+
+Usage: "calc= a b nip", where "a" and "b" can be any value.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 'a 'b 'c tuck" -> "calc=a c b c"
+	* "calc= 1 [2] tuck" -> "calc=[2] 1 [2]"
+
+It puts the top item of the stack underneath the next. Equivalent to "dup rot".
+`,
 /*
-	tuck
 	over
 /*
 	map
