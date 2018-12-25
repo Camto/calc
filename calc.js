@@ -1491,6 +1491,8 @@ It removes the top item of the stack.
 
 	DROP N ITEMS
 
+${built_in_warning}
+
 Usage: "calc= n ... m num dropn", where "num" is the amount of items you want to drop and "n ... m" are the items.
 
 Aliases: ${aliases}.
@@ -1499,13 +1501,65 @@ Examples:
 	* "calc= 'a 'b 'c 'd 2 dropn" -> "calc=a b"
 	* "calc= 10 1 .. expl 5 dropn" -> "calc=10 9 8 7 6"
 
-It drops the top num items of the stack. It should be called with a known, fixed number or you could remove the wrong items, which would cause very strange bugs. Only call it with an arbitrary number when absolutey necessary.
+It drops the top num items of the stack. It should be called with a known, fixed number or you could remove the wrong items, which would cause very strange bugs.
+`,
+	rot: aliases => `
+
+	ROTATE
+
+Usage: "calc= a b c rot", where "a", "b", and "c" can be any value.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 'a 'b 'c rot" -> "calc=c a b"
+	* "calc= "as" [] 1 rot" -> "calc=1 as []"
+
+It rotates the top three items of the stack to the right. To do this with more items you would use roll, but it is not recommended.
+`,
+	unrot: aliases => `
+
+	ROTATE BACKWARD
+
+Usage: "calc= a b c unrot", where "a", "b", and "c" can be any value.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 'a 'b 'c unrot" -> "calc=b c a"
+	* "calc= "as" [] 1 unrot" -> "calc=[] 1 as"
+
+It rotates the top three items of the stack to the left. To do this with more items you would use unroll, but it is not recommended.
+`,
+	roll: aliases => `
+
+	ROLL
+
+Usage: "calc= n ... m num roll", where "num" is the amount of items you want to roll and "n ... m" are the items.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 'a 'b 'c 'd 'e 'f 4 roll" -> "calc=a b f c d e"
+	* "calc= 1 5 .. {n -> 1 n .. expl n roll n group} map" -> "calc=[[1], [2, 1], [3, 1, 2], [4, 1, 2, 3], [5, 1, 2, 3, 4]]"
+
+It rotates the top num items of the stack to the left. If you want to roll 2 or 3 three items, please check out swap and rot.
+`,
+	unroll: aliases => `
+
+	ROLL BACKWARD
+
+Usage: "calc= n ... m num unroll", where "num" is the amount of items you want to roll backward and "n ... m" are the items.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 'a 'b 'c 'd 'e 'f 4 unroll" -> "calc=a b d e f c"
+	* "calc= 1 5 .. {n -> 1 n .. expl n unroll n group} map" -> "calc=[[1], [2, 1], [2, 3, 1], [2, 3, 4, 1], [2, 3, 4, 5, 1]]"
+
+It rotates the top num items of the stack to the right. If you want to roll backward 2 or 3 three items, please check out swap and unrot.
 `,
 /*
-	rot
-	unrot
-	roll
-	unroll
 	nip
 	tuck
 	over
