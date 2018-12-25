@@ -211,6 +211,8 @@ It rotates the top three items of the stack to the left. To do this with more it
 
 	ROLL
 
+${built_in_warning}
+
 Usage: "calc= n ... m num roll", where "num" is the amount of items you want to roll and "n ... m" are the items.
 
 Aliases: ${aliases}.
@@ -224,6 +226,8 @@ It rotates the top num items of the stack to the left. If you want to roll 2 or 
 	unroll: aliases => `
 
 	ROLL BACKWARD
+
+${built_in_warning}
 
 Usage: "calc= n ... m num unroll", where "num" is the amount of items you want to roll backward and "n ... m" are the items.
 
