@@ -264,10 +264,22 @@ Examples:
 	* "calc= 'a 'b 'c tuck" -> "calc=a c b c"
 	* "calc= 1 [2] tuck" -> "calc=[2] 1 [2]"
 
-It puts the top item of the stack underneath the next. Equivalent to "dup rot".
+It puts the top item of the stack underneath the next. Equivalent to "dup rot" or "swap over".
 `,
-/*
-	over
+	over: aliases => `
+
+	DUPLICATE OVER
+
+Usage: "calc= a b over", where "a" and "b" can be any value.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 'a 'b over" -> "calc=a b a"
+	* "calc= 4 98 2 over" -> "calc=4 98 2 98"
+
+It puts a duplicate of the second item from the top of the stack on top of the stack. Equivalent to "swap dup rot" or "swap tuck".
+`,
 /*
 	map
 	fold
