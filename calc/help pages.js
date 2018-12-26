@@ -296,7 +296,7 @@ It applies the function to each element in the list. The function should take on
 `,
 	fold: aliases => `
 
-	FOLD LIST
+	FOLD LIST TO THE LEFT
 
 Usage: "calc= list starting reducer fold", where "list" is a list, "starting" is the starting value for the folding, and "reducer" is the function for folding the list.
 
@@ -322,8 +322,35 @@ The argument on the left is the accumulator and the one on the right is the next
 
 Then 120 is returned.
 `,
+	foldr: aliases => `
+
+	FOLD LIST TO THE RIGHT
+
+Usage: "calc= list starting reducer foldr", where "list" is a list, "starting" is the starting value for the folding, and "reducer" is the function for folding the list.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 1 5 .. 1 $* foldr" -> "calc=120"
+	* "calc= ["foo", "bar", "baz"] "" {", " + +} foldr" -> "calc=baz, bar, foo, "
+
+It applies the function to the last result of the function (the accumulator) to the next element of the list, starting from the end. The first accumulator is the "starting" argument.
+
+Example explanation: "calc= 1 5 .. 1 $* foldr".
+	* [1, 2, 3, 4, 5] The list.
+	* 1 The starting accumulator.
+	* $* The reducer.
+
+The argument on the left is the accumulator and the one on the right is the next element in the list.
+1 * 5 -> 5
+5 * 4 -> 20
+20 * 3 -> 60
+60 * 2 -> 120
+120 * 1 -> 120
+
+Then 120 is returned.
+`,
 /*
-	foldr
 	filter
 /*
 	length
