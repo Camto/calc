@@ -196,7 +196,7 @@ Demos:
 		
 		// List functions.
 		
-		"map, apply, apply_to"() {
+		"map, fmap"() {
 			var mapper = stack.pop();
 			var list = stack.pop().data;
 			
