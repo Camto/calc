@@ -827,7 +827,7 @@ Welcome to calc=, the stack language for chats! For a basic tutorial, type "calc
 
 Demos:
 	* Fibonacci: "calc= fib = {n -> 0 1 {x y -> y x y +} n iter drop} ; 0 9 .. $fib map"
-	* Factorial: "calc= 1 5 .. $* 1 fold"
+	* Factorial: "calc= 1 5 .. 1 $* fold"
 `, type: types.str});
 		},
 		"page, help_page, hp, h_page, help_p"() {
@@ -1013,9 +1013,9 @@ Demos:
 			
 			stack.push({data: mapped, type: types.list});
 		},
-		"reduce, fold, foldl, fold_left"() {
-			var accumulator = stack.pop();
+		"fold, foldl, reduce, fold_left"() {
 			var reducer = stack.pop();
+			var accumulator = stack.pop();
 			var list = stack.pop().data;
 			stack.push(accumulator);
 			
@@ -1025,8 +1025,8 @@ Demos:
 			}
 		},
 		"foldr, fold_right"() {
-			var accumulator = stack.pop();
 			var reducer = stack.pop();
+			var accumulator = stack.pop();
 			var list = stack.pop().data;
 			stack.push(accumulator);
 			
