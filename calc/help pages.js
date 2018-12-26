@@ -132,7 +132,7 @@ Examples:
 
 It swaps the top 2 values of the stack. This means you can use a value underneath another.
 `,
-	stack_reversen: aliases => `
+	stack_reverse_n: aliases => `
 
 	REVERSE TOP N ITEMS
 
@@ -162,7 +162,7 @@ Examples:
 
 It removes the top item of the stack.
 `,
-	dropn: aliases => `
+	drop_n: aliases => `
 
 	DROP N ITEMS
 
@@ -364,7 +364,7 @@ Then 120 is returned.
 	tail
 	body
 	reverse
-	reversen
+	reverse_n
 	popn
 	expl
 	group

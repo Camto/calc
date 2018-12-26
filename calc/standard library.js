@@ -120,7 +120,7 @@ Demos:
 			stack.push(first);
 			stack.push(second);
 		},
-		"stack_reversen, stack_invertn"() {
+		"stack_reverse_n, stack_invert_n"() {
 			var n = stack.pop().data;
 			var reversed_vals = stack.splice(stack.length - n, n).reverse();
 			stack.push.apply(stack, reversed_vals);
@@ -128,7 +128,7 @@ Demos:
 		"drop, stack_pop"() {
 			stack.pop();
 		},
-		"dropn, stack_popn"() {
+		"dropn, stack_pop_n"() {
 			var n = stack.pop().data;
 			for(let cou = 0; cou < n; cou++) {
 				stack.pop();
@@ -150,7 +150,7 @@ Demos:
 			stack.push(first);
 			stack.push(third);
 		},
-		"roll, rotn, rotaten"() {
+		"roll, rot_n, rotate_n"() {
 			var n = stack.pop().data;
 			
 			if(n > 0) {
@@ -162,7 +162,7 @@ Demos:
 				stack.push(rolled);
 			}
 		},
-		"unroll, unrotn, unrotaten, reverse_roll, counter_roll, reverse_rotn, reverse_rotaten, counter_rotn, counter_rotaten"() {
+		"unroll, unrot_n, unrotate_n, reverse_roll, counter_roll, reverse_rot_n, reverse_rotate_n, counter_rot_n, counter_rotate_n"() {
 			var n = stack.pop().data;
 			
 			if(n > 0) {
@@ -261,12 +261,12 @@ Demos:
 			var list = stack.pop().data;
 			stack.push(list[list.length - 2]);
 		},
-		"nth, item, frontn, index, front_index, middlen, middle_index"() {
+		"nth, item, front_n, index, front_index, middle_n, middle_index"() {
 			var index = stack.pop().data;
 			var list = stack.pop().data;
 			stack.push(list[index]);
 		},
-		"back_nth, back_item, lastn, backn, back_index"() {
+		"back_nth, back_item, last_n, back_n, back_index"() {
 			var index = stack.pop().data;
 			var list = stack.pop().data;
 			stack.push(list[list.length - index - 1]);
@@ -293,13 +293,13 @@ Demos:
 			var list = stack.pop().data;
 			stack.push({data: list.reverse(), type: types.list});
 		},
-		"reversen, invertn"() {
+		"reverse_n, invert_n"() {
 			var list = stack.pop().data;
 			var n = list.pop().data;
 			list = list.concat(list.splice(list.length - n, n).reverse());
 			stack.push({data: list, type: types.list});
 		},
-		"popn, list_dropn"() {
+		"pop_n, list_drop_n"() {
 			var n = stack.pop().data;
 			var list = stack.pop().data;
 			for(let cou = 0; cou < n; cou++) {
@@ -373,7 +373,7 @@ Demos:
 			list.push(third);
 			stack.push({data: list, type: types.list});
 		},
-		"list_roll, list_rotn, list_rotaten"() {
+		"list_roll, list_rot_n, list_rotate_n"() {
 			var n = stack.pop().data;
 			var list = stack.pop().data;
 			
@@ -388,7 +388,7 @@ Demos:
 			
 			stack.push({data: list, type: types.list});
 		},
-		"list_reverse_roll, list_counter_roll, list_reverse_rotn, list_reverse_rotaten, list_counter_rotn, list_counter_rotaten"() {
+		"list_reverse_roll, list_counter_roll, list_reverse_rot_n, list_reverse_rotate_n, list_counter_rot_n, list_counter_rotate_n"() {
 			var n = stack.pop().data;
 			var list = stack.pop().data;
 			
@@ -498,7 +498,7 @@ Demos:
 		"call, run, do, apply, get"() {
 			run_part.run_function(stack.pop(), stack, made_built_ins, operators, end_time);
 		},
-		"iter, iterate, iterative, loop, loopn"() {
+		"iter, iterate, iterative, loop, loop_n"() {
 			var iter_cou = stack.pop().data;
 			var iterator = stack.pop();
 			
