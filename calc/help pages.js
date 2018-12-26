@@ -280,11 +280,25 @@ Examples:
 
 It puts a duplicate of the second item from the top of the stack on top of the stack. Equivalent to "swap dup rot" or "swap tuck".
 `,
+	map: aliases => `
+
+	MAP OVER LIST
+
+Usage: "calc= list func map", where "list" is a list and "func" is any function.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 3 6 .. {1+} map" -> "calc=[4, 5, 6, 7]"
+	* "calc= [true, false, true] $! map" -> "calc=[0, 1, 0]"
+
+It applies the function to each element in the list. The function should take one argument and return one value, or else bugs might ensue.
+`,
 /*
-	map
 	fold
 	foldr
 	filter
+/*
 	length
 	head
 	snd
