@@ -294,8 +294,35 @@ Examples:
 
 It applies the function to each element in the list. The function should take one argument and return one value, or else bugs might ensue.
 `,
+	fold: aliases => `
+
+	FOLD LIST
+
+Usage: "calc= list starting reducer fold", where "list" is a list, "starting" is the starting value for the folding, and "reducer" is the function for folding the list.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 1 5 .. 1 $* fold" -> "calc=120"
+	* "calc= ["foo", "bar", "baz"] "" {", " + +} fold" -> "calc=foo, bar, baz, "
+
+It applies the function to the last result of the function (the accumulator) to the next element of the list. The first accumulator is the "starting" argument.
+
+Example explanation: "calc= 1 5 .. 1 $* fold".
+	* [1, 2, 3, 4, 5] The list.
+	* 1 The starting accumulator.
+	* $* The reducer.
+
+The argument on the left is the accumulator and the one on the right is the next element in the list.
+1 * 1 -> 1
+1 * 2 -> 2
+2 * 3 -> 6
+6 * 4 -> 24
+24 * 5 -> 120
+
+Then 120 is returned.
+`,
 /*
-	fold
 	foldr
 	filter
 /*
