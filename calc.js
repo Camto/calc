@@ -290,7 +290,7 @@ Usage: "calc= list func map", where "list" is a list and "func" is any function.
 Aliases: ${aliases}.
 
 Examples:
-	* "calc= 3 6 .. {1+} map" -> "calc=[4, 5, 6]"
+	* "calc= 3 6 .. {1+} map" -> "calc=[4, 5, 6, 7]"
 	* "calc= [true, false, true] $! map" -> "calc=[0, 1, 0]"
 
 It applies the function to each element in the list. The function should take one argument and return one value, or else bugs might ensue.
@@ -1015,7 +1015,7 @@ Demos:
 		
 		// List functions.
 		
-		"map, apply, apply_to"() {
+		"map, fmap"() {
 			var mapper = stack.pop();
 			var list = stack.pop().data;
 			
