@@ -351,7 +351,6 @@ The argument on the left is the accumulator and the one on the right is the next
 
 Then 120 is returned.
 `,
-/*
 	filter: aliases => `
 
 	FILTER LIST WITH PREDICATE
@@ -362,7 +361,9 @@ Aliases: ${aliases}.
 
 Examples:
 	* "calc= -5 5 .. {2 >} filter" -> "calc=[3, 4, 5]"
-	* ""
+	* "calc= [-3 3 .., 1 2 .., -5 -3 .., [0, 3], [5, 1]] {0 elem !} filter" -> "calc=[[1, 2], [-5, -4, -3], [5, 1]]"
+
+It calls the predicate on each element in the list, keeping only the elements that return true.
 `,
 /*
 	length
@@ -633,7 +634,7 @@ function parse(tokens) {
 				token_pointer++;
 			} else if(!is_op(tokens[token_pointer], "{") && !is_op(tokens[token_pointer], "[")) {
 				if(!/,|\]|}|->/.test(tokens[token_pointer].data)) {
-					variable.push(tokens[token_pointer]);
+					code.push(tokens[token_pointer]);
 				} else {
 					throw `Unexpected context operator "${tokens[token_pointer].data}".`;
 				}

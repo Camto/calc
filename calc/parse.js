@@ -89,7 +89,7 @@ function parse(tokens) {
 				token_pointer++;
 			} else if(!is_op(tokens[token_pointer], "{") && !is_op(tokens[token_pointer], "[")) {
 				if(!/,|\]|}|->/.test(tokens[token_pointer].data)) {
-					variable.push(tokens[token_pointer]);
+					code.push(tokens[token_pointer]);
 				} else {
 					throw `Unexpected context operator "${tokens[token_pointer].data}".`;
 				}
