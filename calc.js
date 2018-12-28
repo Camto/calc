@@ -1507,10 +1507,10 @@ function operators(stack) {
 				stack.push(types.new_str(right.data.repeat(left.data)));
 			} else if(left.type == types.str && right.type == types.str) {
 				var prod = cartesian_prod(left.data.split(""), right.data.split(""));
-				stack.push(types.new_list(prod.map(pair => ({data: pair.join(""), type: types.str}))));
+				stack.push(types.new_list(prod.map(pair => (types.new_str(pair.join(""))))));
 			} else if(left.type == types.list && right.type == types.list) {
 				var prod = cartesian_prod(left.data, right.data);
-				stack.push(types.new_list(prod.map(pair => ({data: pair, type: types.list}))));
+				stack.push(types.new_list(prod.map(pair => (types.new_list(pair)))));
 			}
 		},
 		"/"() {
