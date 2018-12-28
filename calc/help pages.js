@@ -378,6 +378,7 @@ It calls the predicate on each element in the list, keeping only the elements th
 	reverse
 	reverse_n
 	popn
+	elem
 	expl
 	group
 	copy_group

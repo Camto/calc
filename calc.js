@@ -379,6 +379,7 @@ It calls the predicate on each element in the list, keeping only the elements th
 	reverse
 	reverse_n
 	popn
+	elem
 	expl
 	group
 	copy_group
@@ -899,7 +900,7 @@ function built_ins(stack, operators, end_time) {
 		// Help functions.
 		
 		"help, h"() {
-			stack.push({data: `
+			stack.push(types.new_str(`
 
 	CALC=
 
@@ -908,48 +909,48 @@ Welcome to calc=, the stack language for chats! For a basic tutorial, type "calc
 Demos:
 	* Fibonacci: "calc= fib = {n -> 0 1 {x y -> y x y +} n iter drop} ; 0 9 .. $fib map"
 	* Factorial: "calc= 1 5 .. 1 $* fold"
-`, type: types.str});
+`));
 		},
-		"page, help_page, hp, h_page, help_p"() {
+		"page, help_page, hp, h_page, help_p, doc, docs, documentation"() {
 			if(stack.length == 0) {
-				stack.push({data: "Help page usage not done yet.", type: types.str});
+				stack.push(types.new_str("Help page usage not done yet."));
 			} else {
 				var page = stack.pop();
 				if(page.type == types.sym) {
 					var found = made_built_ins[page.data];
 					if(found) {
-						stack.push({data: help_pages[found.main_alias](found.aliases.join(", ")), type: types.str});
+						stack.push(types.new_str(help_pages[found.main_alias](found.aliases.join(", "))));
 					} else {
-						stack.push({data: `Error: "${page.data}" is not a built-in.`, type: types.str});
+						stack.push(types.new_str(`Error: "${page.data}" is not a built-in.`));
 					}
 				} else if(page.type == types.op) {
 					
 				} else {
-					stack.push({data: `Error: cannot get help page for value "${print(page)}" of type ${types.type_to_str(page.type)}.`, type: types.str});
+					stack.push(types.new_str(`Error: cannot get help page for value "${print(page)}" of type ${types.type_to_str(page.type)}.`));
 				}
 			}
 		},
 		"tut, tutorial"() {
 			if(stack.length == 0) {
-				stack.push({data: tut_pages[0], type: types.str});
+				stack.push(types.new_str(tut_pages[0]));
 			} else {
 				var page = stack.pop().data;
 				if(page < tut_pages.length) {
-					stack.push({data: tut_pages[page], type: types.str});
+					stack.push(types.new_str(tut_pages[page]));
 				} else {
-					stack.push({data: `Error: tutorial page ${page} does not exist.`, type: types.str});
+					stack.push(types.new_str(`Error: tutorial page ${page} does not exist.`));
 				}
 			}
 		},
 		"adv_tut, adv_tutorial, advanced_tutorial, advanced_tut"() {
 			if(stack.length == 0) {
-				stack.push({data: adv_tut_pages[0], type: types.str});
+				stack.push(types.new_str(adv_tut_pages[0]));
 			} else {
 				var page = stack.pop().data;
 				if(page < adv_tut_pages.length) {
-					stack.push({data: adv_tut_pages[page], type: types.str});
+					stack.push(types.new_str(adv_tut_pages[page]));
 				} else {
-					stack.push({data: `Error: advanced tutorial page ${page} does not exist.`, type: types.str});
+					stack.push(types.new_str(`Error: advanced tutorial page ${page} does not exist.`));
 				}
 			}
 		},
@@ -957,13 +958,13 @@ Demos:
 		// Basic functions.
 		
 		"type, typeof, instance, instanceof"() {
-			stack.push({data: types.type_to_str(stack.pop().type), type: types.str});
+			stack.push(types.new_str(types.type_to_str(stack.pop().type)));
 		},
 		"true, yes, on"() {
-			stack.push({data: 1, type: types.num});
+			stack.push(types.new_num(1));
 		},
 		"false, no, off"() {
-			stack.push({data: 0, type: types.num});
+			stack.push(types.new_num(0));
 		},
 		
 		// Flow control.
@@ -1091,7 +1092,7 @@ Demos:
 				return stack.pop();
 			});
 			
-			stack.push({data: mapped, type: types.list});
+			stack.push(types.new_list(mapped));
 		},
 		"fold, foldl, reduce, fold_left"() {
 			var reducer = stack.pop();
@@ -1125,10 +1126,10 @@ Demos:
 				return stack.pop().data;
 			});
 			
-			stack.push({data: filtered, type: types.list});
+			stack.push(types.new_list(filtered));
 		},
 		"length, size, len"() {
-			stack.push({data: stack.pop().data.length, type: types.num});
+			stack.push(types.new_list(stack.pop().data.length));
 		},
 		"head, first, cat, top, pop, fst"() {
 			var list = stack.pop().data;
@@ -1157,32 +1158,23 @@ Demos:
 			stack.push(list[list.length - index - 1]);
 		},
 		"init, front, list_drop"() {
-			stack.push({
-				data: stack.pop().data.slice(0, -1),
-				type: types.list
-			});
+			stack.push(types.new_list(stack.pop().data.slice(0, -1)));
 		},
 		"tail, back, cdr, rest"() {
-			stack.push({
-				data: stack.pop().data.slice(1),
-				type: types.list
-			});
+			stack.push(types.new_list(stack.pop().data.slice(1)));
 		},
 		"body, middle"() {
-			stack.push({
-				data: stack.pop().data.slice(1, -1),
-				type: types.list
-			});
+			stack.push(types.new_list(stack.pop().data.slice(1, -1)));
 		},
 		"reverse, invert"() {
 			var list = stack.pop().data;
-			stack.push({data: list.reverse(), type: types.list});
+			stack.push(types.new_list(list.reverse()));
 		},
 		"reverse_n, invert_n"() {
 			var list = stack.pop().data;
 			var n = list.pop().data;
 			list = list.concat(list.splice(list.length - n, n).reverse());
-			stack.push({data: list, type: types.list});
+			stack.push(types.new_list(list));
 		},
 		"pop_n, list_drop_n"() {
 			var n = stack.pop().data;
@@ -1190,16 +1182,13 @@ Demos:
 			for(let cou = 0; cou < n; cou++) {
 				list.pop();
 			}
-			stack.push({data: list, type: types.list});
+			stack.push(types.new_list(list));
 		},
 		"elem, includes, contains, in_list"() {
 			var item = stack.pop();
 			var list = stack.pop().data;
 			
-			stack.push({
-				data: list.reduce((acc, cur) => acc || eq(item, cur), false) | 0,
-				type: types.num
-			});
+			stack.push(types.new_num(list.reduce((acc, cur) => acc || eq(item, cur), false) | 0));
 		},
 		"expl, explode, extr, extract, spr, spread"() {
 			var list = stack.pop().data;
@@ -1214,7 +1203,7 @@ Demos:
 			for(let cou = 0; cou < n; cou++) {
 				list.unshift(stack.pop());
 			}
-			stack.push({data: list, type: types.list});
+			stack.push(types.new_list(list));
 		},
 		"copy_group, copy_as_list"() {
 			var n = stack.pop().data;
@@ -1223,21 +1212,21 @@ Demos:
 			for(let cou = 0; cou < n; cou++) {
 				list.unshift(stack[stack.length - 1 - cou]);
 			}
-			stack.push({data: list, type: types.list});
+			stack.push(types.new_list(list));
 		},
 		group_all() {
 			var list = stack.slice();
 			stack = [];
-			stack.push({data: list, type: types.list});
+			stack.push(types.new_list(list));
 		},
 		copy_group_all() {
 			var list = stack.slice();
-			stack.push({data: list, type: types.list});
+			stack.push(types.new_list(list));
 		},
 		"list_dup, list_duplicate"() {
 			var list = stack.pop().data;
 			list.push(list[list.length - 1]);
-			stack.push({data: list, type: types.list});
+			stack.push(types.new_list(list));
 		},
 		list_swap() {
 			var list = stack.pop().data;
@@ -1245,7 +1234,7 @@ Demos:
 			var second = list.pop();
 			list.push(first);
 			list.push(second);
-			stack.push({data: list, type: types.list});
+			stack.push(types.new_list(list));
 		},
 		"list_rot, list_rotate"() {
 			var list = stack.pop().data;
@@ -1255,7 +1244,7 @@ Demos:
 			list.push(first);
 			list.push(third);
 			list.push(second);
-			stack.push({data: list, type: types.list});
+			stack.push(types.new_list(list));
 		},
 		"list_unrot, list_unrotate, list_reverse_rot, list_reverse_rotate, list_counter_rot, list_counter_rotate"() {
 			var list = stack.pop().data;
@@ -1265,7 +1254,7 @@ Demos:
 			list.push(second);
 			list.push(first);
 			list.push(third);
-			stack.push({data: list, type: types.list});
+			stack.push(types.new_list(list));
 		},
 		"list_roll, list_rot_n, list_rotate_n"() {
 			var n = stack.pop().data;
@@ -1280,7 +1269,7 @@ Demos:
 				list.push(rolled);
 			}
 			
-			stack.push({data: list, type: types.list});
+			stack.push(types.new_list(list));
 		},
 		"list_reverse_roll, list_counter_roll, list_reverse_rot_n, list_reverse_rotate_n, list_counter_rot_n, list_counter_rotate_n"() {
 			var n = stack.pop().data;
@@ -1295,14 +1284,14 @@ Demos:
 				list.splice(list.length + n + 1, 0, rolled);
 			}
 			
-			stack.push({data: list, type: types.list});
+			stack.push(types.new_list(list));
 		},
 		list_nip() {
 			var list = stack.pop().data;
 			var first = list.pop();
 			var second = list.pop();
 			list.push(first);
-			stack.push({data: list, type: types.list});
+			stack.push(types.new_list(list));
 		},
 		list_tuck() {
 			var list = stack.pop().data;
@@ -1311,7 +1300,7 @@ Demos:
 			list.push(first);
 			list.push(second);
 			list.push(first);
-			stack.push({data: list, type: types.list});
+			stack.push(types.new_list(list));
 		},
 		list_over() {
 			var list = stack.pop().data;
@@ -1320,71 +1309,71 @@ Demos:
 			list.push(second);
 			list.push(first);
 			list.push(second);
-			stack.push({data: list, type: types.list});
+			stack.push(types.new_list(list));
 		},
 		
 		// Math functions.
 		
 		pi() {
-			stack.push({data: Math.PI, type: types.num});
+			stack.push(types.new_num(Math.PI));
 		},
 		e() {
-			stack.push({data: Math.E, type: types.num});
+			stack.push(types.new_num(Math.E));
 		},
 		"abs, absolute, positive"() {
-			stack.push({data: Math.abs(stack.pop().data), type: types.num});
+			stack.push(types.new_num(Math.abs(stack.pop().data)));
 		},
 		"round, trunc, truncate"() {
-			stack.push({data: Math.round(stack.pop().data), type: types.num});
+			stack.push(types.new_num(Math.round(stack.pop().data)));
 		},
 		"ceil, ceiling, roof"() {
-			stack.push({data: Math.ceil(stack.pop().data), type: types.num});
+			stack.push(types.new_num(Math.ceil(stack.pop().data)));
 		},
 		floor() {
-			stack.push({data: Math.floor(stack.pop().data), type: types.num});
+			stack.push(types.new_num(Math.floor(stack.pop().data)));
 		},
 		"max, maximum, biggest"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			stack.push({data: Math.max(left, right), type: types.num});
+			stack.push(types.new_num(Math.max(left, right)));
 		},
 		"main, minimum, smallest"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			stack.push({data: Math.min(left, right), type: types.num});
+			stack.push(types.new_num(Math.min(left, right)));
 		},
 		"sgn, sign"() {
-			stack.push({data: Math.sign(stack.pop().data), type: types.num});
+			stack.push(types.new_num(Math.sign(stack.pop().data)));
 		},
 		"rand, random"() {
 			var min = stack.pop().data;
 			var max = stack.pop().data;
-			stack.push({data: (Math.random() * (max - min)) + min, type: types.num});
+			stack.push(types.new_num((Math.random() * (max - min)) + min));
 		},
 		"cos, cosine"() {
-			stack.push({data: Math.cos(stack.pop().data), type: types.num});
+			stack.push(types.new_num(Math.cos(stack.pop().data)));
 		},
 		"sin, sine"() {
-			stack.push({data: Math.sin(stack.pop().data), type: types.num});
+			stack.push(types.new_num(Math.sin(stack.pop().data)));
 		},
 		"tan, tangent"() {
-			stack.push({data: Math.tan(stack.pop().data), type: types.num});
+			stack.push(types.new_num(Math.tan(stack.pop().data)));
 		},
 		"sqrt, square_root"() {
-			stack.push({data: Math.sqrt(stack.pop().data), type: types.num});
+			stack.push(types.new_num(Math.sqrt(stack.pop().data)));
 		},
 		"cbrt, cube_root"() {
-			stack.push({data: Math.cbrt(stack.pop().data), type: types.num});
+			stack.push(types.new_num(Math.cbrt(stack.pop().data)));
 		},
 		root() {
 			var num = stack.pop().data;
 			var exp = stack.pop().data;
-			stack.push({data: num ** (1 / exp), type: types.num});
+			stack.push(types.new_num(num ** (1 / exp)));
 		},
 		"log, logarithm"() {
 			var num = stack.pop().data;
 			var base = stack.pop().data;
-			stack.push({data: Math.log(num) / Math.log(base), type: types.num});
+			stack.push(types.new_num(Math.log(num) / Math.log(base)));
 		},
 		
 		// Function functions.
@@ -1404,7 +1393,7 @@ Demos:
 		"dot, comp, compose"(scopes) {
 			var second = stack.pop();
 			var first = stack.pop();
-			var run = {data: "run", type: types.sym};
+			var run = types.new_sym("run");
 			
 			stack.push({
 				args: [],
@@ -1476,20 +1465,11 @@ function operators(stack) {
 					type: left.type
 				});
 			} else if(left.type == types.list && right.type != types.list) {
-				stack.push({
-					data: [...left.data, right],
-					type: types.list
-				});
+				stack.push(types.new_list([...left.data, right]));
 			} else if(left.type != types.list && right.type == types.list) {
-				stack.push({
-					data: [left, ...right.data],
-					type: types.list
-				});
+				stack.push(types.new_list([left, ...right.data]));
 			} else if(left.type == types.list && right.type == types.list) {
-				stack.push({
-					data: [...left.data, ...right.data],
-					type: types.list
-				});
+				stack.push(types.new_list([...left.data, ...right.data]));
 			}
 		},
 		"-"() {
@@ -1507,10 +1487,7 @@ function operators(stack) {
 					: right.data < 0
 						? left.data.slice(-right.data)
 						: left.data;
-				stack.push({
-					data: cut_string,
-					type: types.str
-				});
+				stack.push(types.new_str(cut_string));
 			}
 		},
 		"*"() {
@@ -1523,32 +1500,17 @@ function operators(stack) {
 			);
 			
 			if(left.type == types.num && right.type == types.num) {
-				stack.push({
-					data: left.data * right.data,
-					type: types.num
-				});
+				stack.push(types.new_num(left.data * right.data));
 			} else if(left.type == types.str && right.type == types.num) {
-				stack.push({
-					data: left.data.repeat(right.data),
-					type: types.str
-				});
+				stack.push(types.new_str(left.data.repeat(right.data)));
 			} else if(left.type == types.num && right.type == types.str) {
-				stack.push({
-					data: right.data.repeat(left.data),
-					type: types.str
-				});
+				stack.push(types.new_str(right.data.repeat(left.data)));
 			} else if(left.type == types.str && right.type == types.str) {
 				var prod = cartesian_prod(left.data.split(""), right.data.split(""));
-				stack.push({
-					data: prod.map(pair => ({data: pair.join(""), type: types.str})),
-					type: types.list
-				});
+				stack.push(types.new_list(prod.map(pair => ({data: pair.join(""), type: types.str}))));
 			} else if(left.type == types.list && right.type == types.list) {
 				var prod = cartesian_prod(left.data, right.data);
-				stack.push({
-					data: prod.map(pair => ({data: pair, type: types.list})),
-					type: types.list
-				});
+				stack.push(types.new_list(prod.map(pair => ({data: pair, type: types.list}))));
 			}
 		},
 		"/"() {
@@ -1556,10 +1518,7 @@ function operators(stack) {
 			var left = stack.pop();
 			
 			if(left.type == types.num && right.type == types.num) {
-				stack.push({
-					data: left.data / right.data,
-					type: types.num
-				});
+				stack.push(types.new_num(left.data / right.data));
 			}
 		},
 		"^"() {
@@ -1567,10 +1526,7 @@ function operators(stack) {
 			var left = stack.pop();
 			
 			if(left.type == types.num && right.type == types.num) {
-				stack.push({
-					data: left.data ** right.data,
-					type: types.num
-				});
+				stack.push(types.new_num(left.data ** right.data));
 			}
 		},
 		".."() {
@@ -1595,26 +1551,20 @@ function operators(stack) {
 			
 			var list = [];
 			for(let cou = (gets_bigger ? beginning : end); cou < (gets_bigger ? end + 1 : beginning + 1); cou++) {
-				list.push({data: cou, type: types.num});
+				list.push(types.new_num(cou));
 			}
 			
 			if(left.type == types.str) {
 				list = list.map(n => ({data: String.fromCharCode(n.data), type: types.str}));
 			}
-			stack.push({
-				data: (gets_bigger ? list : list.reverse()),
-				type: types.list
-			});
+			stack.push(types.new_list(gets_bigger ? list : list.reverse()));
 		},
 		"&"() {
 			var right = stack.pop();
 			var left = stack.pop();
 			
 			if(left.type == types.num && right.type == types.num) {
-				stack.push({
-					data: left.data && right.data,
-					type: types.num
-				});
+				stack.push(types.new_num(left.data && right.data));
 			}
 		},
 		"|"() {
@@ -1622,54 +1572,36 @@ function operators(stack) {
 			var left = stack.pop();
 			
 			if(left.type == types.num && right.type == types.num) {
-				stack.push({
-					data: left.data || right.data,
-					type: types.num
-				});
+				stack.push(types.new_num(left.data || right.data));
 			}
 		},
 		"!"() {
 			var bool = stack.pop();
 			if(bool.type == types.num) {
-				stack.push({
-					data: !bool.data | 0,
-					type: types.num
-				});
+				stack.push(types.new_num(!bool.data | 0));
 			}
 		},
 		"="() {
 			var right = stack.pop();
 			var left = stack.pop();
-			stack.push({
-				data: eq(left, right) | 0,
-				type: types.num
-			});
+			stack.push(types.new_num(eq(left, right) | 0));
 		},
 		"!="() {
 			var right = stack.pop();
 			var left = stack.pop();
-			stack.push({
-				data: !eq(left, right),
-				type: types.num
-			});
+			stack.push(types.new_num(!eq(left, right)));
 		},
 		"<"() {
 			var right = stack.pop();
 			var left = stack.pop();
 			
 			if(left.type == types.num && right.type == types.num) {
-				stack.push({
-					data: left.data < right.data | 0,
-					type: types.num
-				});
+				stack.push(types.new_num(left.data < right.data | 0));
 			} else if(
 				left.type == types.str && right.type == types.str ||
 				left.type == types.list && right.type == types.list
 			) {
-				stack.push({
-					data: left.data.length < right.data.length | 0,
-					type: types.num
-				});
+				stack.push(types.new_num(left.data.length < right.data.length | 0));
 			}
 		},
 		">"() {
@@ -1677,18 +1609,12 @@ function operators(stack) {
 			var left = stack.pop();
 			
 			if(left.type == types.num && right.type == types.num) {
-				stack.push({
-					data: left.data > right.data | 0,
-					type: types.num
-				});
+				stack.push(types.new_num(left.data > right.data | 0));
 			} else if(
 				left.type == types.str && right.type == types.str ||
 				left.type == types.list && right.type == types.list
 			) {
-				stack.push({
-					data: left.data.length > right.data.length | 0,
-					type: types.num
-				});
+				stack.push(types.new_num(left.data.length > right.data.length | 0));
 			}
 		},
 		"<="() {
@@ -1696,18 +1622,12 @@ function operators(stack) {
 			var left = stack.pop();
 			
 			if(left.type == types.num && right.type == types.num) {
-				stack.push({
-					data: left.data <= right.data | 0,
-					type: types.num
-				});
+				stack.push(types.new_num(left.data <= right.data | 0));
 			} else if(
 				left.type == types.str && right.type == types.str ||
 				left.type == types.list && right.type == types.list
 			) {
-				stack.push({
-					data: left.data.length <= right.data.length | 0,
-					type: types.num
-				});
+				stack.push(types.new_num(left.data.length <= right.data.length | 0));
 			}
 		},
 		">="() {
@@ -1715,18 +1635,12 @@ function operators(stack) {
 			var left = stack.pop();
 			
 			if(left.type == types.num && right.type == types.num) {
-				stack.push({
-					data: left.data >= right.data | 0,
-					type: types.num
-				});
+				stack.push(types.new_num(left.data >= right.data | 0));
 			} else if(
 				left.type == types.str && right.type == types.str ||
 				left.type == types.list && right.type == types.list
 			) {
-				stack.push({
-					data: left.data.length >= right.data.length | 0,
-					type: types.num
-				});
+				stack.push(types.new_num(left.data.length >= right.data.length | 0));
 			}
 		}
 		
@@ -1804,6 +1718,13 @@ var types = {
 	func: 3, sym: 4, op: 5
 };
 
+var new_value = {
+	new_num: num => ({data: num, type: types.num}),
+	new_str: str => ({data: str, type: types.str}),
+	new_list: list => ({data: list, type: types.list}),
+	new_sym: sym => ({data: sym, type: types.sym})
+};
+
 function type_to_str(type) {
 	switch(type) {
 		case types.num:
@@ -1821,7 +1742,7 @@ function type_to_str(type) {
 	}
 }
 
-module.exports = {...types, type_to_str};
+module.exports = {...types, ...new_value, type_to_str};
 },{}],9:[function(require,module,exports){
 function get_variable(name, scopes) {
 	for(let cou = scopes.length - 1; cou >= 0; cou--) {
