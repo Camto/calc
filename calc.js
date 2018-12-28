@@ -1555,7 +1555,7 @@ function operators(stack) {
 			}
 			
 			if(left.type == types.str) {
-				list = list.map(n => ({data: String.fromCharCode(n.data), type: types.str}));
+				list = list.map(n => (types.new_str(String.fromCharCode(n.data))));
 			}
 			stack.push(types.new_list(gets_bigger ? list : list.reverse()));
 		},
