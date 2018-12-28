@@ -307,6 +307,15 @@ Demos:
 			}
 			stack.push({data: list, type: types.list});
 		},
+		"elem, includes, contains, in_list"() {
+			var item = stack.pop();
+			var list = stack.pop().data;
+			
+			stack.push({
+				data: list.reduce((acc, cur) => acc || eq(item, cur), false) | 0,
+				type: types.num
+			});
+		},
 		"expl, explode, extr, extract, spr, spread"() {
 			var list = stack.pop().data;
 			for(let cou = 0; cou < list.length; cou++) {
@@ -746,40 +755,18 @@ function operators(stack) {
 		"="() {
 			var right = stack.pop();
 			var left = stack.pop();
-			
-			if(
-				left.type == types.num && right.type == types.num ||
-				left.type == types.str && right.type == types.str
-			) {
-				stack.push({
-					data: left.data == right.data | 0,
-					type: types.num
-				});
-			} else if(left.type == types.list && right.type == types.list) {
-				stack.push({
-					data: Object.compare(left.data, right.data) | 0,
-					type: types.num
-				});
-			}
+			stack.push({
+				data: eq(left, right) | 0,
+				type: types.num
+			});
 		},
 		"!="() {
 			var right = stack.pop();
 			var left = stack.pop();
-			
-			if(
-				left.type == types.num && right.type == types.num ||
-				left.type == types.str && right.type == types.str
-			) {
-				stack.push({
-					data: left.data != right.data | 0,
-					type: types.num
-				});
-			} else if(left.type == types.list && right.type == types.list) {
-				stack.push({
-					data: !Object.compare(left.data, right.data) | 0,
-					type: types.num
-				});
-			}
+			stack.push({
+				data: !eq(left, right),
+				type: types.num
+			});
 		},
 		"<"() {
 			var right = stack.pop();
@@ -878,6 +865,19 @@ function expand(obj) {
 		});
 	}
 	return obj;
+}
+
+function eq(left, right) {
+	if(
+		left.type == types.num && right.type == types.num ||
+		left.type == types.str && right.type == types.str
+	) {
+		return left.data == right.data;
+	} else if(left.type == types.list && right.type == types.list) {
+		return Object.compare(left.data, right.data);
+	} else {
+		return false;
+	}
 }
 
 // Taken from https://gist.github.com/nicbell/6081098 .

@@ -351,7 +351,18 @@ The argument on the left is the accumulator and the one on the right is the next
 Then 120 is returned.
 `,
 /*
-	filter
+	filter: aliases => `
+
+	FILTER LIST WITH PREDICATE
+
+Usage: "calc= list pred filter", where "list" is a list and "pred" is any predicate (function that returns a boolean).
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= -5 5 .. {2 >} filter" -> "calc=[3, 4, 5]"
+	* ""
+`,
 /*
 	length
 	head

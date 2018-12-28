@@ -133,7 +133,7 @@ Examples:
 
 It swaps the top 2 values of the stack. This means you can use a value underneath another.
 `,
-	stack_reversen: aliases => `
+	stack_reverse_n: aliases => `
 
 	REVERSE TOP N ITEMS
 
@@ -163,7 +163,7 @@ Examples:
 
 It removes the top item of the stack.
 `,
-	dropn: aliases => `
+	drop_n: aliases => `
 
 	DROP N ITEMS
 
@@ -352,7 +352,18 @@ The argument on the left is the accumulator and the one on the right is the next
 Then 120 is returned.
 `,
 /*
-	filter
+	filter: aliases => `
+
+	FILTER LIST WITH PREDICATE
+
+Usage: "calc= list pred filter", where "list" is a list and "pred" is any predicate (function that returns a boolean).
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= -5 5 .. {2 >} filter" -> "calc=[3, 4, 5]"
+	* ""
+`,
 /*
 	length
 	head
@@ -365,7 +376,7 @@ Then 120 is returned.
 	tail
 	body
 	reverse
-	reversen
+	reverse_n
 	popn
 	expl
 	group
@@ -993,7 +1004,7 @@ Demos:
 			stack.push(first);
 			stack.push(second);
 		},
-		"stack_reversen, stack_invertn"() {
+		"stack_reverse_n, stack_invert_n"() {
 			var n = stack.pop().data;
 			var reversed_vals = stack.splice(stack.length - n, n).reverse();
 			stack.push.apply(stack, reversed_vals);
@@ -1001,7 +1012,7 @@ Demos:
 		"drop, stack_pop"() {
 			stack.pop();
 		},
-		"dropn, stack_popn"() {
+		"dropn, stack_pop_n"() {
 			var n = stack.pop().data;
 			for(let cou = 0; cou < n; cou++) {
 				stack.pop();
@@ -1023,7 +1034,7 @@ Demos:
 			stack.push(first);
 			stack.push(third);
 		},
-		"roll, rotn, rotaten"() {
+		"roll, rot_n, rotate_n"() {
 			var n = stack.pop().data;
 			
 			if(n > 0) {
@@ -1035,7 +1046,7 @@ Demos:
 				stack.push(rolled);
 			}
 		},
-		"unroll, unrotn, unrotaten, reverse_roll, counter_roll, reverse_rotn, reverse_rotaten, counter_rotn, counter_rotaten"() {
+		"unroll, unrot_n, unrotate_n, reverse_roll, counter_roll, reverse_rot_n, reverse_rotate_n, counter_rot_n, counter_rotate_n"() {
 			var n = stack.pop().data;
 			
 			if(n > 0) {
@@ -1134,12 +1145,12 @@ Demos:
 			var list = stack.pop().data;
 			stack.push(list[list.length - 2]);
 		},
-		"nth, item, frontn, index, front_index, middlen, middle_index"() {
+		"nth, item, front_n, index, front_index, middle_n, middle_index"() {
 			var index = stack.pop().data;
 			var list = stack.pop().data;
 			stack.push(list[index]);
 		},
-		"back_nth, back_item, lastn, backn, back_index"() {
+		"back_nth, back_item, last_n, back_n, back_index"() {
 			var index = stack.pop().data;
 			var list = stack.pop().data;
 			stack.push(list[list.length - index - 1]);
@@ -1166,19 +1177,28 @@ Demos:
 			var list = stack.pop().data;
 			stack.push({data: list.reverse(), type: types.list});
 		},
-		"reversen, invertn"() {
+		"reverse_n, invert_n"() {
 			var list = stack.pop().data;
 			var n = list.pop().data;
 			list = list.concat(list.splice(list.length - n, n).reverse());
 			stack.push({data: list, type: types.list});
 		},
-		"popn, list_dropn"() {
+		"pop_n, list_drop_n"() {
 			var n = stack.pop().data;
 			var list = stack.pop().data;
 			for(let cou = 0; cou < n; cou++) {
 				list.pop();
 			}
 			stack.push({data: list, type: types.list});
+		},
+		"elem, includes, contains, in_list"() {
+			var item = stack.pop();
+			var list = stack.pop().data;
+			
+			stack.push({
+				data: list.reduce((acc, cur) => acc || eq(item, cur), false) | 0,
+				type: types.num
+			});
 		},
 		"expl, explode, extr, extract, spr, spread"() {
 			var list = stack.pop().data;
@@ -1246,7 +1266,7 @@ Demos:
 			list.push(third);
 			stack.push({data: list, type: types.list});
 		},
-		"list_roll, list_rotn, list_rotaten"() {
+		"list_roll, list_rot_n, list_rotate_n"() {
 			var n = stack.pop().data;
 			var list = stack.pop().data;
 			
@@ -1261,7 +1281,7 @@ Demos:
 			
 			stack.push({data: list, type: types.list});
 		},
-		"list_reverse_roll, list_counter_roll, list_reverse_rotn, list_reverse_rotaten, list_counter_rotn, list_counter_rotaten"() {
+		"list_reverse_roll, list_counter_roll, list_reverse_rot_n, list_reverse_rotate_n, list_counter_rot_n, list_counter_rotate_n"() {
 			var n = stack.pop().data;
 			var list = stack.pop().data;
 			
@@ -1371,7 +1391,7 @@ Demos:
 		"call, run, do, apply, get"() {
 			run_part.run_function(stack.pop(), stack, made_built_ins, operators, end_time);
 		},
-		"iter, iterate, iterative, loop, loopn"() {
+		"iter, iterate, iterative, loop, loop_n"() {
 			var iter_cou = stack.pop().data;
 			var iterator = stack.pop();
 			
@@ -1619,40 +1639,18 @@ function operators(stack) {
 		"="() {
 			var right = stack.pop();
 			var left = stack.pop();
-			
-			if(
-				left.type == types.num && right.type == types.num ||
-				left.type == types.str && right.type == types.str
-			) {
-				stack.push({
-					data: left.data == right.data | 0,
-					type: types.num
-				});
-			} else if(left.type == types.list && right.type == types.list) {
-				stack.push({
-					data: Object.compare(left.data, right.data) | 0,
-					type: types.num
-				});
-			}
+			stack.push({
+				data: eq(left, right) | 0,
+				type: types.num
+			});
 		},
 		"!="() {
 			var right = stack.pop();
 			var left = stack.pop();
-			
-			if(
-				left.type == types.num && right.type == types.num ||
-				left.type == types.str && right.type == types.str
-			) {
-				stack.push({
-					data: left.data != right.data | 0,
-					type: types.num
-				});
-			} else if(left.type == types.list && right.type == types.list) {
-				stack.push({
-					data: !Object.compare(left.data, right.data) | 0,
-					type: types.num
-				});
-			}
+			stack.push({
+				data: !eq(left, right),
+				type: types.num
+			});
 		},
 		"<"() {
 			var right = stack.pop();
@@ -1751,6 +1749,19 @@ function expand(obj) {
 		});
 	}
 	return obj;
+}
+
+function eq(left, right) {
+	if(
+		left.type == types.num && right.type == types.num ||
+		left.type == types.str && right.type == types.str
+	) {
+		return left.data == right.data;
+	} else if(left.type == types.list && right.type == types.list) {
+		return Object.compare(left.data, right.data);
+	} else {
+		return false;
+	}
 }
 
 // Taken from https://gist.github.com/nicbell/6081098 .
