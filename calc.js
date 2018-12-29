@@ -394,8 +394,21 @@ Examples:
 
 It returns the first item of the list.
 `,
+	snd: aliases => `
+
+	SECOND ITEM
+
+Usage: "calc= list snd", where "list" is a list.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= [6, 2, 7] snd" -> "calc=2"
+	* "calc= 6 3 .. snd" -> "calc=5"
+
+It returns the second item of the list.
+`,
 /*
-	snd
 	last
 	back_snd
 	nth
