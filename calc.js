@@ -408,8 +408,21 @@ Examples:
 
 It returns the second item of the list.
 `,
+	last: aliases => `
+
+	LAST ITEM
+
+Usage: "calc= list last", where "list" is a list.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= [6, 2, 7] last" -> "calc=7"
+	* "calc= 6 3 .. last" -> "calc=3"
+
+It returns the last item of the list.
+`,
 /*
-	last
 	back_snd
 	nth
 	back_nth
