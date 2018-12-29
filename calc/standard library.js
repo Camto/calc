@@ -96,13 +96,14 @@ Demos:
 					break;
 				case types.func:
 				case types.sym:
+				case types.op:
 					is_true = true;
 					break;
 				case types.list:
 					is_true = cond.data.length;
 					break;
 			}
-			if(is_true) {
+			if(is_true || cond.is_ref) {
 				run_part.run_function(if_true, stack, made_built_ins, operators, end_time);
 			} else {
 				run_part.run_function(if_false, stack, made_built_ins, operators, end_time);
