@@ -422,8 +422,21 @@ Examples:
 
 It returns the last item of the list.
 `,
+	back_snd: aliases => `
+
+	BEFORE LAST ITEM
+
+Usage: "calc= list back_snd", where "list" is a list.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= [6, 2, 7] back_snd" -> "calc=2"
+	* "calc= 6 3 .. back_snd" -> "calc=4"
+
+It returns the before last item of the list.
+`,
 /*
-	back_snd
 	nth
 	back_nth
 	init
