@@ -15,7 +15,7 @@ function lex(code) {
 			}
 			var sym = code.substr(pointer, end - pointer);
 			pointer = end;
-			return {data: sym, type: types.sym};
+			return types.new_sym(sym);
 		},
 		
 		num() {
@@ -31,7 +31,7 @@ function lex(code) {
 			}
 			var num = code.substr(pointer, end - pointer);
 			pointer = end;
-			return {data: parseFloat(num), type: types.num};
+			return types.new_num(parseFloat(num));
 		},
 		
 		str() {
@@ -62,12 +62,12 @@ function lex(code) {
 			}
 			
 			pointer++;
-			return {data: str, type: types.str};
+			return types.new_str(str);
 		},
 		
 		char() {
 			pointer += 2;
-			return {data: code[pointer - 1], type: types.str}
+			return types.new_str(code[pointer - 1]);
 		},
 		
 		op() {
@@ -88,7 +88,7 @@ function lex(code) {
 			end++;
 			var op = code.substr(pointer, end - pointer);
 			pointer = end;
-			return {data: op, type: types.op};
+			return types.new_op(op);
 		}
 		
 	};

@@ -8,7 +8,8 @@ var new_value = {
 	new_bool: bool => ({data: bool | 0, type: types.num}),
 	new_str: str => ({data: str, type: types.str}),
 	new_list: list => ({data: list, type: types.list}),
-	new_sym: sym => ({data: sym, type: types.sym})
+	new_sym: sym => ({data: sym, type: types.sym}),
+	new_op: op => ({data: op, type: types.op})
 };
 
 function type_to_str(type) {
