@@ -107,7 +107,7 @@ function parse(tokens) {
 		}
 		token_pointer++;
 		
-		return [...code, {data: length, type: types.list}];
+		return [...code, types.new_list(length)];
 	}
 	
 	var raw_variables = [];

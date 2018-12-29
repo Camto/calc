@@ -72,7 +72,7 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 				for(let cou = 0; cou < block[instruccion_pointer].data; cou++) {
 					list.push(stack.pop());
 				}
-				stack.push({data: list.reverse(), type: types.list});
+				stack.push(types.new_list(list.reverse()));
 				break;
 			case types.func:
 				var scoped_function = block[instruccion_pointer];

@@ -746,7 +746,7 @@ function parse(tokens) {
 		}
 		token_pointer++;
 		
-		return [...code, {data: length, type: types.list}];
+		return [...code, types.new_list(length)];
 	}
 	
 	var raw_variables = [];
@@ -911,7 +911,7 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 				for(let cou = 0; cou < block[instruccion_pointer].data; cou++) {
 					list.push(stack.pop());
 				}
-				stack.push({data: list.reverse(), type: types.list});
+				stack.push(types.new_list(list.reverse()));
 				break;
 			case types.func:
 				var scoped_function = block[instruccion_pointer];
