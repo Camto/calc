@@ -492,8 +492,20 @@ Examples:
 
 It returns all but the last item of the list.
 `,
-/*
-	body
+	body: aliases => `
+
+	ALL BUT FIRST AND LAST ITEM
+
+Usage: "calc= list body", where "list" is a list.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= [6, 2, 7] body" -> "calc=[2]"
+	* "calc= 6 3 .. body" -> "calc=[5, 4]"
+
+It returns all but the first and last item of the list.
+`,
 /*
 	reverse
 	reverse_n
