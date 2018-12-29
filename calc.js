@@ -962,10 +962,10 @@ Demos:
 			stack.push(types.new_str(types.type_to_str(stack.pop().type)));
 		},
 		"true, yes, on"() {
-			stack.push(types.new_num(1));
+			stack.push(types.new_bool(true));
 		},
 		"false, no, off"() {
-			stack.push(types.new_num(0));
+			stack.push(types.new_bool(false));
 		},
 		
 		// Flow control.
