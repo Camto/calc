@@ -1176,7 +1176,7 @@ Demos:
 			var item = stack.pop();
 			var list = stack.pop().data;
 			
-			stack.push(types.new_num(list.reduce((acc, cur) => acc || eq(item, cur), false) | 0));
+			stack.push(types.new_bool(list.reduce((acc, cur) => acc || eq(item, cur), false)));
 		},
 		"expl, explode, extr, extract, spr, spread"() {
 			var list = stack.pop().data;
@@ -1566,30 +1566,30 @@ function operators(stack) {
 		"!"() {
 			var bool = stack.pop();
 			if(bool.type == types.num) {
-				stack.push(types.new_num(!bool.data | 0));
+				stack.push(types.new_bool(!bool.data));
 			}
 		},
 		"="() {
 			var right = stack.pop();
 			var left = stack.pop();
-			stack.push(types.new_num(eq(left, right) | 0));
+			stack.push(types.new_bool(eq(left, right)));
 		},
 		"!="() {
 			var right = stack.pop();
 			var left = stack.pop();
-			stack.push(types.new_num(!eq(left, right)));
+			stack.push(types.new_bool(!eq(left, right)));
 		},
 		"<"() {
 			var right = stack.pop();
 			var left = stack.pop();
 			
 			if(left.type == types.num && right.type == types.num) {
-				stack.push(types.new_num(left.data < right.data | 0));
+				stack.push(types.new_bool(left.data < right.data));
 			} else if(
 				left.type == types.str && right.type == types.str ||
 				left.type == types.list && right.type == types.list
 			) {
-				stack.push(types.new_num(left.data.length < right.data.length | 0));
+				stack.push(types.new_bool(left.data.length < right.data.length));
 			}
 		},
 		">"() {
@@ -1597,12 +1597,12 @@ function operators(stack) {
 			var left = stack.pop();
 			
 			if(left.type == types.num && right.type == types.num) {
-				stack.push(types.new_num(left.data > right.data | 0));
+				stack.push(types.new_bool(left.data > right.data));
 			} else if(
 				left.type == types.str && right.type == types.str ||
 				left.type == types.list && right.type == types.list
 			) {
-				stack.push(types.new_num(left.data.length > right.data.length | 0));
+				stack.push(types.new_bool(left.data.length > right.data.length));
 			}
 		},
 		"<="() {
@@ -1610,12 +1610,12 @@ function operators(stack) {
 			var left = stack.pop();
 			
 			if(left.type == types.num && right.type == types.num) {
-				stack.push(types.new_num(left.data <= right.data | 0));
+				stack.push(types.new_bool(left.data <= right.data));
 			} else if(
 				left.type == types.str && right.type == types.str ||
 				left.type == types.list && right.type == types.list
 			) {
-				stack.push(types.new_num(left.data.length <= right.data.length | 0));
+				stack.push(types.new_bool(left.data.length <= right.data.length));
 			}
 		},
 		">="() {
@@ -1623,12 +1623,12 @@ function operators(stack) {
 			var left = stack.pop();
 			
 			if(left.type == types.num && right.type == types.num) {
-				stack.push(types.new_num(left.data >= right.data | 0));
+				stack.push(types.new_bool(left.data >= right.data));
 			} else if(
 				left.type == types.str && right.type == types.str ||
 				left.type == types.list && right.type == types.list
 			) {
-				stack.push(types.new_num(left.data.length >= right.data.length | 0));
+				stack.push(types.new_bool(left.data.length >= right.data.length));
 			}
 		}
 		
