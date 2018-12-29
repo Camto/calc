@@ -365,8 +365,21 @@ Examples:
 
 It calls the predicate on each element in the list, keeping only the elements that return truthy values.
 `,
+	length: aliases => `
+
+	LENGTH OF
+
+Usage: "calc= list_like length", where "list_like" is a list or a string (like a list of characters).
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= [0, 1, 2] length" -> "calc=3"
+	* "calc= "dbfj" length" -> "calc=4"
+
+It returns the length of the given list_like.
+`,
 /*
-	length
 	head
 	snd
 	last

@@ -229,7 +229,7 @@ Demos:
 			stack.push(types.new_list(filtered));
 		},
 		"length, size, len"() {
-			stack.push(types.new_list(stack.pop().data.length));
+			stack.push(types.new_num(stack.pop().data.length));
 		},
 		"head, first, cat, top, pop, fst"() {
 			var list = stack.pop().data;
