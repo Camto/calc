@@ -450,8 +450,21 @@ Examples:
 
 It returns the n-th item of the list, where idx is that n. The list is 0 indexed, meaning the first item is at index 0.
 `,
+	back_nth: aliases => `
+
+	N-TH ITEM FROM THE END
+
+Usage: "calc= list idx back_nth", where "idx" is an index into the list and "list" is a list.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= [866, 346, 987, 43] 2 back_nth" -> "calc=346"
+	* "calc= 3 8 .. 3 back_nth" -> "calc=5"
+
+It returns the n-th item from the back of the list, where idx is that n. The list is 0 indexed, meaning the last item is at index 0.
+`,
 /*
-	back_nth
 	init
 	tail
 	body
