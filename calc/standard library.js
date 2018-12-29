@@ -288,7 +288,7 @@ Demos:
 			var item = stack.pop();
 			var list = stack.pop().data;
 			
-			stack.push(types.new_num(list.reduce((acc, cur) => acc || eq(item, cur), false) | 0));
+			stack.push(types.new_bool(list.reduce((acc, cur) => acc || eq(item, cur), false)));
 		},
 		"expl, explode, extr, extract, spr, spread"() {
 			var list = stack.pop().data;
