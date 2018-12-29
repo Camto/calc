@@ -88,22 +88,7 @@ Demos:
 			var if_true = stack.pop();
 			var cond = stack.pop();
 			
-			var is_true;
-			switch(cond.type) {
-				case types.num:
-				case types.str:
-					is_true = cond.data;
-					break;
-				case types.func:
-				case types.sym:
-				case types.op:
-					is_true = true;
-					break;
-				case types.list:
-					is_true = cond.data.length;
-					break;
-			}
-			if(is_true || cond.is_ref) {
+			if(types.to_bool(cond)) {
 				run_part.run_function(if_true, stack, made_built_ins, operators, end_time);
 			} else {
 				run_part.run_function(if_false, stack, made_built_ins, operators, end_time);

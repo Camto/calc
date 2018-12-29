@@ -5,6 +5,7 @@ var types = {
 
 var new_value = {
 	new_num: num => ({data: num, type: types.num}),
+	new_bool: bool => ({data: bool | 0, type: types.num}),
 	new_str: str => ({data: str, type: types.str}),
 	new_list: list => ({data: list, type: types.list}),
 	new_sym: sym => ({data: sym, type: types.sym})
@@ -31,7 +32,7 @@ function to_bool(val) {
 	if(val.is_ref) {
 		return true;
 	}
-	switch(cond.type) {
+	switch(val.type) {
 		case types.num:
 		case types.str:
 			return Boolean(val.data);

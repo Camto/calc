@@ -975,22 +975,7 @@ Demos:
 			var if_true = stack.pop();
 			var cond = stack.pop();
 			
-			var is_true;
-			switch(cond.type) {
-				case types.num:
-				case types.str:
-					is_true = cond.data;
-					break;
-				case types.func:
-				case types.sym:
-				case types.op:
-					is_true = true;
-					break;
-				case types.list:
-					is_true = cond.data.length;
-					break;
-			}
-			if(is_true || cond.is_ref) {
+			if(types.to_bool(cond)) {
 				run_part.run_function(if_true, stack, made_built_ins, operators, end_time);
 			} else {
 				run_part.run_function(if_false, stack, made_built_ins, operators, end_time);
@@ -1722,6 +1707,7 @@ var types = {
 
 var new_value = {
 	new_num: num => ({data: num, type: types.num}),
+	new_bool: bool => ({data: bool | 0, type: types.num}),
 	new_str: str => ({data: str, type: types.str}),
 	new_list: list => ({data: list, type: types.list}),
 	new_sym: sym => ({data: sym, type: types.sym})
@@ -1744,7 +1730,28 @@ function type_to_str(type) {
 	}
 }
 
-module.exports = {...types, ...new_value, type_to_str};
+function to_bool(val) {
+	if(val.is_ref) {
+		return true;
+	}
+	switch(val.type) {
+		case types.num:
+		case types.str:
+			return Boolean(val.data);
+			break;
+		case types.func:
+		case types.sym:
+		case types.op:
+			return true;
+			break;
+		case types.list:
+			return Boolean(val.data.length);
+			break;
+	}
+	return false;
+}
+
+module.exports = {...types, ...new_value, type_to_str, to_bool};
 },{}],9:[function(require,module,exports){
 function get_variable(name, scopes) {
 	for(let cou = scopes.length - 1; cou >= 0; cou--) {
