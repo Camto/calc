@@ -378,10 +378,23 @@ Examples:
 	* "calc= [0, 1, 2] length" -> "calc=3"
 	* "calc= "dbfj" length" -> "calc=4"
 
-It returns the length of the given list_like.
+It returns the length of the list_like.
+`,
+	head: aliases => `
+
+	FIRST ITEM
+
+Usage: "calc= list head", where "list" is a list.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= [6, 2, 7] head" -> "calc=6"
+	* "calc= 6 3 .. head" -> "calc=6"
+
+It returns the first item of the list.
 `,
 /*
-	head
 	snd
 	last
 	back_snd
