@@ -27,4 +27,25 @@ function type_to_str(type) {
 	}
 }
 
-module.exports = {...types, ...new_value, type_to_str};
+function to_bool(val) {
+	if(val.is_ref) {
+		return true;
+	}
+	switch(cond.type) {
+		case types.num:
+		case types.str:
+			return Boolean(val.data);
+			break;
+		case types.func:
+		case types.sym:
+		case types.op:
+			return true;
+			break;
+		case types.list:
+			return Boolean(val.data.length);
+			break;
+	}
+	return false;
+}
+
+module.exports = {...types, ...new_value, type_to_str, to_bool};
