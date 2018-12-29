@@ -464,8 +464,21 @@ Examples:
 
 It returns the n-th item from the back of the list, where idx is that n. The list is 0 indexed, meaning the last item is at index 0.
 `,
+	init: aliases => `
+
+	ALL BUT FIRST ITEM
+
+Usage: "calc= list init", where "list" is a list.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= [6, 2, 7] init" -> "calc=[6, 2]"
+	* "calc= 6 3 .. init" -> "calc=[6, 5, 4]"
+
+It returns all but the first item of the list.
+`,
 /*
-	init
 	tail
 	body
 /*
