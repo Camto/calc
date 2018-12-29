@@ -361,8 +361,9 @@ Aliases: ${aliases}.
 Examples:
 	* "calc= -5 5 .. {2 >} filter" -> "calc=[3, 4, 5]"
 	* "calc= [-3 3 .., 1 2 .., -5 -3 .., [0, 3], [5, 1]] {0 elem !} filter" -> "calc=[[1, 2], [-5, -4, -3], [5, 1]]"
+	* "calc= ["", "as", [], [1], 0, 1, {}, {+}, $0] {} filter" -> "calc=[as, [1], 1, { -> <function definition>}, { -> <function definition>}, 0]"
 
-It calls the predicate on each element in the list, keeping only the elements that return true.
+It calls the predicate on each element in the list, keeping only the elements that return truthy values.
 `,
 /*
 	length

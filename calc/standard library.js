@@ -223,7 +223,7 @@ Demos:
 			var filtered = list.filter(item => {
 				stack.push(item);
 				run_part.run_function(filter, stack, made_built_ins, operators, end_time);
-				return stack.pop().data;
+				return types.to_bool(stack.pop());
 			});
 			
 			stack.push(types.new_list(filtered));
