@@ -477,8 +477,21 @@ Examples:
 
 It returns all but the first item of the list.
 `,
+	tail: aliases => `
+
+	ALL BUT LAST ITEM
+
+Usage: "calc= list tail", where "list" is a list.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= [6, 2, 7] tail" -> "calc=[2, 7]"
+	* "calc= 6 3 .. tail" -> "calc=[5, 4, 3]"
+
+It returns all but the last item of the list.
+`,
 /*
-	tail
 	body
 /*
 	reverse
