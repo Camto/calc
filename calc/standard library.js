@@ -271,8 +271,8 @@ Demos:
 			stack.push(types.new_list(list.reverse()));
 		},
 		"reverse_n, invert_n"() {
+			var n = stack.pop().data;
 			var list = stack.pop().data;
-			var n = list.pop().data;
 			list = list.concat(list.splice(list.length - n, n).reverse());
 			stack.push(types.new_list(list));
 		},

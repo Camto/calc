@@ -519,8 +519,21 @@ Examples:
 
 It reverses the list.
 `,
+	reverse_n: aliases => `
+
+	REVERSE LAST N ITEMS OF LIST
+
+Usage: "calc= list num reverse", where "list" is a list and "num" is an index into the list.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 1 6 .. 4 reverse_n" -> "calc=[1, 2, 6, 5, 4, 3]"
+	* "calc= [7, 34, $-, "as", [], {}] 3 reverse_n" -> "calc=[7, 34, -, { -> <function definition>}, [], as]"
+
+It reverses only the last num items of the list.
+`,
 /*
-	reverse_n
 	popn
 	elem
 	expl
