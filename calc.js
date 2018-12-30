@@ -506,8 +506,21 @@ Examples:
 
 It returns all but the first and last item of the list.
 `,
+	reverse: aliases => `
+
+	REVERSE LIST
+
+Usage: "calc= list reverse", where "list" is a list.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 4 9 .. reverse" -> "calc=[9, 8, 7, 6, 5, 4]"
+	* "calc= [7, 34, $-, "as", [], {}] reverse" -> "calc=[{ -> <function definition>}, [], as, -, 34, 7]"
+
+It reverses the list.
+`,
 /*
-	reverse
 	reverse_n
 	popn
 	elem
@@ -516,6 +529,7 @@ It returns all but the first and last item of the list.
 	copy_group
 	group_all
 	copy_group_all
+/*
 	list_dup
 	list_swap
 	list_rot
