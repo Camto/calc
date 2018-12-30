@@ -548,8 +548,22 @@ Examples:
 
 It removes the last num items of the list.
 `,
+	elem: aliases => `
+
+	IS ITEM IN LIST
+
+Usage: "calc= list item elem", where "list" is the list and "item" is the item to test for.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= [7, {}, 4, 23, 'a, $+, 4, []] 4 elem" -> "calc=1"
+	* "calc= [7, {}, 23, 'a, $+, []] 4 elem" -> "calc=0"
+	* "calc= [-3 3 .., 1 2 .., -5 -3 .., [0, 3], [5, 1]] {0 elem !} filter" -> "calc=[[1, 2], [-5, -4, -3], [5, 1]]"
+
+It returns true if the item is in the list, else it returns false.
+`,
 /*
-	elem
 	expl
 	group
 	copy_group
