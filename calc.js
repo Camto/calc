@@ -534,8 +534,21 @@ Examples:
 
 It reverses only the last num items of the list.
 `,
+	pop_n: aliases => `
+
+	REMOVE LAST N ITEMS OF LIST
+
+Usage: "calc= list num pop_n", where "list" is a list and "num" is an index into the list.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 1 6 .. 4 pop_n" -> "calc=[1, 2]"
+	* "calc= [7, 34, $-, "as", [], {}] 3 pop_n" -> "calc=[7, 34, -]"
+
+It removes the last num items of the list.
+`,
 /*
-	popn
 	elem
 	expl
 	group
