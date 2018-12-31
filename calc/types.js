@@ -50,4 +50,49 @@ function to_bool(val) {
 	return false;
 }
 
-module.exports = {...types, ...new_value, type_to_str, to_bool};
+function eq(left, right) {
+	if(
+		left.type == types.num && right.type == types.num ||
+		left.type == types.str && right.type == types.str
+	) {
+		return left.data == right.data;
+	} else if(left.type == types.list && right.type == types.list) {
+		return Object.compare(left.data, right.data);
+	} else {
+		return false;
+	}
+}
+
+// Taken from https://gist.github.com/nicbell/6081098 .
+Object.compare = function(obj1, obj2) {
+	for(var p in obj1) {
+		if(obj1.hasOwnProperty(p) !== obj2.hasOwnProperty(p)) {
+			return false;
+		}
+		switch(typeof (obj1[p])) {
+			case "object":
+				if(!Object.compare(obj1[p], obj2[p])) {
+					return false;
+				}
+				break;
+			case "function":
+				if(typeof (obj2[p]) == "undefined" || (p != "compare" && obj1[p].toString() != obj2[p].toString())) {
+					return false;
+				}
+				break;
+			default:
+				if(obj1[p] != obj2[p]) {
+					return false;
+				}
+				break;
+		}
+	}
+	for(var p in obj2) {
+		if(typeof (obj1[p]) == "undefined") {
+			return false;
+		}
+	}
+	return true;
+};
+
+module.exports = {...types, ...new_value, type_to_str, to_bool, eq};

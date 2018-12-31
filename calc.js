@@ -1359,7 +1359,7 @@ Demos:
 			var item = stack.pop();
 			var list = stack.pop().data;
 			
-			stack.push(types.new_bool(list.reduce((acc, cur) => acc || eq(item, cur), false)));
+			stack.push(types.new_bool(list.reduce((acc, cur) => acc || types.eq(item, cur), false)));
 		},
 		"expl, explode, extr, extract, spr, spread"() {
 			var list = stack.pop().data;
@@ -1755,12 +1755,12 @@ function operators(stack) {
 		"="() {
 			var right = stack.pop();
 			var left = stack.pop();
-			stack.push(types.new_bool(eq(left, right)));
+			stack.push(types.new_bool(types.eq(left, right)));
 		},
 		"!="() {
 			var right = stack.pop();
 			var left = stack.pop();
-			stack.push(types.new_bool(!eq(left, right)));
+			stack.push(types.new_bool(!types.eq(left, right)));
 		},
 		"<"() {
 			var right = stack.pop();
@@ -1837,51 +1837,6 @@ function expand(obj) {
 	return obj;
 }
 
-function eq(left, right) {
-	if(
-		left.type == types.num && right.type == types.num ||
-		left.type == types.str && right.type == types.str
-	) {
-		return left.data == right.data;
-	} else if(left.type == types.list && right.type == types.list) {
-		return Object.compare(left.data, right.data);
-	} else {
-		return false;
-	}
-}
-
-// Taken from https://gist.github.com/nicbell/6081098 .
-Object.compare = function(obj1, obj2) {
-	for(var p in obj1) {
-		if(obj1.hasOwnProperty(p) !== obj2.hasOwnProperty(p)) {
-			return false;
-		}
-		switch(typeof (obj1[p])) {
-			case "object":
-				if(!Object.compare(obj1[p], obj2[p])) {
-					return false;
-				}
-				break;
-			case "function":
-				if(typeof (obj2[p]) == "undefined" || (p != "compare" && obj1[p].toString() != obj2[p].toString())) {
-					return false;
-				}
-				break;
-			default:
-				if(obj1[p] != obj2[p]) {
-					return false;
-				}
-				break;
-		}
-	}
-	for(var p in obj2) {
-		if(typeof (obj1[p]) == "undefined") {
-			return false;
-		}
-	}
-	return true;
-};
-
 module.exports = {built_ins, operators};
 },{"./help pages":1,"./print":4,"./run part":5,"./types":8,"./variable manipulation":9}],8:[function(require,module,exports){
 var types = {
@@ -1936,7 +1891,52 @@ function to_bool(val) {
 	return false;
 }
 
-module.exports = {...types, ...new_value, type_to_str, to_bool};
+function eq(left, right) {
+	if(
+		left.type == types.num && right.type == types.num ||
+		left.type == types.str && right.type == types.str
+	) {
+		return left.data == right.data;
+	} else if(left.type == types.list && right.type == types.list) {
+		return Object.compare(left.data, right.data);
+	} else {
+		return false;
+	}
+}
+
+// Taken from https://gist.github.com/nicbell/6081098 .
+Object.compare = function(obj1, obj2) {
+	for(var p in obj1) {
+		if(obj1.hasOwnProperty(p) !== obj2.hasOwnProperty(p)) {
+			return false;
+		}
+		switch(typeof (obj1[p])) {
+			case "object":
+				if(!Object.compare(obj1[p], obj2[p])) {
+					return false;
+				}
+				break;
+			case "function":
+				if(typeof (obj2[p]) == "undefined" || (p != "compare" && obj1[p].toString() != obj2[p].toString())) {
+					return false;
+				}
+				break;
+			default:
+				if(obj1[p] != obj2[p]) {
+					return false;
+				}
+				break;
+		}
+	}
+	for(var p in obj2) {
+		if(typeof (obj1[p]) == "undefined") {
+			return false;
+		}
+	}
+	return true;
+};
+
+module.exports = {...types, ...new_value, type_to_str, to_bool, eq};
 },{}],9:[function(require,module,exports){
 function get_variable(name, scopes) {
 	for(let cou = scopes.length - 1; cou >= 0; cou--) {
