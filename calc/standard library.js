@@ -694,54 +694,22 @@ function operators(stack) {
 		"<"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			
-			if(left.type == types.num && right.type == types.num) {
-				stack.push(types.new_bool(left.data < right.data));
-			} else if(
-				left.type == types.str && right.type == types.str ||
-				left.type == types.list && right.type == types.list
-			) {
-				stack.push(types.new_bool(left.data.length < right.data.length));
-			}
+			stack.push(types.new_bool(types.cmp(left, right, (x, y) => x < y)));
 		},
 		">"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			
-			if(left.type == types.num && right.type == types.num) {
-				stack.push(types.new_bool(left.data > right.data));
-			} else if(
-				left.type == types.str && right.type == types.str ||
-				left.type == types.list && right.type == types.list
-			) {
-				stack.push(types.new_bool(left.data.length > right.data.length));
-			}
+			stack.push(types.new_bool(types.cmp(left, right, (x, y) => x > y)));
 		},
 		"<="() {
 			var right = stack.pop();
 			var left = stack.pop();
-			
-			if(left.type == types.num && right.type == types.num) {
-				stack.push(types.new_bool(left.data <= right.data));
-			} else if(
-				left.type == types.str && right.type == types.str ||
-				left.type == types.list && right.type == types.list
-			) {
-				stack.push(types.new_bool(left.data.length <= right.data.length));
-			}
+			stack.push(types.new_bool(types.cmp(left, right, (x, y) => x <= y)));
 		},
 		">="() {
 			var right = stack.pop();
 			var left = stack.pop();
-			
-			if(left.type == types.num && right.type == types.num) {
-				stack.push(types.new_bool(left.data >= right.data));
-			} else if(
-				left.type == types.str && right.type == types.str ||
-				left.type == types.list && right.type == types.list
-			) {
-				stack.push(types.new_bool(left.data.length >= right.data.length));
-			}
+			stack.push(types.new_bool(types.cmp(left, right, (x, y) => x >= y)));
 		}
 		
 	};

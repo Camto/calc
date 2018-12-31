@@ -1765,54 +1765,22 @@ function operators(stack) {
 		"<"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			
-			if(left.type == types.num && right.type == types.num) {
-				stack.push(types.new_bool(left.data < right.data));
-			} else if(
-				left.type == types.str && right.type == types.str ||
-				left.type == types.list && right.type == types.list
-			) {
-				stack.push(types.new_bool(left.data.length < right.data.length));
-			}
+			stack.push(types.new_bool(types.cmp(left, right, (x, y) => x < y)));
 		},
 		">"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			
-			if(left.type == types.num && right.type == types.num) {
-				stack.push(types.new_bool(left.data > right.data));
-			} else if(
-				left.type == types.str && right.type == types.str ||
-				left.type == types.list && right.type == types.list
-			) {
-				stack.push(types.new_bool(left.data.length > right.data.length));
-			}
+			stack.push(types.new_bool(types.cmp(left, right, (x, y) => x > y)));
 		},
 		"<="() {
 			var right = stack.pop();
 			var left = stack.pop();
-			
-			if(left.type == types.num && right.type == types.num) {
-				stack.push(types.new_bool(left.data <= right.data));
-			} else if(
-				left.type == types.str && right.type == types.str ||
-				left.type == types.list && right.type == types.list
-			) {
-				stack.push(types.new_bool(left.data.length <= right.data.length));
-			}
+			stack.push(types.new_bool(types.cmp(left, right, (x, y) => x <= y)));
 		},
 		">="() {
 			var right = stack.pop();
 			var left = stack.pop();
-			
-			if(left.type == types.num && right.type == types.num) {
-				stack.push(types.new_bool(left.data >= right.data));
-			} else if(
-				left.type == types.str && right.type == types.str ||
-				left.type == types.list && right.type == types.list
-			) {
-				stack.push(types.new_bool(left.data.length >= right.data.length));
-			}
+			stack.push(types.new_bool(types.cmp(left, right, (x, y) => x >= y)));
 		}
 		
 	};
@@ -1936,7 +1904,19 @@ Object.compare = function(obj1, obj2) {
 	return true;
 };
 
-module.exports = {...types, ...new_value, type_to_str, to_bool, eq};
+function cmp(left, right, comparator) {
+	if(left.type == types.num && right.type == types.num) {
+		return comparator(left.data, right.data);
+	} else if(
+		left.type == types.str && right.type == types.str ||
+		left.type == types.list && right.type == types.list
+	) {
+		return comparator(left.data.length, right.data.length);
+	}
+	return false;
+}
+
+module.exports = {...types, ...new_value, type_to_str, to_bool, eq, cmp};
 },{}],9:[function(require,module,exports){
 function get_variable(name, scopes) {
 	for(let cou = scopes.length - 1; cou >= 0; cou--) {

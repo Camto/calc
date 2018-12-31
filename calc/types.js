@@ -95,4 +95,16 @@ Object.compare = function(obj1, obj2) {
 	return true;
 };
 
-module.exports = {...types, ...new_value, type_to_str, to_bool, eq};
+function cmp(left, right, comparator) {
+	if(left.type == types.num && right.type == types.num) {
+		return comparator(left.data, right.data);
+	} else if(
+		left.type == types.str && right.type == types.str ||
+		left.type == types.list && right.type == types.list
+	) {
+		return comparator(left.data.length, right.data.length);
+	}
+	return false;
+}
+
+module.exports = {...types, ...new_value, type_to_str, to_bool, eq, cmp};
