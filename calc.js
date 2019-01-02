@@ -563,9 +563,35 @@ Examples:
 
 It returns true if the item is in the list, else it returns false.
 `,
+	expl: aliases => `
+
+	EXPLODE LIST ITEMS
+
+Usage: "calc= list expl", where "list" is a list.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 1 3 .. expl" -> "calc=1 2 3"
+	* "calc= [67, 2, 'a, 2] expl" -> "calc=67 2 a 2"
+
+Every item of the list gets pushed to the top. The last item pushed will be the last item in the list.
+`,
+	group: aliases => `
+
+	GROUP INTO LIST
+
+Usage: "calc= n ... m num group", where "num" is the amount of items you want to group and "n ... m" are the items.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 56 1 8 'f $+ 4 group" -> "calc=56 [1, 8, f, +]"
+	* "4 6 .. expl 3 group" -> "calc=[4, 5, 6]"
+
+It pops the top num items and puts them into a list, where the first item in the list was the last popped.
+`,
 /*
-	expl
-	group
 	copy_group
 	group_all
 	copy_group_all
