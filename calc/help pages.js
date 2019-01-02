@@ -586,12 +586,25 @@ Aliases: ${aliases}.
 
 Examples:
 	* "calc= 56 1 8 'f $+ 4 group" -> "calc=56 [1, 8, f, +]"
-	* "4 6 .. expl 3 group" -> "calc=[4, 5, 6]"
+	* "calc= 4 6 .. expl 3 group" -> "calc=[4, 5, 6]"
 
 It pops the top num items and puts them into a list, where the first item in the list was the last popped.
 `,
+	copy_group: aliases => `
+
+	COPY AND GROUP INTO LIST
+
+Usage: "calc= n ... m num copy_group", where "num" is the amount of items you want to copy and group and "n ... m" are the items.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 56 1 8 'f $+ 4 copy_group" -> "calc=56 1 8 f + [1, 8, f, +]"
+	* "calc= 4 6 .. expl 3 copy_group" -> "calc=4 5 6 [4, 5, 6]"
+
+It peeks at the top num items and puts them into a list, where the first item in the list was the last peeked at.
+`,
 /*
-	copy_group
 	group_all
 	copy_group_all
 /*
