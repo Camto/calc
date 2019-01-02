@@ -316,7 +316,7 @@ Demos:
 		},
 		group_all() {
 			var list = stack.slice();
-			stack = [];
+			stack.splice(0, stack.length);
 			stack.push(types.new_list(list));
 		},
 		copy_group_all() {

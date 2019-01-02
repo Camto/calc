@@ -614,7 +614,7 @@ Aliases: ${aliases}.
 
 Examples:
 	* "calc= 56 1 8 'f $+ 4 group" -> "calc=56 [1, 8, f, +]"
-	* "4 6 .. expl 3 group" -> "calc=[4, 5, 6]"
+	* "calc= 4 6 .. expl 3 group" -> "calc=[4, 5, 6]"
 
 It pops the top num items and puts them into a list, where the first item in the list was the last popped.
 `,
@@ -628,13 +628,38 @@ Aliases: ${aliases}.
 
 Examples:
 	* "calc= 56 1 8 'f $+ 4 copy_group" -> "calc=56 1 8 f + [1, 8, f, +]"
-	* "4 6 .. expl 3 copy_group" -> "calc=4 5 6 [4, 5, 6]"
+	* "calc= 4 6 .. expl 3 copy_group" -> "calc=4 5 6 [4, 5, 6]"
 
 It peeks at the top num items and puts them into a list, where the first item in the list was the last peeked at.
 `,
-/*
-	group_all
-	copy_group_all
+	group_all: aliases => `
+
+	GROUP ALL ITEMS INTO LIST
+
+Usage: "calc= n ... m group_all", where "n ... m" is the entire stack.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 67 235 7 246 9 group_all" -> "calc=[67, 235, 7, 246, 9]"
+	* "calc= $+ 987 'q 87 37 008 group_all" -> "calc=[+, 987, q, 87, 37, 8]"
+
+It groups all the items, removing them after, into a list. The items near the top of the stack are near the end of the list.
+`,
+	copy_group_all: aliases => `
+
+	COPY AND GROUP ALL ITEMS INTO LIST
+
+Usage: "calc= n ... m copy_group_all", where "n ... m" is the entire stack.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 67 235 7 246 9 copy_group_all" -> "calc=67 235 7 246 9 [67, 235, 7, 246, 9]"
+	* "calc= $+ 987 'q 87 37 008 copy_group_all" -> "+ 987 q 87 37 8 calc=[+, 987, q, 87, 37, 8]"
+
+It groups all the items, without removing them, into a list. The items near the top f the stack are near the end of the list.
+`,
 /*
 	list_dup
 	list_swap
@@ -1453,7 +1478,7 @@ Demos:
 		},
 		group_all() {
 			var list = stack.slice();
-			stack = [];
+			stack.splice(0, stack.length);
 			stack.push(types.new_list(list));
 		},
 		copy_group_all() {
