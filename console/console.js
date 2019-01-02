@@ -1,7 +1,5 @@
 "use strict";
 
-var calc = require("calc");
-
 var past = ["calc= "];
 var travel = 2;
 

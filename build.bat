@@ -1,1 +1,1 @@
-browserify -r ./calc/calc.js:calc -o calc.js
+browserify ./calc/calc.js -s calc -o calc.js

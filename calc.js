@@ -1,4 +1,31 @@
-require=(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.calc = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+"use strict";
+
+var lex = require("./lex");
+var parse = require("./parse");
+var run = require("./run");
+var print = require("./print");
+
+function calc(code_, max_time) {
+	if(code_.substr(0, 5) != "calc=") {
+		throw "There is no \"calc=\".";
+	}
+	var code = code_.substr(5, code_.length);
+	var tokens = lex(code);
+	var ast = parse(tokens);
+	try {
+		return run(ast, max_time);
+	} catch(err) {
+		throw "calc=" + err_to_str(err);
+	}
+}
+
+var err_to_str = err => !(err instanceof Error)
+	? err
+	: "\n" + err.stack.split("\n").slice(0, 2).join("\n\t");
+
+module.exports = {calc, print, err_to_str};
+},{"./lex":3,"./parse":4,"./print":5,"./run":7}],2:[function(require,module,exports){
 module.exports = {
 	help: aliases => `
 
@@ -632,7 +659,7 @@ It pops the top num items and puts them into a list, where the first item in the
 };
 
 var built_in_warning = "!WARNING: This function is discouraged from being used, the only reason it is here is for the few cases in which it is necessary!";
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 "use strict";
 
 var types = require("./types");
@@ -754,7 +781,7 @@ function lex(code) {
 }
 
 module.exports = lex;
-},{"./types":8}],3:[function(require,module,exports){
+},{"./types":9}],4:[function(require,module,exports){
 "use strict";
 
 var types = require("./types");
@@ -913,7 +940,7 @@ function parse(tokens) {
 var is_op = (token, op) => token.data == op && token.type == types.op;
 
 module.exports = parse;
-},{"./types":8}],4:[function(require,module,exports){
+},{"./types":9}],5:[function(require,module,exports){
 var types = require("./types");
 
 module.exports = function print(value) {
@@ -954,7 +981,7 @@ module.exports = function print(value) {
 		
 	}
 }
-},{"./types":8}],5:[function(require,module,exports){
+},{"./types":9}],6:[function(require,module,exports){
 "use strict";
 
 var types = require("./types");
@@ -1068,7 +1095,7 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 }
 
 module.exports = {run_function, run_block};
-},{"./types":8,"./variable manipulation":9}],6:[function(require,module,exports){
+},{"./types":9,"./variable manipulation":10}],7:[function(require,module,exports){
 "use strict";
 
 var run_part = require("./run part");	
@@ -1094,7 +1121,7 @@ function run(ast, max_time = Infinity) {
 }
 
 module.exports = run;
-},{"./run part":5,"./standard library":7}],7:[function(require,module,exports){
+},{"./run part":6,"./standard library":8}],8:[function(require,module,exports){
 "use strict";
 
 var types = require("./types");
@@ -1832,7 +1859,7 @@ function expand(obj) {
 }
 
 module.exports = {built_ins, operators};
-},{"./help pages":1,"./print":4,"./run part":5,"./types":8,"./variable manipulation":9}],8:[function(require,module,exports){
+},{"./help pages":2,"./print":5,"./run part":6,"./types":9,"./variable manipulation":10}],9:[function(require,module,exports){
 var types = {
 	num: 0, str: 1, list: 2,
 	func: 3, sym: 4, op: 5
@@ -1943,7 +1970,7 @@ function cmp(left, right, comparator) {
 }
 
 module.exports = {...types, ...new_value, type_to_str, to_bool, eq, cmp};
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 function get_variable(name, scopes) {
 	for(let cou = scopes.length - 1; cou >= 0; cou--) {
 		if(scopes[cou][name]) {
@@ -1964,31 +1991,5 @@ function set_variable(name, value, scopes) {
 }
 
 module.exports = {get_variable, set_variable};
-},{}],"calc":[function(require,module,exports){
-"use strict";
-
-var lex = require("./lex");
-var parse = require("./parse");
-var run = require("./run");
-var print = require("./print");
-
-function calc(code_, max_time) {
-	if(code_.substr(0, 5) != "calc=") {
-		throw "There is no \"calc=\".";
-	}
-	var code = code_.substr(5, code_.length);
-	var tokens = lex(code);
-	var ast = parse(tokens);
-	try {
-		return run(ast, max_time);
-	} catch(err) {
-		throw "calc=" + err_to_str(err);
-	}
-}
-
-var err_to_str = err => !(err instanceof Error)
-	? err
-	: "\n" + err.stack.split("\n").slice(0, 2).join("\n\t");
-
-module.exports = {calc, print, err_to_str};
-},{"./lex":2,"./parse":3,"./print":4,"./run":6}]},{},[]);
+},{}]},{},[1])(1)
+});
