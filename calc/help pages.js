@@ -730,10 +730,49 @@ Examples:
 
 It rotates the top num items of the list to the right. If you want to roll backward 2 or 3 three items, please check out list_swap and list_unrot.
 `,
+	list_nip: aliases => `
+
+	NIP UNDER LIST
+
+Usage: "calc= list list_nip", where "list" is a list with at least 2 items.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= ['a, 'b, 'c] list_nip" -> "calc=[a, c]"
+	* "calc= [6, 1, 78, 2] list_nip" -> "calc=[6, 1, 2]"
+
+It removes the item under the top one. Equivalent to "list_swap list_drop".
+`,
 /*
-	list_nip
-	list_tuck
-	list_over
+	tuck: aliases => `
+
+	TUCK UNDER
+
+Usage: "calc= a b nip", where "a" and "b" can be any value.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 'a 'b 'c tuck" -> "calc=a c b c"
+	* "calc= 1 [2] tuck" -> "calc=[2] 1 [2]"
+
+It puts the top item of the stack underneath the next. Equivalent to "dup rot" or "swap over".
+`,
+	over: aliases => `
+
+	DUPLICATE OVER
+
+Usage: "calc= a b over", where "a" and "b" can be any value.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 'a 'b over" -> "calc=a b a"
+	* "calc= 4 98 2 over" -> "calc=4 98 2 98"
+
+It puts a duplicate of the second item from the top of the stack on top of the stack. Equivalent to "swap dup rot" or "swap tuck".
+`,
 /*
 	pi
 	e
