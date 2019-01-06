@@ -656,8 +656,21 @@ Examples:
 
 It duplicates the top value of the list.
 `,
+	list_swap: aliases => `
+
+	SWAP TOP OF LIST
+
+Usage: "calc= list swap", where "list" is a list with at least 2 items.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= [2, 5] list_swap" -> "calc=[5, 2]"
+	* "calc= ["gh", [1, 2, 3]] list_swap" -> "calc=[[1, 2, 3], gh]"
+
+It swaps the top 2 values of the list.
+`,
 /*
-	list_swap
 	list_rot
 	list_unrot
 	list_roll
