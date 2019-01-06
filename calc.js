@@ -698,8 +698,21 @@ Examples:
 
 It swaps the top 2 values of the list.
 `,
+	list_rot: aliases => `
+
+	ROTATE TOP OF STACK
+
+Usage: "calc= list rot", where "list" is a list with at least 3 items.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= ['a, 'b, 'c] list_rot" -> "calc=[c, a, b]"
+	* "calc= ["as", [], 1] list_rot" -> "calc=[1, as, []]"
+
+It rotates the top three items of the list to the right. To do this with more items you would use roll, but it is not recommended.
+`,
 /*
-	list_rot
 	list_unrot
 	list_roll
 	list_reverse_roll
