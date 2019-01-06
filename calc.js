@@ -700,9 +700,9 @@ It swaps the top 2 values of the list.
 `,
 	list_rot: aliases => `
 
-	ROTATE TOP OF STACK
+	ROTATE TOP OF list
 
-Usage: "calc= list rot", where "list" is a list with at least 3 items.
+Usage: "calc= list list_rot", where "list" is a list with at least 3 items.
 
 Aliases: ${aliases}.
 
@@ -710,12 +710,25 @@ Examples:
 	* "calc= ['a, 'b, 'c] list_rot" -> "calc=[c, a, b]"
 	* "calc= ["as", [], 1] list_rot" -> "calc=[1, as, []]"
 
-It rotates the top three items of the list to the right. To do this with more items you would use roll, but it is not recommended.
+It rotates the top three items of the list to the right. To do this with more items you would use list_roll, but it is not recommended.
+`,
+	list_unrot: aliases => `
+
+	ROTATE TOP OF LIST BACKWARD
+
+Usage: "calc= list list_unrot", where "list" is a list with at least 3 items.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= ['a, 'b, 'c] list_unrot" -> "calc=[b, c, a]"
+	* "calc= ["as", [], 1] list_unrot" -> "calc=[[], 1, as]"
+
+It rotates the top three items of the list to the left. To do this with more items you would use list_unroll, but it is not recommended.
 `,
 /*
-	list_unrot
 	list_roll
-	list_reverse_roll
+	list_unroll
 	list_nip
 	list_tuck
 	list_over
@@ -1583,7 +1596,7 @@ Demos:
 			
 			stack.push(types.new_list(list));
 		},
-		"list_reverse_roll, list_counter_roll, list_reverse_rot_n, list_reverse_rotate_n, list_counter_rot_n, list_counter_rotate_n"() {
+		"list_unroll, list_reverse_roll, list_counter_roll, list_reverse_rot_n, list_reverse_rotate_n, list_counter_rot_n, list_counter_rotate_n"() {
 			var n = stack.pop().data;
 			var list = stack.pop().data;
 			

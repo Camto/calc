@@ -371,7 +371,7 @@ Demos:
 			
 			stack.push(types.new_list(list));
 		},
-		"list_reverse_roll, list_counter_roll, list_reverse_rot_n, list_reverse_rotate_n, list_counter_rot_n, list_counter_rotate_n"() {
+		"list_unroll, list_reverse_roll, list_counter_roll, list_reverse_rot_n, list_reverse_rotate_n, list_counter_rot_n, list_counter_rotate_n"() {
 			var n = stack.pop().data;
 			var list = stack.pop().data;
 			
