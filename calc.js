@@ -142,7 +142,7 @@ Aliases: ${aliases}.
 
 Examples:
 	* "calc= 5 dup" -> "calc=5 5"
-	* "calc= "str" "str" dup" -> "calc=str str"
+	* "calc= "ble" "str" dup" -> "calc=ble str str"
 
 It duplicates the top value of the stack. You can use dup to use some value without discarding it.
 `,
@@ -594,6 +594,8 @@ It returns true if the item is in the list, else it returns false.
 
 	EXPLODE LIST ITEMS
 
+${built_in_warning}
+
 Usage: "calc= list expl", where "list" is a list.
 
 Aliases: ${aliases}.
@@ -607,6 +609,8 @@ Every item of the list gets pushed to the top. The last item pushed will be the 
 	group: aliases => `
 
 	GROUP INTO LIST
+
+${built_in_warning}
 
 Usage: "calc= n ... m num group", where "num" is the amount of items you want to group and "n ... m" are the items.
 
@@ -622,6 +626,8 @@ It pops the top num items and puts them into a list, where the first item in the
 
 	COPY AND GROUP INTO LIST
 
+${built_in_warning}
+
 Usage: "calc= n ... m num copy_group", where "num" is the amount of items you want to copy and group and "n ... m" are the items.
 
 Aliases: ${aliases}.
@@ -635,6 +641,8 @@ It peeks at the top num items and puts them into a list, where the first item in
 	group_all: aliases => `
 
 	GROUP ALL ITEMS INTO LIST
+
+${built_in_warning}
 
 Usage: "calc= n ... m group_all", where "n ... m" is the entire stack.
 
@@ -650,6 +658,8 @@ It groups all the items, removing them after, into a list. The items near the to
 
 	COPY AND GROUP ALL ITEMS INTO LIST
 
+${built_in_warning}
+
 Usage: "calc= n ... m copy_group_all", where "n ... m" is the entire stack.
 
 Aliases: ${aliases}.
@@ -660,8 +670,21 @@ Examples:
 
 It groups all the items, without removing them, into a list. The items near the top f the stack are near the end of the list.
 `,
+	list_dup: aliases => `
+
+	DUPLICATE TOP OF LIST
+
+Usage: "calc= list dup", where "list" is a list with at least 1 item.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= [5] list_dup" -> "calc=[5, 5]"
+	* "calc= ["ble", "str"] list_dup" -> "calc=[ble, str, str]"
+
+It duplicates the top value of the list.
+`,
 /*
-	list_dup
 	list_swap
 	list_rot
 	list_unrot
@@ -670,6 +693,7 @@ It groups all the items, without removing them, into a list. The items near the 
 	list_nip
 	list_tuck
 	list_over
+/*
 	pi
 	e
 	abs
