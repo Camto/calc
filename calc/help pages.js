@@ -758,20 +758,19 @@ Examples:
 
 It puts the top item of the list underneath the next. Equivalent to "list_dup list_rot" or "list_swap list_over".
 `,
-/*
-	over: aliases => `
+	list_over: aliases => `
 
-	DUPLICATE OVER
+	DUPLICATE OVER ON LIST
 
-Usage: "calc= a b over", where "a" and "b" can be any value.
+Usage: "calc= list list_over", where "list" is a list with at least 2 items.
 
 Aliases: ${aliases}.
 
 Examples:
-	* "calc= 'a 'b over" -> "calc=a b a"
-	* "calc= 4 98 2 over" -> "calc=4 98 2 98"
+	* "calc= ['a, 'b] list_over" -> "calc=[a, b, a]"
+	* "calc= [4, 98, 2] list_over" -> "calc=[4, 98, 2, 98]"
 
-It puts a duplicate of the second item from the top of the stack on top of the stack. Equivalent to "swap dup rot" or "swap tuck".
+It puts a duplicate of the second item from the top of the list on top of the list. Equivalent to "list_swap list_dup list_rot" or "list_swap list_tuck".
 `,
 /*
 	pi
