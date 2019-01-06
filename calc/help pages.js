@@ -698,8 +698,23 @@ Examples:
 
 It rotates the top three items of the list to the left. To do this with more items you would use list_unroll, but it is not recommended.
 `,
+	list_roll: aliases => `
+
+	ROLL TOP OF LIST
+
+${built_in_warning}
+
+Usage: "calc= [n ... m] num roll", where "num" is the amount of items you want to roll and "[n ... m]" is a list with at least "num" items.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= ['a, 'b, 'c, 'd, 'e, 'f] 4 list_roll" -> "calc=[a, b, f, c, d, e]"
+	* "calc= 1 5 .. {n -> 1 n .. n list_roll} map" -> "calc=[[1], [2, 1], [3, 1, 2], [4, 1, 2, 3], [5, 1, 2, 3, 4]]"
+
+It rotates the top num items of the list to the left. If you want to roll 2 or 3 three items, please check out swap and rot.
+`,
 /*
-	list_roll
 	list_unroll
 	list_nip
 	list_tuck
