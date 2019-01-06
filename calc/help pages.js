@@ -742,23 +742,23 @@ Examples:
 	* "calc= ['a, 'b, 'c] list_nip" -> "calc=[a, c]"
 	* "calc= [6, 1, 78, 2] list_nip" -> "calc=[6, 1, 2]"
 
-It removes the item under the top one. Equivalent to "list_swap list_drop".
+It removes the item under the top one of the list. Equivalent to "list_swap list_drop".
 `,
-/*
-	tuck: aliases => `
+	list_tuck: aliases => `
 
-	TUCK UNDER
+	TUCK UNDER LIST
 
-Usage: "calc= a b nip", where "a" and "b" can be any value.
+Usage: "calc= list list_tuck", where "list" is a list with at least 2 items.
 
 Aliases: ${aliases}.
 
 Examples:
-	* "calc= 'a 'b 'c tuck" -> "calc=a c b c"
-	* "calc= 1 [2] tuck" -> "calc=[2] 1 [2]"
+	* "calc= ['a, 'b, 'c] list_tuck" -> "calc=[a, c, b, c]"
+	* "calc= [1, [2]] list_tuck" -> "calc=[[2], 1, [2]]"
 
-It puts the top item of the stack underneath the next. Equivalent to "dup rot" or "swap over".
+It puts the top item of the list underneath the next. Equivalent to "list_dup list_rot" or "list_swap list_over".
 `,
+/*
 	over: aliases => `
 
 	DUPLICATE OVER
