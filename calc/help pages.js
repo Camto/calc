@@ -712,10 +712,25 @@ Examples:
 	* "calc= ['a, 'b, 'c, 'd, 'e, 'f] 4 list_roll" -> "calc=[a, b, f, c, d, e]"
 	* "calc= 1 5 .. {n -> 1 n .. n list_roll} map" -> "calc=[[1], [2, 1], [3, 1, 2], [4, 1, 2, 3], [5, 1, 2, 3, 4]]"
 
-It rotates the top num items of the list to the left. If you want to roll 2 or 3 three items, please check out swap and rot.
+It rotates the top num items of the list to the left. If you want to roll 2 or 3 three items, please check out list_swap and list_rot.
+`,
+	list_unroll: aliases => `
+
+	ROLL TOP OF LIST BACKWARD
+
+${built_in_warning}
+
+Usage: "calc= [n ... m] num unroll", where "num" is the amount of items you want to roll backward and "[n ... m]" is a list with at least "num" items.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= ['a, 'b, 'c, 'd, 'e, 'f] 4 list_unroll" -> "calc=[a, b, d, e, f, c]"
+	* "calc= 1 5 .. {n -> 1 n .. n list_unroll} map" -> "calc=[[1], [2, 1], [2, 3, 1], [2, 3, 4, 1], [2, 3, 4, 5, 1]]"
+
+It rotates the top num items of the list to the right. If you want to roll backward 2 or 3 three items, please check out list_swap and list_unrot.
 `,
 /*
-	list_unroll
 	list_nip
 	list_tuck
 	list_over
