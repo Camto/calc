@@ -784,7 +784,7 @@ Examples:
 	* "calc= pi 2 *" -> "calc=6.28318"
 	* "calc= circle_area = {dup * pi *} ; 1 5 .. $circle_area map" -> "calc=[3.14159, 12.56637, 28.27433, 50.26548, 78.53981]"
 
-Pushes the mathematical constant pi. Same as "tau 2 /".
+Returns the mathematical constant pi. Same as "tau 2 /".
 `,
 	tau: aliases => `
 
@@ -798,7 +798,7 @@ Examples:
 	* "calc= tau 2 /" -> "calc=3.14159"
 	* "calc= circumference = {tau *} ; 1 5 .. $circumference map" -> "calc=[6.28318, 12.56637, 18.84955, 25.13274, 31.41592]"
 
-Pushes the mathematical constant tau. Same as "pi 2 *".
+Returns the mathematical constant tau. Same as "pi 2 *".
 `,
 /*
 	e
