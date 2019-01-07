@@ -1725,6 +1725,9 @@ Demos:
 		pi() {
 			stack.push(types.new_num(Math.PI));
 		},
+		tau() {
+			stack.push(types.new_num(Math.PI * 2));
+		},
 		e() {
 			stack.push(types.new_num(Math.E));
 		},
