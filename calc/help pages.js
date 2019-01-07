@@ -800,8 +800,21 @@ Examples:
 
 Returns the mathematical constant tau. Same as "pi 2 *".
 `,
+	e: aliases => `
+
+	THE CONSTANT E
+
+Usage: "calc= e".
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= e ln" -> "calc=1"
+	* "calc= e 3 ^ ln" -> "calc=3"
+
+Returns the mathematical constant e, the base of the natural logarithm.
+`,
 /*
-	e
 	abs
 	round
 	ceil
