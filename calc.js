@@ -800,13 +800,28 @@ Examples:
 
 It puts a duplicate of the second item from the top of the list on top of the list. Equivalent to "list_swap list_dup list_rot" or "list_swap list_tuck".
 `,
+	pi: aliases => `
+
+	THE CONSTANT PI
+
+Usage: "calc= pi".
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 2 pi *" -> "calc=6.28318"
+	* "calc= circle_area = {dup * pi *} ; 1 5 .. $circle_area map" -> "calc=[3.14159, 12.56637, 28.27433, 50.26548, 78.53981]"
+
+Pushes the mathematical constant pi. Same as "tau 2 /".
+`,
 /*
-	pi
+	tau
 	e
 	abs
 	round
 	ceil
 	floor
+/*
 	max
 	main
 	sgn
