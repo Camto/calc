@@ -878,11 +878,11 @@ Examples:
 It returns num rounded to the nearest integer less than or equal to it.
 `,
 /*
-/*
 	max
-	main
+	min
 	sgn
 	rand
+/*
 	cos
 	sin
 	tan

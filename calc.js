@@ -906,11 +906,11 @@ Examples:
 It returns num rounded to the nearest integer less than or equal to it.
 `,
 /*
-/*
 	max
-	main
+	min
 	sgn
 	rand
+/*
 	cos
 	sin
 	tan
@@ -1823,10 +1823,10 @@ Demos:
 		"round, trunc, truncate"() {
 			stack.push(types.new_num(Math.round(stack.pop().data)));
 		},
-		"ceil, ceiling, roof"() {
+		"ceil, ceiling, roof, round_up, round_upwards"() {
 			stack.push(types.new_num(Math.ceil(stack.pop().data)));
 		},
-		floor() {
+		"floor, round_down, round_downwards"() {
 			stack.push(types.new_num(Math.floor(stack.pop().data)));
 		},
 		"max, maximum, biggest"() {
@@ -1834,7 +1834,7 @@ Demos:
 			var left = stack.pop();
 			stack.push(types.new_num(Math.max(left, right)));
 		},
-		"main, minimum, smallest"() {
+		"min, minimum, smallest"() {
 			var right = stack.pop();
 			var left = stack.pop();
 			stack.push(types.new_num(Math.min(left, right)));

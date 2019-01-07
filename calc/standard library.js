@@ -440,7 +440,7 @@ Demos:
 			var left = stack.pop();
 			stack.push(types.new_num(Math.max(left, right)));
 		},
-		"main, minimum, smallest"() {
+		"min, minimum, smallest"() {
 			var right = stack.pop();
 			var left = stack.pop();
 			stack.push(types.new_num(Math.min(left, right)));
