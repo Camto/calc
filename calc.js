@@ -809,13 +809,26 @@ Usage: "calc= pi".
 Aliases: ${aliases}.
 
 Examples:
-	* "calc= 2 pi *" -> "calc=6.28318"
+	* "calc= pi 2 *" -> "calc=6.28318"
 	* "calc= circle_area = {dup * pi *} ; 1 5 .. $circle_area map" -> "calc=[3.14159, 12.56637, 28.27433, 50.26548, 78.53981]"
 
 Pushes the mathematical constant pi. Same as "tau 2 /".
 `,
+	tau: aliases => `
+
+	THE CONSTANT TAU
+
+Usage: "calc= tau".
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= tau 2 /" -> "calc="
+	* "calc= circumference = {tau *} ; 1 5 .. $circumference map" -> "calc="
+
+Pushes the mathematical constant tau. Same as "pi 2 *".
+`,
 /*
-	tau
 	e
 	abs
 	round
