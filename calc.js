@@ -856,8 +856,24 @@ Examples:
 
 It returns the absolute value of num. For any number more than or equal to 0, it returns that number, else that number negated.
 `,
+	round: aliases => `
+
+	ROUND TO THE NEAREST INTEGER
+
+Usage: "calc= num round" where "num" is a number.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= -0.5 round" -> "calc=0"
+	* "calc= 0.5 round" -> "calc=1"
+	* "calc= 5 round" -> "calc=5"
+	* "calc= 7.25 round" -> "calc=7"
+	* "calc= 9.75 round" -> "calc=10"
+
+It returns num, rounded to the nearest integer. If the fractional part if .5, the number is rounded upwards.
+`,
 /*
-	round
 	ceil
 	floor
 /*
