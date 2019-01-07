@@ -478,6 +478,9 @@ Demos:
 			var base = stack.pop().data;
 			stack.push(types.new_num(Math.log(num) / Math.log(base)));
 		},
+		"ln, log_e, natural_log, natural_logarithm"() {
+			stack.push(types.new_num(Math.log(stack.pop().data)));
+		},
 		
 		// Function functions.
 		

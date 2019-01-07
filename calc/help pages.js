@@ -818,6 +818,7 @@ Returns the mathematical constant tau. Same as "pi 2 *".
 	cbrt
 	root
 	log
+	ln
 	call
 	iter
 	id
