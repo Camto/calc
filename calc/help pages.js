@@ -845,8 +845,23 @@ Examples:
 
 It returns num, rounded to the nearest integer. If the fractional part if .5, the number is rounded upwards.
 `,
+	ceil: aliases => `
+
+	ROUND UPWARDS
+
+Usage: "calc= num ceil" where "num" is a number.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 4.5 ceil" -> "calc= 5"
+	* "calc= 4.2 ceil" -> "calc= 5"
+	* "calc= 6 ceil" -> "calc=6"
+	* "calc= -2.5 ceil" -> "calc= -2"
+
+It returns num rounded to the nearest integer greater or equal to it.
+`,
 /*
-	ceil
 	floor
 /*
 	max
