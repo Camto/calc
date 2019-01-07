@@ -429,10 +429,10 @@ Demos:
 		"round, trunc, truncate"() {
 			stack.push(types.new_num(Math.round(stack.pop().data)));
 		},
-		"ceil, ceiling, roof"() {
+		"ceil, ceiling, roof, round_up, round_upwards"() {
 			stack.push(types.new_num(Math.ceil(stack.pop().data)));
 		},
-		floor() {
+		"floor, round_down, round_downwards"() {
 			stack.push(types.new_num(Math.floor(stack.pop().data)));
 		},
 		"max, maximum, biggest"() {
