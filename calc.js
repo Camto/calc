@@ -889,8 +889,23 @@ Examples:
 
 It returns num rounded to the nearest integer greater or equal to it.
 `,
+	floor: aliases => `
+
+	ROUND DOWNWARDS
+
+Usage: "calc= num floor" where "num" is a number.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 4.5 floor" -> "calc= 4"
+	* "calc= 4.7 floor" -> "calc= 4"
+	* "calc= 6 floor" -> "calc=6"
+	* "calc= -2.5 floor" -> "calc= -3"
+
+It returns num rounded to the nearest integer less than or equal to it.
+`,
 /*
-	floor
 /*
 	max
 	main
