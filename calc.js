@@ -812,7 +812,7 @@ Examples:
 	* "calc= pi 2 *" -> "calc=6.28318"
 	* "calc= circle_area = {dup * pi *} ; 1 5 .. $circle_area map" -> "calc=[3.14159, 12.56637, 28.27433, 50.26548, 78.53981]"
 
-Returns the mathematical constant pi. Same as "tau 2 /".
+It returns the mathematical constant pi. Same as "tau 2 /".
 `,
 	tau: aliases => `
 
@@ -826,7 +826,7 @@ Examples:
 	* "calc= tau 2 /" -> "calc=3.14159"
 	* "calc= circumference = {tau *} ; 1 5 .. $circumference map" -> "calc=[6.28318, 12.56637, 18.84955, 25.13274, 31.41592]"
 
-Returns the mathematical constant tau. Same as "pi 2 *".
+It returns the mathematical constant tau. Same as "pi 2 *".
 `,
 	e: aliases => `
 
@@ -840,10 +840,23 @@ Examples:
 	* "calc= e ln" -> "calc=1"
 	* "calc= e 3 ^ ln" -> "calc=3"
 
-Returns the mathematical constant e, the base of the natural logarithm.
+It returns the mathematical constant e, the base of the natural logarithm.
+`,
+	abs: aliases => `
+
+	ABSOLUTE VALUE
+
+Usage: "calc= num abs" where "num" is a number.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= -5 abs 0 abs 2 abs" -> "calc= 5 0 2"
+	* "calc= -5 5 .. $abs map" -> "calc= [5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5]"
+
+It returns the absolute value of num. For any number more than or equal to 0, it returns that number, else that number negated.
 `,
 /*
-	abs
 	round
 	ceil
 	floor
