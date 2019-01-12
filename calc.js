@@ -1886,15 +1886,15 @@ Demos:
 		"floor, round_down, round_downwards"() {
 			stack.push(types.new_num(Math.floor(stack.pop().data)));
 		},
-		"max, maximum, biggest"() {
+		"max, maximum, biggest, longest, largest"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			stack.push(types.new_num(Math.max(left, right)));
+			stack.push(types.cmp(left, right, (x, y) => x > y) ? left : right);
 		},
-		"min, minimum, smallest"() {
+		"min, minimum, smallest, shortest"() {
 			var right = stack.pop();
 			var left = stack.pop();
-			stack.push(types.new_num(Math.min(left, right)));
+			stack.push(types.cmp(left, right, (x, y) => x < y) ? left : right);
 		},
 		"sgn, sign"() {
 			stack.push(types.new_num(Math.sign(stack.pop().data)));
