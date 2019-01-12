@@ -976,6 +976,7 @@ It returns are psuedo-random number between x and y (they don't have a specific 
 	root
 	log
 	ln
+/*
 	call
 	iter
 	id
@@ -1994,7 +1995,17 @@ calc= is a programming language for chats. Every program starts with "calc=" and
 
 	FIRST EXAMPLE (1)
 
-As you can see, "calc= 5 1 -" gives back "calc= 4". This is because "5" pushed a "5" on top of the stack, then "1" pushed a "1". Finally "-" popped the top two elements from the stack, "5" and "1", and subtracted them to form "4".
+As you can see, "calc= 5 1 -" gives back "calc= 4". This is because "5" pushed a "5" on top of the stack, then "1" pushed a "1". Finally "-" popped the top two elements from the stack, "5" and "1", and subtracted them to form "4". There are the four basic operators: "+", "-", "*", "/".
+`,`
+
+	MULTIPLE OPERATIONS (2)
+
+The problem now is: how do you make more complicated calculations like "4 * 3 - 2". In calc=, there is no order of operations, because each symbol is read from left to right, you always know which goes first. In the case of "4 * 3 - 2", you would write "calc= 4 3 * 2 -". In the normal math example, "*" goes first so in calc= it will be towards the front of the program. In the normal math example, you last thing you do is subtract, so it will be at the very end of the calc= program. Now on to a more complex example: how would write "2 + (5 - 1) / 3"? Try to write it yourself, the answer is on the next page.
+`,`
+
+	COMPLEX EXAMPLE (3)
+
+In calc=, "2 + (5 - 1) / 3" would be written as "calc= 5 1 - 3 / 2 +" (there are other ways, but this is the most straight forward one). You can see that parenthesis are not necesarry in calc= because the order is always explicit, "-" goes first, then "/", and finally "+".
 `];
 
 var adv_tut_pages = [`

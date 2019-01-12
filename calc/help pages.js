@@ -948,6 +948,7 @@ It returns are psuedo-random number between x and y (they don't have a specific 
 	root
 	log
 	ln
+/*
 	call
 	iter
 	id
