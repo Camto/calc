@@ -905,9 +905,39 @@ Examples:
 
 It returns num rounded to the nearest integer less than or equal to it.
 `,
+	max: aliases => `
+
+	BIGGEST OR LONGEST
+
+Usage: "calc= x y max" where "x" and "y" are numbers, lists, or strings (they must be the same type).
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 3 4 max" -> "calc=4"
+	* "calc= 6 -2 max" -> "calc=6"
+	* "calc= [1, 2, 3] [1] max" -> "calc=[1, 2, 3]"
+	* "calc= 'a "nice" max" -> "calc=nice"
+
+It returns the biggest or longest of two items.
+`,
+	min: aliases => `
+
+	SMALLEST OR SHORTEST
+
+Usage: "calc= x y min" where "x" and "y" are numbers, lists, or strings (they must be the same type).
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 3 4 min" -> "calc=3"
+	* "calc= 6 -2 min" -> "calc=-2"
+	* "calc= [1, 2, 3] [1] min" -> "calc=[1]"
+	* "calc= 'a "nice" min" -> "calc=a"
+
+It returns the smallest or shortest of two items.
+`,
 /*
-	max
-	min
 	sgn
 	rand
 /*
