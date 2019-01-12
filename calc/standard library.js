@@ -449,8 +449,8 @@ Demos:
 			stack.push(types.new_num(Math.sign(stack.pop().data)));
 		},
 		"rand, random"() {
-			var min = stack.pop().data;
 			var max = stack.pop().data;
+			var min = stack.pop().data;
 			stack.push(types.new_num((Math.random() * (max - min)) + min));
 		},
 		"cos, cosine"() {

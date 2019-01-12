@@ -946,15 +946,27 @@ Usage: "calc= num sgn" where "num" is a number.
 Aliases: ${aliases}.
 
 Examples:
-	* "calc=42 sgn" -> "calc=1"
-	* "calc=0 sgn" -> "calc=0"
-	* "calc=-30 sgn" -> "calc=-1"
+	* "calc= 42 sgn" -> "calc=1"
+	* "calc= 0 sgn" -> "calc=0"
+	* "calc= -30 sgn" -> "calc=-1"
 	* "calc= -3 3 .. $sgn map" -> "calc=[-1, -1, -1, 0, 1, 1, 1]"
 
 It returns the sign of num, 1 for positive, -1 for negative, and 0 for none.
 `,
-/*
-	rand
+	rand: aliases => `
+
+	GENERATE RANDOM NUMBER
+
+Usage: "calc= x y rand", where "x" and "y" are the boundaries of the random number.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 3 4 rand" -> "calc=3.45051"
+	* "calc= 0 9 .. {drop 1 10 rand} map" -> "calc=[4.44581, 9.54312, 9.75568, 4.35409, 9.83876, 5.42639, 9.90467, 6.86817, 9.90735, 5.01449]"
+
+It returns are psuedo-random number between x and y (they don't have a specific order).
+`,
 /*
 	cos
 	sin
@@ -1888,8 +1900,8 @@ Demos:
 			stack.push(types.new_num(Math.sign(stack.pop().data)));
 		},
 		"rand, random"() {
-			var min = stack.pop().data;
 			var max = stack.pop().data;
+			var min = stack.pop().data;
 			stack.push(types.new_num((Math.random() * (max - min)) + min));
 		},
 		"cos, cosine"() {
