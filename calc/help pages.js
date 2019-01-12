@@ -909,8 +909,23 @@ Examples:
 
 It returns the smallest or shortest of two items.
 `,
+	sgn: aliases => `
+
+	SIGN OF NUMBER
+
+Usage: "calc= num sgn" where "num" is a number.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc=42 sgn" -> "calc=1"
+	* "calc=0 sgn" -> "calc=0"
+	* "calc=-30 sgn" -> "calc=-1"
+	* "calc= -3 3 .. $sgn map" -> "calc=[-1, -1, -1, 0, 1, 1, 1]"
+
+It returns the sign of num, 1 for positive, -1 for negative, and 0 for none.
+`,
 /*
-	sgn
 	rand
 /*
 	cos
