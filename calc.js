@@ -971,7 +971,7 @@ It returns are psuedo-random number between x and y (they don't have a specific 
 
 	COSINE OF ANGLE IN RADIANS
 
-Usage: "calc= angle cos". where angle is an angle in radians.
+Usage: "calc= angle cos". where "angle" is an angle in radians.
 
 Aliases: ${aliases}.
 
@@ -985,7 +985,7 @@ It returns the cosine of the given angle, which is in radians.
 
 	SINE OF ANGLE IN RADIANS
 
-Usage: "calc= angle sin". where angle is an angle in radians.
+Usage: "calc= angle sin". where "angle" is an angle in radians.
 
 Aliases: ${aliases}.
 
@@ -999,7 +999,7 @@ It returns the sine of the given angle, which is in radians.
 
 	TANGENT OF ANGLE IN RADIANS
 
-Usage: "calc= angle tan". where angle is an angle in radians.
+Usage: "calc= angle tan". where "angle" is an angle in radians.
 
 Aliases: ${aliases}.
 
@@ -1009,9 +1009,35 @@ Examples:
 
 It returns the tangent of the given angle, which is in radians.
 `,
+	sqrt: aliases => `
+
+	SQUARE ROOT
+
+Usage: "calc= num sqrt", where "num" is any number.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 2 sqrt" -> "calc=1.41421"
+	* "calc= 9 sqrt" -> "calc=3"
+
+It returns the square root of num.
+`,
+	cbrt: aliases => `
+
+	CUBE ROOT
+
+Usage: "calc= num cbrt", where "num" is any number.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 3 cbrt" -> "calc=1.44224"
+	* "calc= 64 cbrt" -> "calc=4"
+
+It returns the cube root of num.
+`,
 /*
-	sqrt
-	cbrt
 	root
 	log
 	ln
