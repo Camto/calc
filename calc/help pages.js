@@ -967,8 +967,21 @@ Examples:
 
 It returns the sine of the given angle, which is in radians.
 `,
+	tan: aliases => `
+
+	TANGENT OF ANGLE IN RADIANS
+
+Usage: "calc= angle tan". where angle is an angle in radians.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 1 4 / pi * tan" -> "calc=0.99999"
+	* "calc= 3 pi * tan" -> "calc=0"
+
+It returns the tangent of the given angle, which is in radians.
+`,
 /*
-	tan
 	sqrt
 	cbrt
 	root
