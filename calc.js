@@ -1290,7 +1290,7 @@ module.exports = function print(value) {
 				return value.data;
 				break;
 			case types.num:
-				return Math.floor(value.data * 100000) / 100000;
+				return Math.trunc(value.data * 100000) / 100000;
 			case types.list:
 				var list = "[";
 				for(let cou = 0; cou < value.data.length; cou++) {
