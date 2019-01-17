@@ -939,8 +939,21 @@ Examples:
 
 It returns are psuedo-random number between x and y (they don't have a specific order).
 `,
+	cos: aliases => `
+
+	COSINE OF ANGLE IN RADIANS
+
+Usage: "calc= angle cos". where angle is an angle in radians.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 3 2 / pi * cos" -> "calc=0"
+	* "calc= 4 pi * cos" -> "calc=1"
+
+It returns the cosine of the given angle, which is in radians.
+`,
 /*
-	cos
 	sin
 	tan
 	sqrt
