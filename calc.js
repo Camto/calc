@@ -981,8 +981,21 @@ Examples:
 
 It returns the cosine of the given angle, which is in radians.
 `,
+	sin: aliases => `
+
+	SINE OF ANGLE IN RADIANS
+
+Usage: "calc= angle sin". where angle is an angle in radians.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 3 2 / pi * sin" -> "calc=-1"
+	* "calc= 4 pi * sin" -> "calc=0"
+
+It returns the sine of the given angle, which is in radians.
+`,
 /*
-	sin
 	tan
 	sqrt
 	cbrt
@@ -2023,7 +2036,7 @@ In calc=, "2 + (5 - 1) / 3" would be written as "calc= 5 1 - 3 / 2 +" (there are
 
 	CALLING FUNCTIONS (4)
 
-To call any function, you just need to provide it's arguments and write it's name
+To call any function, you just need to provide it's arguments and write it's name. For example, the absolute value function, shortened to "abs", can be used like so: "calc= 3 5 - abs" -> "calc=2". Use "calc= page" to find functions you need.
 `];
 
 var adv_tut_pages = [`

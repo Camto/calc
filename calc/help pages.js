@@ -953,8 +953,21 @@ Examples:
 
 It returns the cosine of the given angle, which is in radians.
 `,
+	sin: aliases => `
+
+	SINE OF ANGLE IN RADIANS
+
+Usage: "calc= angle sin". where angle is an angle in radians.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 3 2 / pi * sin" -> "calc=-1"
+	* "calc= 4 pi * sin" -> "calc=0"
+
+It returns the sine of the given angle, which is in radians.
+`,
 /*
-	sin
 	tan
 	sqrt
 	cbrt
