@@ -2019,6 +2019,11 @@ The problem now is: how do you make more complicated calculations like "4 * 3 - 
 	COMPLEX EXAMPLE (3)
 
 In calc=, "2 + (5 - 1) / 3" would be written as "calc= 5 1 - 3 / 2 +" (there are other ways, but this is the most straight forward one). You can see that parenthesis are not necesarry in calc= because the order is always explicit, "-" goes first, then "/", and finally "+".
+`,`
+
+	CALLING FUNCTIONS (4)
+
+To call any function, you just need to provide it's arguments and write it's name
 `];
 
 var adv_tut_pages = [`
