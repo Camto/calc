@@ -1015,16 +1015,27 @@ It returns the cube root of num.
 
 Usage: "calc= num exp root", where "num" is any number and "exp" is an exponent.
 
-Aliases:  ${aliases}.
+Aliases: ${aliases}.
 
 Examples:
-	"calc= 16 5 root" -> "calc=2"
+	"calc= 16 4 root" -> "calc=2"
 	"calc= 6 4 root" -> "calc=1.56508"
 
 It returns the exp-th root of num.
 `,
+	log: aliases => `
+
+Usage: "calc= num base log", where "num" is any number and "base" is a base.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 1024 2 log" -> "calc=10"
+	* "calc= 27 3 log" -> "calc=3"
+
+It returns the logarithm of num to base.
+`,
 /*
-	log
 	ln
 /*
 	call
