@@ -468,14 +468,14 @@ Demos:
 		"cbrt, cube_root"() {
 			stack.push(types.new_num(Math.cbrt(stack.pop().data)));
 		},
-		root() {
-			var num = stack.pop().data;
+		"root, nth_root"() {
 			var exp = stack.pop().data;
+			var num = stack.pop().data;
 			stack.push(types.new_num(num ** (1 / exp)));
 		},
-		"log, logarithm"() {
-			var num = stack.pop().data;
+		"log, logarithm, log_n"() {
 			var base = stack.pop().data;
+			var num = stack.pop().data;
 			stack.push(types.new_num(Math.log(num) / Math.log(base)));
 		},
 		"ln, log_e, natural_log, natural_logarithm"() {

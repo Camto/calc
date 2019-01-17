@@ -1009,8 +1009,21 @@ Examples:
 
 It returns the cube root of num.
 `,
+	root: aliases => `
+
+	NTH ROOT
+
+Usage: "calc= num exp root", where "num" is any number and "exp" is an exponent.
+
+Aliases:  ${aliases}.
+
+Examples:
+	"calc= 16 5 root" -> "calc=2"
+	"calc= 6 4 root" -> "calc=1.56508"
+
+It returns the exp-th root of num.
+`,
 /*
-	root
 	log
 	ln
 /*
