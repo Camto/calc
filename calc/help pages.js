@@ -1053,7 +1053,7 @@ It returns the logarithm of num to base e.
 	call
 	iter
 	id
-	dot
+	comp
 	set
 	inc
 	dec*/

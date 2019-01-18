@@ -496,7 +496,7 @@ Demos:
 			}
 		},
 		"id, identity, nop, noop"() {},
-		"dot, comp, compose"(scopes) {
+		"comp, compose"(scopes) {
 			var second = stack.pop();
 			var first = stack.pop();
 			var run = types.new_sym("run");
