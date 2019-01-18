@@ -1063,8 +1063,20 @@ Examples:
 
 It returns the logarithm of num to base.
 `,
-/*
-	ln
+	ln: aliases => `
+
+	NATURAL LOGARITHM
+
+Usage: "calc= num ln" where "num" is any number.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 3 ln" -> "calc=1.09861"
+	* "calc= e ln" -> "calc=1"
+
+It returns the logarithm of num to base e.
+`,
 /*
 	call
 	iter
