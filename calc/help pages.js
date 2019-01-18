@@ -1054,6 +1054,7 @@ It returns the logarithm of num to base e.
 	iter
 	id
 	comp
+/*
 	set
 	inc
 	dec*/
