@@ -1131,6 +1131,8 @@ Aliases: ${aliases}.
 Examples:
 	"calc= $3 {1+} comp call" -> "calc=4"
 	"calc= func = {1-} $sqrt comp ; 5 func" -> "calc=2"
+
+It returns the composition of the functions. The resulting function, when run, just executes f, then g. It would be equivalent to {f g}.
 `,
 /*
 	set
@@ -2101,18 +2103,6 @@ Demos:
 		},
 		"id, identity, nop, noop"() {},
 		"comp, compose"(scopes) {
-			/*var second = stack.pop();
-			var first = stack.pop();
-			var call = types.new_sym("call");
-			
-			stack.push({
-				args: [],
-				data: [first, call, second, call],
-				scopes,
-				type: types.func,
-				variables: []
-			});*/
-			
 			var comp = {
 				args: ["f", "g"],
 				variables: [],
