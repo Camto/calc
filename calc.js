@@ -2053,7 +2053,7 @@ Demos:
 		
 		// Function functions.
 		
-		"call, run, do, apply, get"() {
+		"call, run, do, apply, get, exe, execute"() {
 			run_part.run_function(stack.pop(), stack, made_built_ins, operators, end_time);
 		},
 		"iter, iterate, iterative, loop, loop_n"() {
