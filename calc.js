@@ -1077,11 +1077,27 @@ Examples:
 
 It returns the logarithm of num to base e.
 `,
+	call: aliases => `
+
+	CALL FUNCTION OR BUILT-IN
+
+Usage:  "calc= callable call", where "callable" is a function, built-in reference, or other reference.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 1 {1+} call" -> "calc=2"
+	* "calc= $id dup call" -> "calc=id"
+	* "calc= func = {1+} ; 1 $func call" -> "calc=2"
+	* "calc= $3 call" -> "calc=3"
+
+It returns the result of the callable.
+`,
 /*
-	call
 	iter
 	id
-	dot
+	comp
+/*
 	set
 	inc
 	dec*/
@@ -2049,7 +2065,7 @@ Demos:
 			}
 		},
 		"id, identity, nop, noop"() {},
-		"dot, comp, compose"(scopes) {
+		"comp, compose"(scopes) {
 			var second = stack.pop();
 			var first = stack.pop();
 			var run = types.new_sym("run");
