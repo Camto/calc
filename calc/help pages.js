@@ -1053,7 +1053,7 @@ It returns the logarithm of num to base e.
 
 	CALL FUNCTION OR BUILT-IN
 
-Usage:  "calc= callable call", where "callable" is a function, built-in reference, or other reference.
+Usage: "calc= args callable call", where "callable" is a function, built-in reference, or other reference and "args" are the arguments to the callable.
 
 Aliases: ${aliases}.
 
@@ -1065,8 +1065,21 @@ Examples:
 
 It returns the result of the callable.
 `,
+	iter: aliases => `
+
+	ITERATE OVER
+
+Usage: "calc= initial_state iterator n iter", where "initial_state" are the first arguments to the iterating function, "iterator" is a function to iterate with, and "n" is how many iterations to run.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 0 1 {x y -> y x y +} 6 iter" -> "calc=8 13"
+	* "calc= $'a 7 iter" -> "calc=a a a a a a a"
+
+It runs the iterator n times, feeding the output of the function to it's input, starting with the initial state. It returns the final result of the iterator.
+`,
 /*
-	iter
 	id
 	comp
 /*

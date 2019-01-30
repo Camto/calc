@@ -499,11 +499,11 @@ Demos:
 		"comp, compose"(scopes) {
 			var second = stack.pop();
 			var first = stack.pop();
-			var run = types.new_sym("run");
+			var call = types.new_sym("call");
 			
 			stack.push({
 				args: [],
-				data: [first, run, second, run],
+				data: [first, call, second, call],
 				scopes,
 				type: types.func,
 				variables: []
