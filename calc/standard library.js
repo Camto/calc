@@ -497,17 +497,28 @@ Demos:
 		},
 		"id, identity, nop, noop"() {},
 		"comp, compose"(scopes) {
-			var second = stack.pop();
-			var first = stack.pop();
-			var call = types.new_sym("call");
-			
-			stack.push({
-				args: [],
-				data: [first, call, second, call],
-				scopes,
+			var comp = {
+				args: ["f", "g"],
+				variables: [],
+				data: [{
+						args: [],
+						variables: [],
+						data: [{
+								data: "f",
+								type: types.sym
+							}, {
+								data: "g",
+								type: types.sym
+							}
+						],
+						type: types.func
+					}
+				],
 				type: types.func,
-				variables: []
-			});
+				scopes: [{}]
+			};
+			
+			run_part.run_function(comp, stack, made_built_ins, operators, end_time);
 		},
 		
 		// Scope-needing functions.

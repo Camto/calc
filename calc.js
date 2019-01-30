@@ -1120,8 +1120,18 @@ Example:
 
 It does nothing.
 `,
-/*
-	comp
+	comp: aliases => `
+
+	COMPOSE FUNCTIONS
+
+Usage: "calc= f g comp", where "f" and "g" are functions.
+
+Aliases: ${aliases}.
+
+Examples:
+	"calc= $3 {1+} comp call" -> "calc=4"
+	"calc= func = {1-} $sqrt comp ; 5 func" -> "calc=2"
+`,
 /*
 	set
 	inc
@@ -2091,7 +2101,7 @@ Demos:
 		},
 		"id, identity, nop, noop"() {},
 		"comp, compose"(scopes) {
-			var second = stack.pop();
+			/*var second = stack.pop();
 			var first = stack.pop();
 			var call = types.new_sym("call");
 			
@@ -2101,7 +2111,30 @@ Demos:
 				scopes,
 				type: types.func,
 				variables: []
-			});
+			});*/
+			
+			var comp = {
+				args: ["f", "g"],
+				variables: [],
+				data: [{
+						args: [],
+						variables: [],
+						data: [{
+								data: "f",
+								type: types.sym
+							}, {
+								data: "g",
+								type: types.sym
+							}
+						],
+						type: types.func
+					}
+				],
+				type: types.func,
+				scopes: [{}]
+			};
+			
+			run_part.run_function(comp, stack, made_built_ins, operators, end_time);
 		},
 		
 		// Scope-needing functions.

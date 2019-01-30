@@ -1092,8 +1092,18 @@ Example:
 
 It does nothing.
 `,
-/*
-	comp
+	comp: aliases => `
+
+	COMPOSE FUNCTIONS
+
+Usage: "calc= f g comp", where "f" and "g" are functions.
+
+Aliases: ${aliases}.
+
+Examples:
+	"calc= $3 {1+} comp call" -> "calc=4"
+	"calc= func = {1-} $sqrt comp ; 5 func" -> "calc=2"
+`,
 /*
 	set
 	inc
