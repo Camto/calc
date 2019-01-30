@@ -1079,8 +1079,20 @@ Examples:
 
 It runs the iterator n times, feeding the output of the function to it's input, starting with the initial state. It returns the final result of the iterator.
 `,
+	id: aliases => `
+
+	IDENTITY FUNCTION
+
+Usage: "calc= id".
+
+Aliases: ${aliases}.
+
+Example:
+	"calc= 3 'a id" -> "calc=3 a"
+
+It does nothing.
+`,
 /*
-	id
 	comp
 /*
 	set
