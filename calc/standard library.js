@@ -498,18 +498,12 @@ Demos:
 		"id, identity, nop, noop"() {},
 		"comp, compose"(scopes) {
 			var comp = {
-				args: ["f", "g"],
-				variables: [],
+				args: ["f", "g"], variables: [],
 				data: [{
-						args: [],
-						variables: [],
-						data: [{
-								data: "f",
-								type: types.sym
-							}, {
-								data: "g",
-								type: types.sym
-							}
+						args: [], variables: [],
+						data: [
+							{data: "f", type: types.sym},
+							{data: "g", type: types.sym}
 						],
 						type: types.func
 					}
