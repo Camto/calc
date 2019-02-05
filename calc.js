@@ -1134,10 +1134,48 @@ Examples:
 
 It returns the composition of the functions. The resulting function, when run, just executes f, then g. It would be equivalent to {f g}.
 `,
-/*
-	set
-	inc
-	dec*/
+	set: aliases => `
+
+	SET VARIABLE
+
+Usage: "calc= variable value set", where "variable" is a variable reference and "value" is the new value for the variable.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= x = 3 ; x $x 4 set x" -> "calc=3 4"
+	* "calc= var = "thing" ; $var 1 5 .. set var" -> "calc=[1, 2, 3, 4, 5]"
+
+Sets the variable to the new value. Returns nothing.
+`,
+	inc: aliases => `
+
+	INCREMENT VARIABLE
+
+Usage: "calc= variable inc", where "variable" is a variable reference.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= x = 4 ; x $x inc x" -> "calc=4 5"
+	* "calc= var = 89 ; $var inc var" -> "calc=90"
+
+It increments the variable. Returns nothing.
+`,
+	dec: aliases => `
+
+	DECREMENT VARIABLE
+
+Usage: "calc= variable dec", where "variable" is a variable reference.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= x = 4 ; x $x dec x" -> "calc=4 3"
+	* "calc= var = 89 ; $var dec var" -> "calc=88"
+
+It decrements the variable. Returns nothing.
+`
 };
 
 var built_in_warning = "!WARNING: This function is discouraged from being used, the only reason it is here is for the few cases in which it is necessary!";
@@ -2104,18 +2142,12 @@ Demos:
 		"id, identity, nop, noop"() {},
 		"comp, compose"(scopes) {
 			var comp = {
-				args: ["f", "g"],
-				variables: [],
+				args: ["f", "g"], variables: [],
 				data: [{
-						args: [],
-						variables: [],
-						data: [{
-								data: "f",
-								type: types.sym
-							}, {
-								data: "g",
-								type: types.sym
-							}
+						args: [], variables: [],
+						data: [
+							{data: "f", type: types.sym},
+							{data: "g", type: types.sym}
 						],
 						type: types.func
 					}
