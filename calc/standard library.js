@@ -4,7 +4,7 @@ var types = require("./types");
 var print = require("./print");
 var run_part = require("./run part");
 var variable_manipulation = require("./variable manipulation");
-var help_pages = require("./help pages");
+var help = require("./help");
 
 // Generate built-ins based on a stack, operators, and an end time.
 
@@ -33,7 +33,7 @@ Demos:
 				if(page.type == types.sym) {
 					var found = made_built_ins[page.data];
 					if(found) {
-						stack.push(types.new_str(help_pages[found.main_alias](found.aliases.join(", "))));
+						stack.push(types.new_str(help.help_pages[found.main_alias](found.aliases.join(", "))));
 					} else {
 						stack.push(types.new_str(`Error: "${page.data}" is not a built-in.`));
 					}
@@ -46,11 +46,11 @@ Demos:
 		},
 		"tut, tutorial"() {
 			if(stack.length == 0) {
-				stack.push(types.new_str(tut_pages[0]));
+				stack.push(types.new_str(help.tut_pages[0]));
 			} else {
 				var page = stack.pop().data;
-				if(page < tut_pages.length) {
-					stack.push(types.new_str(tut_pages[page]));
+				if(page < help.tut_pages.length) {
+					stack.push(types.new_str(help.tut_pages[page]));
 				} else {
 					stack.push(types.new_str(`Error: tutorial page ${page} does not exist.`));
 				}
@@ -58,11 +58,11 @@ Demos:
 		},
 		"adv_tut, adv_tutorial, advanced_tutorial, advanced_tut"() {
 			if(stack.length == 0) {
-				stack.push(types.new_str(adv_tut_pages[0]));
+				stack.push(types.new_str(help.adv_tut_pages[0]));
 			} else {
 				var page = stack.pop().data;
-				if(page < adv_tut_pages.length) {
-					stack.push(types.new_str(adv_tut_pages[page]));
+				if(page < help.adv_tut_pages.length) {
+					stack.push(types.new_str(help.adv_tut_pages[page]));
 				} else {
 					stack.push(types.new_str(`Error: advanced tutorial page ${page} does not exist.`));
 				}
@@ -538,40 +538,6 @@ Demos:
 	
 	return made_built_ins;
 }
-
-var tut_pages = [`
-
-	INTRODUCTION (0)
-
-calc= is a programming language for chats. Every program starts with "calc=" and then has a series of instruccions to follow. calc= is a stack based (or concatenative) language, which means all of it's computations will be done using a stack. You can push things on top, then pop them off to use them. Try the program "calc= 5 1 -", then proceed to the next page of the tutorial. To access a page use "calc= number tut", where you replace "number" by the page number. The next page of this tutorial is at "calc= 1 tut".
-`,`
-
-	FIRST EXAMPLE (1)
-
-As you can see, "calc= 5 1 -" gives back "calc= 4". This is because "5" pushed a "5" on top of the stack, then "1" pushed a "1". Finally "-" popped the top two elements from the stack, "5" and "1", and subtracted them to form "4". There are the four basic operators: "+", "-", "*", "/".
-`,`
-
-	MULTIPLE OPERATIONS (2)
-
-The problem now is: how do you make more complicated calculations like "4 * 3 - 2". In calc=, there is no order of operations, because each symbol is read from left to right, you always know which goes first. In the case of "4 * 3 - 2", you would write "calc= 4 3 * 2 -". In the normal math example, "*" goes first so in calc= it will be towards the front of the program. In the normal math example, you last thing you do is subtract, so it will be at the very end of the calc= program. Now on to a more complex example: how would write "2 + (5 - 1) / 3"? Try to write it yourself, the answer is on the next page.
-`,`
-
-	COMPLEX EXAMPLE (3)
-
-In calc=, "2 + (5 - 1) / 3" would be written as "calc= 5 1 - 3 / 2 +" (there are other ways, but this is the most straight forward one). You can see that parenthesis are not necesarry in calc= because the order is always explicit, "-" goes first, then "/", and finally "+".
-`,`
-
-	CALLING FUNCTIONS (4)
-
-To call any function, you just need to provide it's arguments and write it's name. For example, the absolute value function, shortened to "abs", can be used like so: "calc= 3 5 - abs" -> "calc=2". Use "calc= page" to find functions you need.
-`];
-
-var adv_tut_pages = [`
-
-	WIP (0)
-
-Advanced tutorial pages are still a work in progress.
-`];
 
 // Generate operators based on a stack.
 
