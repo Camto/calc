@@ -1144,6 +1144,8 @@ It returns the composition of the functions. The resulting function, when run, j
 
 	SET VARIABLE
 
+${built_in_warning}
+
 Usage: "calc= variable value set", where "variable" is a variable reference and "value" is the new value for the variable.
 
 Aliases: ${aliases}.
@@ -1158,6 +1160,8 @@ Sets the variable to the new value. Returns nothing.
 
 	INCREMENT VARIABLE
 
+${built_in_warning}
+
 Usage: "calc= variable inc", where "variable" is a variable reference.
 
 Aliases: ${aliases}.
@@ -1171,6 +1175,8 @@ It increments the variable. Returns nothing.
 	dec: aliases => `
 
 	DECREMENT VARIABLE
+
+${built_in_warning}
 
 Usage: "calc= variable dec", where "variable" is a variable reference.
 
