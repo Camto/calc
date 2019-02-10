@@ -51,6 +51,11 @@ In calc=, "2 + (5 - 1) / 3" would be written as "calc= 5 1 - 3 / 2 +" (there are
 	CALLING FUNCTIONS (4)
 
 To call any function, you just need to provide it's arguments and write it's name. For example, the absolute value function, shortened to "abs", can be used like so: "calc= 3 5 - abs" -> "calc=2". Use "calc= page" to find functions you need.
+`,`
+
+	MAKING VARIABLES (5)
+
+Variables in calc= are not like normal mathematical variables. They are mosr similar to constants. For example: "calc= x = 3 ; x 4 +" defines a variable x as 3, then uses it. To define a variable, all you need to do is write the name, an equals sign (=), it's value, and a somecolon (;) to finish it. Here is a more complex example: "calc= x = 2 sqrt ; y = 6 2 + ; x 2 / y". x is set to the square root of 2, y is 6 + 2, and the result is x / 2 and y.
 `];
 
 var adv_tut_pages = [`
@@ -107,7 +112,7 @@ It shows the advanced tutorial page.
 `,
 	type: aliases => `
 
-	TYPE
+	GET TYPE
 
 Usage: "calc= value type", where "value" is any value.
 
@@ -1073,7 +1078,7 @@ It returns the cube root of num.
 `,
 	root: aliases => `
 
-	NTH ROOT
+	N-TH ROOT
 
 Usage: "calc= num exp root", where "num" is any number and "exp" is an exponent.
 
@@ -1086,6 +1091,8 @@ Examples:
 It returns the exp-th root of num.
 `,
 	log: aliases => `
+
+	LOGARITHM
 
 Usage: "calc= num base log", where "num" is any number and "base" is a base.
 
@@ -1713,7 +1720,109 @@ Demos:
 		},
 		"page, help_page, hp, h_page, help_p, doc, docs, documentation"() {
 			if(stack.length == 0) {
-				stack.push(types.new_str("Help page usage not done yet."));
+				stack.push(types.new_str(`
+
+	HELP PAGES
+
+This is the help page index!
+
+To find the help page of a built-in or an operator, just run this command: "calc= $thing page", where "thing" is the name of the built-in or the operator.
+
+The built-ins are classified in these categories:
+	* Help functions.
+		* help - Help menu.
+		* page - Built-in/operator documentation.
+		* tut - Basic tutorial.
+		* adv_tut - Advanced tutorial.
+
+	* Basic functions.
+		* type - Get type.
+		* true
+		* false
+
+	* Flow control.
+		* if - If/else statement.
+
+	* Stack functions.
+		* dup - Duplicate.
+		* swap
+		* stack_reverse_n - Reverse top n items.
+		* drop
+		* drop_n - Drop n items.
+		* rot - Rotate.
+		* unrot - Rotate backward.
+		* roll - Roll.
+		* unroll - Roll backward.
+		* nip - Nip under.
+		* tuck - Tuck under.
+		* over - Duplicate over.
+
+	* List functions.
+		* map - Map over list.
+		* fold - Fold list to the left.
+		* foldr - Fold list to the right.
+		* filter - Filter list with predicate.
+		* length - Length of.
+		* head - First item.
+		* snd - Second item.
+		* last - Last item.
+		* back_snd - Before last item.
+		* nth - N-th item.
+		* back_nth - N-th item from the end.
+		* init - All but first item.
+		* tail - All but last item.
+		* body - All but first and last item.
+		* reverse - Reverse list.
+		* reverse_n - Reverse last n items of list.
+		* pop_n - Remove last n items of list.
+		* elem - Is item in list.
+		* expl - Explode list items.
+		* group - Group into list.
+		* copy_group - Copy and group into list.
+		* group_all - Group all items into list.
+		* copy_group_all - Copy and group all items into list.
+		* list_dup - Duplicate top of list.
+		* list_swap - Swap top of list.
+		* list_rot - Rotate top of list.
+		* list_unrot - Rotate top of list backward.
+		* list_roll - Roll top of list.
+		* list_unroll - Roll top of list backward.
+		* list_nip - Nip under list.
+		* list_tuck - Tuck under list.
+		* list_over - Duplicate over on list.
+
+	* Math functions.
+		* pi - The constant pi.
+		* tau - The constant tau.
+		* e - The constant e.
+		* abs - Absolute value.
+		* round - Round to the nearest integer.
+		* ceil - Round upwards.
+		* floor - Round downwards.
+		* max - Biggest or longest.
+		* min - Smallest or shortest.
+		* sgn - Sign of number.
+		* rand - Generate random number.
+		* cos - Cosine of angle in radians.
+		* sin - Sine of angle in radians.
+		* tan - Tangent of angle in radians.
+		* sqrt - Square root.
+		* cbrt - Cube root.
+		* root - N-th root.
+		* log - Logarithm.
+		* ln - Natural logarithm.
+
+	* Function functions.
+		* call - Call function or built-in.
+		* iter - Iterate over.
+		* id - Identity function.
+		* comp - Compose functions.
+
+	* State functions.
+		* set - Set variable.
+		* inc - Increment variable.
+		* dec - Decrement variable.
+`));
 			} else {
 				var page = stack.pop();
 				if(page.type == types.sym) {
@@ -2201,7 +2310,7 @@ Demos:
 			run_part.run_function(comp, stack, made_built_ins, operators, end_time);
 		},
 		
-		// Scope-needing functions.
+		// State functions.
 		
 		set(scopes) {
 			var value = stack.pop();

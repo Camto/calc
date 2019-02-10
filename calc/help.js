@@ -23,6 +23,11 @@ In calc=, "2 + (5 - 1) / 3" would be written as "calc= 5 1 - 3 / 2 +" (there are
 	CALLING FUNCTIONS (4)
 
 To call any function, you just need to provide it's arguments and write it's name. For example, the absolute value function, shortened to "abs", can be used like so: "calc= 3 5 - abs" -> "calc=2". Use "calc= page" to find functions you need.
+`,`
+
+	MAKING VARIABLES (5)
+
+Variables in calc= are not like normal mathematical variables. They are mosr similar to constants. For example: "calc= x = 3 ; x 4 +" defines a variable x as 3, then uses it. To define a variable, all you need to do is write the name, an equals sign (=), it's value, and a somecolon (;) to finish it. Here is a more complex example: "calc= x = 2 sqrt ; y = 6 2 + ; x 2 / y". x is set to the square root of 2, y is 6 + 2, and the result is x / 2 and y.
 `];
 
 var adv_tut_pages = [`
@@ -79,7 +84,7 @@ It shows the advanced tutorial page.
 `,
 	type: aliases => `
 
-	TYPE
+	GET TYPE
 
 Usage: "calc= value type", where "value" is any value.
 
@@ -1045,7 +1050,7 @@ It returns the cube root of num.
 `,
 	root: aliases => `
 
-	NTH ROOT
+	N-TH ROOT
 
 Usage: "calc= num exp root", where "num" is any number and "exp" is an exponent.
 
@@ -1058,6 +1063,8 @@ Examples:
 It returns the exp-th root of num.
 `,
 	log: aliases => `
+
+	LOGARITHM
 
 Usage: "calc= num base log", where "num" is any number and "base" is a base.
 
