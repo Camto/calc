@@ -1225,9 +1225,10 @@ It decrements the variable. Returns nothing.
 `
 };
 
+op_help_pages = {
 var built_in_warning = "!WARNING: This function is discouraged from being used, the only reason it is here is for the few cases in which it is necessary!";
 
-module.exports = {tut_pages, adv_tut_pages, help_pages};
+module.exports = {tut_pages, adv_tut_pages, help_pages, op_help_pages};
 },{}],3:[function(require,module,exports){
 "use strict";
 
@@ -1836,7 +1837,7 @@ The built-ins are classified in these categories:
 						stack.push(types.new_str(`Error: "${page.data}" is not a built-in.`));
 					}
 				} else if(page.type == types.op) {
-					
+					stack.push(types.new_str(help.op_help_pages[page.data]));
 				} else {
 					stack.push(types.new_str(`Error: cannot get help page for value "${print(page)}" of type ${types.type_to_str(page.type)}.`));
 				}

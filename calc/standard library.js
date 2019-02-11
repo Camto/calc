@@ -140,7 +140,7 @@ The built-ins are classified in these categories:
 						stack.push(types.new_str(`Error: "${page.data}" is not a built-in.`));
 					}
 				} else if(page.type == types.op) {
-					
+					stack.push(types.new_str(help.op_help_pages[page.data]));
 				} else {
 					stack.push(types.new_str(`Error: cannot get help page for value "${print(page)}" of type ${types.type_to_str(page.type)}.`));
 				}

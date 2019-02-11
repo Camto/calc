@@ -1197,6 +1197,7 @@ It decrements the variable. Returns nothing.
 `
 };
 
+op_help_pages = {
 var built_in_warning = "!WARNING: This function is discouraged from being used, the only reason it is here is for the few cases in which it is necessary!";
 
-module.exports = {tut_pages, adv_tut_pages, help_pages};
+module.exports = {tut_pages, adv_tut_pages, help_pages, op_help_pages};
