@@ -11,9 +11,9 @@ function calc(code_, max_time) {
 		throw "There is no \"calc=\".";
 	}
 	var code = code_.substr(5, code_.length);
-	var tokens = lex(code);
-	var ast = parse(tokens);
 	try {
+		var tokens = lex(code);
+		var ast = parse(tokens);
 		return run(ast, max_time);
 	} catch(err) {
 		throw "calc=" + err_to_str(err);
