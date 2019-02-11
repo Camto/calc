@@ -1226,6 +1226,33 @@ It decrements the variable. Returns nothing.
 };
 
 op_help_pages = {
+	"+": `
+
+	ADDITION OR CONCATENATION
+
+Usage: "calc= x y +", where "x" and "y" are either both numbers, strings, or lists, or one of them is the list and another is an item to be appended.
+
+Examples:
+	* (both numbers) "calc= 3 5 +" -> "calc=8"
+	* (both strings) "calc= "abc" "def" +" -> "calc=abcdef"
+	* (both strings) "calc= "asd" 'f +" -> "calc=asdf"
+	* (both lists) "calc= 1 3 .. 4 6 .. +" -> "calc=[1, 2, 3, 4, 5, 6]"
+	* (x is a list, y is an item) "calc= 1 3 .. 4 +" -> "calc=[1, 2, 3, 4]"
+	* (x is an item, y is a list) "calc= 'a 'e 'h .. +" -> "calc=[a, e, f, g, h]"
+
+If x and y are numbers, they are added. If they are strings or lists, they are concatenated. If one is a list and the other is an item, the item is appended to the list, to the beginning if it is to the left, to the end if it is to the right.
+
+Here is a visual way to think about it:
+	"calc= 1 [2, 3, 4] +"
+	x = 1, y = [2, 3, 4]
+	result = [1, 2, 3, 4]
+
+	"calc= [2, 3, 4] 1 +"
+	y = [2, 3, 4], x = 1
+	result = [2, 3, 4, 1]
+`
+};
+
 var built_in_warning = "!WARNING: This function is discouraged from being used, the only reason it is here is for the few cases in which it is necessary!";
 
 module.exports = {tut_pages, adv_tut_pages, help_pages, op_help_pages};
