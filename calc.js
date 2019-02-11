@@ -1615,6 +1615,9 @@ var types = require("./types");
 var variable_manipulation = require("./variable manipulation");
 
 function run_function(func, stack, built_ins, operators, end_time) {
+	if(Date.now() > end_time) {
+		throw "Error: code took too long to run, stopped.";
+	}
 	if(!func.is_ref || [types.func, types.op].includes(func.type)) {
 		switch(func.type) {
 			case types.func:
