@@ -47,6 +47,7 @@ The built-ins are classified in these categories:
 		* true
 		* false
 		* num_to_str - Convert number to string.
+		* str_to_num - Convert string to number.
 		* eval - Evaluate calc= program.
 
 	* Flow control.
@@ -186,7 +187,11 @@ The built-ins are classified in these categories:
 		},
 		"num_to_str, number_to_string"() {
 			var num = stack.pop().data;
-			stack.push(types.new_str(Math.trunc(num * 100000) / 100000));
+			stack.push(types.new_str(Math.round(num * 100000) / 100000));
+		},
+		"str_to_num, string_to_number"() {
+			var str = stack.pop().data;
+			stack.push(types.new_num(parseFloat(str)));
 		},
 		"eval, evaluate, calc"() {
 			var program = stack.pop().data;

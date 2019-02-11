@@ -150,6 +150,34 @@ Examples:
 
 Returns the simplest falsy value, 0.
 `,
+	num_to_str: aliases => `
+
+	CONVERT NUMBER TO STRING
+
+Usage: "calc= number num_to_str", where "number" is any number.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 5 num_to_str" -> "calc=5"
+	* "calc= 5 num_to_str type" -> "calc=string"
+
+It returns the number as a string.
+`,
+	str_to_num: aliases => `
+
+	CONVERT STRING TO NUMBER
+
+Usage: "calc= string str_to_num", where "string" is a string representing a number.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= "5" str_to_num" -> "calc=5"
+	* "calc= "5" str_to_num type" -> "calc=number"
+
+It returns the string as a number.
+`,
 	eval: aliases => `
 
 	EVALUATE CALC= PROGRAM
@@ -1589,7 +1617,7 @@ module.exports = function print(value) {
 				return value.data;
 				break;
 			case types.num:
-				return Math.trunc(value.data * 100000) / 100000;
+				return Math.round(value.data * 100000) / 100000;
 			case types.list:
 				var list = "[";
 				for(let cou = 0; cou < value.data.length; cou++) {
@@ -1804,6 +1832,7 @@ The built-ins are classified in these categories:
 		* true
 		* false
 		* num_to_str - Convert number to string.
+		* str_to_num - Convert string to number.
 		* eval - Evaluate calc= program.
 
 	* Flow control.
@@ -1943,7 +1972,11 @@ The built-ins are classified in these categories:
 		},
 		"num_to_str, number_to_string"() {
 			var num = stack.pop().data;
-			stack.push(types.new_str(Math.trunc(num * 100000) / 100000));
+			stack.push(types.new_str(Math.round(num * 100000) / 100000));
+		},
+		"str_to_num, string_to_number"() {
+			var str = stack.pop().data;
+			stack.push(types.new_num(parseFloat(str)));
 		},
 		"eval, evaluate, calc"() {
 			var program = stack.pop().data;

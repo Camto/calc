@@ -136,6 +136,20 @@ Examples:
 
 It returns the number as a string.
 `,
+	str_to_num: aliases => `
+
+	CONVERT STRING TO NUMBER
+
+Usage: "calc= string str_to_num", where "string" is a string representing a number.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= "5" str_to_num" -> "calc=5"
+	* "calc= "5" str_to_num type" -> "calc=number"
+
+It returns the string as a number.
+`,
 	eval: aliases => `
 
 	EVALUATE CALC= PROGRAM
