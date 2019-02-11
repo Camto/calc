@@ -2454,7 +2454,7 @@ function operators(stack) {
 			var left = stack.pop();
 			
 			if(left.type == types.num && right.type == types.num) {
-				stack.push(types.new_num(left.data && right.data));
+				stack.push(types.new_bool(left.data && right.data));
 			}
 		},
 		"|"() {
@@ -2462,7 +2462,7 @@ function operators(stack) {
 			var left = stack.pop();
 			
 			if(left.type == types.num && right.type == types.num) {
-				stack.push(types.new_num(left.data || right.data));
+				stack.push(types.new_bool(left.data || right.data));
 			}
 		},
 		"!"() {
