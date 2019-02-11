@@ -805,8 +805,8 @@ function operators(stack) {
 			var left = stack.pop();
 			stack.push(types.new_bool(types.cmp(left, right, (x, y) => x >= y)));
 		},
-		"$"() {
-			throw "Called $ as a function. Don't do that.";
+		$() {
+			throw "Tried to call $ as a function. Don't do that.";
 		}
 		
 	};

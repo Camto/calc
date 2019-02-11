@@ -1222,7 +1222,8 @@ Here is a visual way to think about it:
 	"calc= [2, 3, 4] 1 +"
 	y = [2, 3, 4], x = 1
 	result = [2, 3, 4, 1]
-`
+`,
+	$: "Tried to get documentation of $ as a function. Don't do that."
 };
 
 var built_in_warning = "!WARNING: This function is discouraged from being used, the only reason it is here is for the few cases in which it is necessary!";
