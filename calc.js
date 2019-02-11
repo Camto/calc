@@ -1251,6 +1251,19 @@ Here is a visual way to think about it:
 	y = [2, 3, 4], x = 1
 	result = [2, 3, 4, 1]
 `,
+	"-": `
+
+	SUBSTRACTION OR SLICING
+
+Usage: "x y -", where "x" and "y" are either both numbers, or "x" is a list-like (list or string) and "y" is a number.
+
+Examples:
+	* (both numbers) "calc= 3 1 -" -> "calc=-2"
+	* (x is a list, y is a number) "calc= 'a 'z .. -6 -" -> "calc=[g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z]"
+	* (x is a string, y is a number) "calc= "abcdef" 3 -" -> "calc=abc"
+
+If x and y are numbers, they are subtracted. If x is a list-like and y is a positive number, then y items or characters are removed from the end of x. If x is a list-like and y is a negative number, then y items or characters are removed from the beginning of x.
+`,
 	$: "Tried to get documentation of $ as a function. Don't do that."
 };
 
