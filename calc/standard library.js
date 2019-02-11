@@ -613,10 +613,7 @@ The built-ins are classified in these categories:
 				args: ["f", "g"], variables: [],
 				data: [{
 						args: [], variables: [],
-						data: [
-							{data: "f", type: types.sym},
-							{data: "g", type: types.sym}
-						],
+						data: [types.new_sym("f"), types.new_sym("g")],
 						type: types.func
 					}
 				],
