@@ -161,6 +161,7 @@ Aliases: ${aliases}.
 Examples:
 	* "calc= "calc= 1 2 + 6" eval" -> "calc=[3, 6]"
 	* "calc= "calc= " 5 num_to_str " 4 +" + + eval" -> "calc=[9]"
+	* "calc= "" {"calc= \"" swap "\" 'a+" + + eval fst} 3 iter" -> "calc=aaa"
 	* "calc= "calc= \\"calc= 1\\"eval" eval" -> "calc=[[1]]"
 
 It returns the stack of the result of the program.
