@@ -3,13 +3,13 @@
 var run_part = require("./run part");	
 var standard_library = require("./standard library");
 
-function run(ast, max_time = Infinity) {
+function run(ast, max_time = Infinity, calc) {
 	var stack = [];
 	
 	var end_time = (new Date).getTime() + max_time;
 	
 	var operators = standard_library.operators(stack);
-	var built_ins = standard_library.built_ins(stack, operators, end_time);
+	var built_ins = standard_library.built_ins(stack, calc, operators, end_time);
 	
 	var variables = {};
 	for(let cou = 0; cou < ast.variables.length; cou++) {

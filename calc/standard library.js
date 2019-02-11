@@ -8,7 +8,7 @@ var help = require("./help");
 
 // Generate built-ins based on a stack, operators, and an end time.
 
-function built_ins(stack, operators, end_time) {
+function built_ins(stack, calc, operators, end_time) {
 	var made_built_ins = expand({
 		
 		// Help functions.
@@ -46,6 +46,7 @@ The built-ins are classified in these categories:
 		* type - Get type.
 		* true
 		* false
+		* eval - Evaluate calc= program.
 
 	* Flow control.
 		* if - If/else statement.
@@ -181,6 +182,12 @@ The built-ins are classified in these categories:
 		},
 		"false, no, off"() {
 			stack.push(types.new_bool(false));
+		},
+		"eval, evaluate, calc"() {
+			var program = stack.pop().data;
+			stack.push(types.new_list(
+				calc(program, end_time - (new Date).getTime())
+			));
 		},
 		
 		// Flow control.
@@ -390,7 +397,10 @@ The built-ins are classified in these categories:
 			var item = stack.pop();
 			var list = stack.pop().data;
 			
-			stack.push(types.new_bool(list.reduce((acc, cur) => acc || types.eq(item, cur), false)));
+			stack.push(types.new_bool(list.reduce(
+				(acc, cur) => acc || types.eq(item, cur),
+				false
+			)));
 		},
 		"expl, explode, extr, extract, spr, spread"() {
 			var list = stack.pop().data;

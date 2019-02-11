@@ -13,7 +13,7 @@ function calc(code_, max_time) {
 	try {
 		var tokens = lex(code);
 		var ast = parse(tokens);
-		return run(ast, max_time);
+		return run(ast, max_time, calc);
 	} catch(err) {
 		throw "calc=" + err_to_str(err);
 	}
