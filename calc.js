@@ -2400,13 +2400,16 @@ function operators(stack) {
 					data: left.data - right.data,
 					type: types.num
 				});
-			} else if(left.type == types.str && right.type == types.num) {
-				var cut_string = right.data > 0
+			} else if(
+				(left.type == types.list || left.type == types.str) &&
+				right.type == types.num
+			) {
+				var cut_list_like = right.data > 0
 					? left.data.slice(0, -right.data)
 					: right.data < 0
 						? left.data.slice(-right.data)
 						: left.data;
-				stack.push(types.new_str(cut_string));
+				stack.push({data: cut_list_like, type: left.type});
 			}
 		},
 		"*"() {
