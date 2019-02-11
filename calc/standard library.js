@@ -46,6 +46,7 @@ The built-ins are classified in these categories:
 		* type - Get type.
 		* true
 		* false
+		* num_to_str - Convert number to string.
 		* eval - Evaluate calc= program.
 
 	* Flow control.
@@ -182,6 +183,10 @@ The built-ins are classified in these categories:
 		},
 		"false, no, off"() {
 			stack.push(types.new_bool(false));
+		},
+		"num_to_str, number_to_string"() {
+			var num = stack.pop().data;
+			stack.push(types.new_str(Math.trunc(num * 100000) / 100000));
 		},
 		"eval, evaluate, calc"() {
 			var program = stack.pop().data;

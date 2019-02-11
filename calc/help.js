@@ -122,6 +122,20 @@ Examples:
 
 Returns the simplest falsy value, 0.
 `,
+	num_to_str: aliases => `
+
+	CONVERT NUMBER TO STRING
+
+Usage: "calc= number num_to_str", where "number" is any number.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 5 num_to_str" -> "calc=5"
+	* "calc= 5 num_to_str type" -> "calc=string"
+
+It returns the number as a string.
+`,
 	eval: aliases => `
 
 	EVALUATE CALC= PROGRAM
