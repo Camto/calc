@@ -1588,6 +1588,9 @@ function run_function(func, stack, built_ins, operators, end_time) {
 }
 
 function run_block(block, stack, scopes, built_ins, operators, end_time) {
+	if(Date.now() > end_time) {
+		throw "Error: code took too long to run, stopped.";
+	}
 	for(let instruccion_pointer = 0; instruccion_pointer < block.length; instruccion_pointer++) {
 		if(Date.now() > end_time) {
 			throw "Error: code took too long to run, stopped.";
