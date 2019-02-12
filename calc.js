@@ -1371,8 +1371,10 @@ function lex(code) {
 							break;
 						case "t":
 							str += "\t";
+							break;
 						default:
 							str += code[pointer];
+							break;
 					}
 				}
 				pointer++;
@@ -1384,6 +1386,17 @@ function lex(code) {
 		
 		char() {
 			pointer += 2;
+			if(code[pointer - 1] == "\\") {
+				pointer++;
+				switch(code[pointer - 1]) {
+					case "n":
+						return types.new_str("\n");
+					case "t":
+						return types.new_str("\t");
+					default:
+						return types.new_str(code[pointer - 1]);
+				}
+			}
 			return types.new_str(code[pointer - 1]);
 		},
 		
