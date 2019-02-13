@@ -1336,6 +1336,18 @@ Examples:
 
 It returns x divided by y.
 `,
+	"^": `
+
+	EXPONENTIATION
+
+Usage: "calc= x y ^", where "x" and "y" are both numbers.
+
+Examples:
+	* "calc= 3 2 ^" -> "calc=9"
+	* "calc= 10 -5 ^" -> "calc=0.00001"
+
+It returns x to the power of y.
+`,
 	$: "Tried to get documentation of $ as a function. Don't do that."
 };
 
