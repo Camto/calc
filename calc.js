@@ -1361,6 +1361,39 @@ Examples:
 
 It returns a list starting from "from" and ending with "to", with an element in between for the distance of both. Charcters are treated as numbers in the ASCII table.
 `,
+	"&": `
+
+	LOGICAL AND
+
+Usage: "calc= x y &", where "x" and "y" are booleans (numbers).
+
+Examples:
+	* "calc= false 2 &" -> "calc=0"
+
+It returns true (1) when both values are truthy (non-0).
+`,
+	"|": `
+
+	LOGICAL OR
+
+Usage: "calc= x y |", where "x" and "y" are booleans (numbers).
+
+Examples:
+	* "calc= false 2 |" -> "calc=1"
+
+It returns true (1) when either value is truthy (non-0).
+`,
+	"!": `
+
+	LOGICAL NOT
+
+Usage: "calc= x &", where "x" is a boolean (number).
+
+Examples:
+	* "calc= false !" -> "calc=1"
+
+It returns true (1) when x is false (0), otherwise it returns false (0).
+`,
 	$: "Tried to get documentation of $ as a function. Don't do that."
 };
 
