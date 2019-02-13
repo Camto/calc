@@ -1284,7 +1284,7 @@ If x and y are numbers, they are subtracted. If x is a list-like and y is a posi
 `,
 	"*": `
 
-	MULTIPLICATION, STRING REPETITION, OR CARTESIAN PRODUCTS
+	MULTIPLICATION, LIST-LIKE REPETITION, OR CARTESIAN PRODUCTS
 
 Usage: "x y *", where "x" is either a number or a list-like (list or string) and "y" is either a number or a list-like (list or string).
 
@@ -1295,6 +1295,18 @@ Examples:
 	* (both strings) "calc= "abc" dup *" -> "calc=[aa, ab, ac, ba, bb, bc, ca, cb, cc]"
 
 If x and y are numbers, they are multiplied. If one is a list-like and the other is a number, the list-like is replicated that many times. If both are list-likes, their cartesian product is given, with pairs as lists of 2 elements. If both are strings, the cartesian product will use strings as pairs.
+`,
+	"/": `
+
+	DIVISION
+
+Usage: "calc= x y /", where "x" and "y" are both numbers.
+
+Examples:
+	* "calc= 6 3 /" -> "calc=2"
+	* "calc= 1 3 /" -> "calc=0.33333"
+
+It returns x divided by y.
 `,
 	$: "Tried to get documentation of $ as a function. Don't do that."
 };
