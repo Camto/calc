@@ -1387,7 +1387,7 @@ It returns true (1) when either value is truthy (non-0).
 
 	LOGICAL NOT
 
-Usage: "calc= x &", where "x" is a boolean (number).
+Usage: "calc= x !", where "x" is a boolean (number).
 
 Examples:
 	* "calc= false !" -> "calc=1"
@@ -2775,10 +2775,10 @@ var is_type = {
 	is_num: val => val.type == types.num,
 	is_str: val => val.type == types.str,
 	is_list: val => val.type == types.list,
-	is_list_like: val => is_type.is_list(val) || is_type.is_str(val),
 	is_func: val => val.type == types.func,
 	is_sym: val => val.type == types.sym,
-	is_op: val => val.type == types.op
+	is_op: val => val.type == types.op,
+	is_list_like: val => is_type.is_list(val) || is_type.is_str(val)
 };
 
 function type_to_str(type) {
