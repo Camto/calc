@@ -2654,7 +2654,7 @@ function operators(stack) {
 		},
 		"!"() {
 			var bool = stack.pop();
-			if(types.is_num(left)) {
+			if(types.is_num(bool)) {
 				stack.push(types.new_bool(!bool.data));
 			}
 		},
