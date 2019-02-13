@@ -2618,7 +2618,7 @@ function operators(stack) {
 				list.push(types.new_num(cou));
 			}
 			
-			if(types.is_num(left)) {
+			if(types.is_str(left)) {
 				list = list.map(n => (types.new_str(String.fromCharCode(n.data))));
 			}
 			stack.push(types.new_list(gets_bigger ? list : list.reverse()));
