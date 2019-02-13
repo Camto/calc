@@ -708,6 +708,7 @@ function operators(stack) {
 			var right = stack.pop();
 			var left = stack.pop();
 			
+			var list_repeat = (list, num) => Array(num).fill(list).flat();
 			var cartesian_prod = (col, row) => col.reduce(
 				(acc, i) => [...acc, ...row.map(j => [i, j])],
 				[]
@@ -715,6 +716,10 @@ function operators(stack) {
 			
 			if(left.type == types.num && right.type == types.num) {
 				stack.push(types.new_num(left.data * right.data));
+			} else if(left.type == types.list && right.type == types.num) {
+				stack.push(types.new_list(list_repeat(left.data, right.data)));
+			} else if(left.type == types.num && right.type == types.list) {
+				stack.push(types.new_list(list_repeat(right.data, left.data)));
 			} else if(left.type == types.str && right.type == types.num) {
 				stack.push(types.new_str(left.data.repeat(right.data)));
 			} else if(left.type == types.num && right.type == types.str) {
