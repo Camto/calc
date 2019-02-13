@@ -2627,12 +2627,18 @@ function operators(stack) {
 			var gets_bigger = beginning < end;
 			
 			var list = [];
-			for(let cou = (gets_bigger ? beginning : end); cou < (gets_bigger ? end + 1 : beginning + 1); cou++) {
+			for(
+				let cou = (gets_bigger ? beginning : end);
+				cou < (gets_bigger ? end + 1 : beginning + 1);
+				cou++
+			) {
 				list.push(types.new_num(cou));
 			}
 			
 			if(types.is_str(left)) {
-				list = list.map(n => (types.new_str(String.fromCharCode(n.data))));
+				list = list.map(
+					n => types.new_str(String.fromCharCode(n.data))
+				);
 			}
 			stack.push(types.new_list(gets_bigger ? list : list.reverse()));
 		},
