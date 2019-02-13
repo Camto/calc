@@ -2526,10 +2526,23 @@ function operators(stack) {
 				stack.push(types.new_str(right.data.repeat(left.data)));
 			} else if(left.type == types.str && right.type == types.str) {
 				var prod = cartesian_prod(left.data.split(""), right.data.split(""));
-				stack.push(types.new_list(prod.map(pair => (types.new_str(pair.join(""))))));
-			} else if(left.type == types.list && right.type == types.list) {
-				var prod = cartesian_prod(left.data, right.data);
-				stack.push(types.new_list(prod.map(pair => (types.new_list(pair)))));
+				stack.push(types.new_list(prod.map(
+					pair => types.new_str(pair.join(""))
+				)));
+			} else if(
+				(left.type == types.list || left.type == types.str) &&
+				(right.type == types.list || right.type == types.str)
+			) {
+				var list_left = left.type == types.list
+					? left.data
+					: left.data.split("").map(char => types.new_str(char));
+				var list_right = right.type == types.list
+					? right.data
+					: right.data.split("").map(char => types.new_str(char));
+				var prod = cartesian_prod(list_left, list_right);
+				stack.push(types.new_list(prod.map(
+					pair => types.new_list(pair)
+				)));
 			}
 		},
 		"/"() {
