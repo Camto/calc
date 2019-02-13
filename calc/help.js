@@ -1266,7 +1266,7 @@ Here is a visual way to think about it:
 	result = [1, 2, 3, 4]
 
 	"calc= [2, 3, 4] 1 +"
-	y = [2, 3, 4], x = 1
+	x = [2, 3, 4], y = 1
 	result = [2, 3, 4, 1]
 `,
 	"-": `
@@ -1281,6 +1281,20 @@ Examples:
 	* (x is a string, y is a number) "calc= "abcdef" 3 -" -> "calc=abc"
 
 If x and y are numbers, they are subtracted. If x is a list-like and y is a positive number, then y items or characters are removed from the end of x. If x is a list-like and y is a negative number, then y items or characters are removed from the beginning of x.
+`,
+	"*": `
+
+	MULTIPLICATION, STRING REPETITION, OR CARTESIAN PRODUCTS
+
+Usage: "x y *", where "x" is either a number or a list-like (list or string) and "y" is either a number or a list-like (list or string).
+
+Examples:
+	* (both numbers) "calc= 4 5 *" -> "calc=20"
+	* (x is a list-like, y is a number) "calc= "abc" 3 *" -> "calc=abcabcabc"
+	* (both are list-likes) "calc= "def" 1 3 .. *" -> "calc=[[d, 1], [d, 2], [d, 3], [e, 1], [e, 2], [e, 3], [f, 1], [f, 2], [f, 3]]"
+	* (both strings) "calc= "abc" dup *" -> "calc=[aa, ab, ac, ba, bb, bc, ca, cb, cc]"
+
+If x and y are numbers, they are multiplied. If one is a list-like and the other is a number, the list-like is replicated that many times. If both are list-likes, their cartesian product is given, with pairs as lists of 2 elements. If both are strings, the cartesian product will use strings as pairs.
 `,
 	$: "Tried to get documentation of $ as a function. Don't do that."
 };
