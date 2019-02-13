@@ -12,6 +12,16 @@ var new_value = {
 	new_op: op => ({data: op, type: types.op})
 };
 
+var is_type = {
+	is_num: val => val.type == types.num,
+	is_str: val => val.type == types.str,
+	is_list: val => val.type == types.list,
+	is_list_like: val => is_type.is_list(val) || is_type.is_str(val),
+	is_func: val => val.type == types.func,
+	is_sym: val => val.type == types.sym,
+	is_op: val => val.type == types.op
+};
+
 function type_to_str(type) {
 	switch(type) {
 		case types.num:
@@ -52,11 +62,11 @@ function to_bool(val) {
 
 function eq(left, right) {
 	if(
-		left.type == types.num && right.type == types.num ||
-		left.type == types.str && right.type == types.str
+		is_type.is_num(left) && is_type.is_num(right) ||
+		is_type.is_str(left) && is_type.is_str(right)
 	) {
 		return left.data == right.data;
-	} else if(left.type == types.list && right.type == types.list) {
+	} else if(is_type.is_list(left) && is_type.is_list(right)) {
 		return Object.compare(left.data, right.data);
 	} else {
 		return false;
@@ -96,15 +106,14 @@ Object.compare = function(obj1, obj2) {
 };
 
 function cmp(left, right, comparator) {
-	if(left.type == types.num && right.type == types.num) {
+	if(is_type.is_num(left) && is_type.is_num(right)) {
 		return comparator(left.data, right.data);
 	} else if(
-		left.type == types.str && right.type == types.str ||
-		left.type == types.list && right.type == types.list
+		is_type.is_list_like(left) && is_type.is_list_like(right)
 	) {
 		return comparator(left.data.length, right.data.length);
 	}
 	return false;
 }
 
-module.exports = {...types, ...new_value, type_to_str, to_bool, eq, cmp};
+module.exports = {...types, ...new_value, ...is_type, type_to_str, to_bool, eq, cmp};

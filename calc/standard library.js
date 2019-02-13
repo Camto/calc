@@ -668,18 +668,18 @@ function operators(stack) {
 			var left = stack.pop();
 			
 			if(
-				left.type == types.num && right.type == types.num ||
-				left.type == types.str && right.type == types.str
+				types.is_num(left) && types.is_num(right) ||
+				types.is_str(left) && types.is_str(right)
 			) {
 				stack.push({
 					data: left.data + right.data,
 					type: left.type
 				});
-			} else if(left.type == types.list && right.type != types.list) {
+			} else if(types.is_list(left) && !types.is_list(right)) {
 				stack.push(types.new_list([...left.data, right]));
-			} else if(left.type != types.list && right.type == types.list) {
+			} else if(!types.is_list(left) && types.is_list(right)) {
 				stack.push(types.new_list([left, ...right.data]));
-			} else if(left.type == types.list && right.type == types.list) {
+			} else if(types.is_list(left) && types.is_list(right)) {
 				stack.push(types.new_list([...left.data, ...right.data]));
 			}
 		},
@@ -687,15 +687,12 @@ function operators(stack) {
 			var right = stack.pop();
 			var left = stack.pop();
 			
-			if(left.type == types.num && right.type == types.num) {
+			if(types.is_num(left) && types.is_num(right)) {
 				stack.push({
 					data: left.data - right.data,
 					type: types.num
 				});
-			} else if(
-				(left.type == types.list || left.type == types.str) &&
-				right.type == types.num
-			) {
+			} else if(types.is_list_like(left) && types.is_num(right)) {
 				var cut_list_like = right.data > 0
 					? left.data.slice(0, -right.data)
 					: right.data < 0
@@ -714,29 +711,26 @@ function operators(stack) {
 				[]
 			);
 			
-			if(left.type == types.num && right.type == types.num) {
+			if(types.is_num(left) && types.is_num(right)) {
 				stack.push(types.new_num(left.data * right.data));
-			} else if(left.type == types.list && right.type == types.num) {
+			} else if(types.is_list(left) && types.is_num(right)) {
 				stack.push(types.new_list(list_repeat(left.data, right.data)));
-			} else if(left.type == types.num && right.type == types.list) {
+			} else if(types.is_num(left) && types.is_list(right)) {
 				stack.push(types.new_list(list_repeat(right.data, left.data)));
-			} else if(left.type == types.str && right.type == types.num) {
+			} else if(types.is_str(left) && types.is_num(right)) {
 				stack.push(types.new_str(left.data.repeat(right.data)));
-			} else if(left.type == types.num && right.type == types.str) {
+			} else if(types.is_num(left) && types.is_str(right)) {
 				stack.push(types.new_str(right.data.repeat(left.data)));
-			} else if(left.type == types.str && right.type == types.str) {
+			} else if(types.is_str(left) && types.is_str(right)) {
 				var prod = cartesian_prod(left.data.split(""), right.data.split(""));
 				stack.push(types.new_list(prod.map(
 					pair => types.new_str(pair.join(""))
 				)));
-			} else if(
-				(left.type == types.list || left.type == types.str) &&
-				(right.type == types.list || right.type == types.str)
-			) {
-				var list_left = left.type == types.list
+			} else if(types.is_list_like(left) && types.is_list_like(right)) {
+				var list_left = types.is_list(left)
 					? left.data
 					: left.data.split("").map(char => types.new_str(char));
-				var list_right = right.type == types.list
+				var list_right = types.is_list(right)
 					? right.data
 					: right.data.split("").map(char => types.new_str(char));
 				var prod = cartesian_prod(list_left, list_right);
@@ -749,7 +743,7 @@ function operators(stack) {
 			var right = stack.pop();
 			var left = stack.pop();
 			
-			if(left.type == types.num && right.type == types.num) {
+			if(types.is_num(left) && types.is_num(right)) {
 				stack.push(types.new_num(left.data / right.data));
 			}
 		},
@@ -757,7 +751,7 @@ function operators(stack) {
 			var right = stack.pop();
 			var left = stack.pop();
 			
-			if(left.type == types.num && right.type == types.num) {
+			if(types.is_num(left) && types.is_num(right)) {
 				stack.push(types.new_num(left.data ** right.data));
 			}
 		},
@@ -765,10 +759,10 @@ function operators(stack) {
 			var right = stack.pop();
 			var left = stack.pop();
 			
-			if(left.type == types.num && right.type == types.num) {
+			if(types.is_num(left) && types.is_num(right)) {
 				var beginning = Math.floor(left.data);
 				var end = Math.floor(right.data);
-			} else if(left.type == types.str && right.type == types.str) {
+			} else if(types.is_str(left) && types.is_str(right)) {
 				if(left.data.length != 1 || right.data.length != 1) {
 					throw `".." found the strings "${beginning}" of length ${beginning.length} and "${end}" of length ${end.length}. ".." expected both to be length 1 (characters).`;
 				}
@@ -786,7 +780,7 @@ function operators(stack) {
 				list.push(types.new_num(cou));
 			}
 			
-			if(left.type == types.str) {
+			if(types.is_num(left)) {
 				list = list.map(n => (types.new_str(String.fromCharCode(n.data))));
 			}
 			stack.push(types.new_list(gets_bigger ? list : list.reverse()));
@@ -795,7 +789,7 @@ function operators(stack) {
 			var right = stack.pop();
 			var left = stack.pop();
 			
-			if(left.type == types.num && right.type == types.num) {
+			if(types.is_num(left) && types.is_num(right)) {
 				stack.push(types.new_bool(left.data && right.data));
 			}
 		},
@@ -803,13 +797,13 @@ function operators(stack) {
 			var right = stack.pop();
 			var left = stack.pop();
 			
-			if(left.type == types.num && right.type == types.num) {
+			if(types.is_num(left) && types.is_num(right)) {
 				stack.push(types.new_bool(left.data || right.data));
 			}
 		},
 		"!"() {
 			var bool = stack.pop();
-			if(bool.type == types.num) {
+			if(types.is_num(left)) {
 				stack.push(types.new_bool(!bool.data));
 			}
 		},
