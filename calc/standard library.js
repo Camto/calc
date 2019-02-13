@@ -138,7 +138,9 @@ The built-ins are classified in these categories:
 				if(page.type == types.sym) {
 					var found = made_built_ins[page.data];
 					if(found) {
-						stack.push(types.new_str(help.help_pages[found.main_alias](found.aliases.join(", "))));
+						stack.push(types.new_str(
+							help.help_pages[found.main_alias](found.aliases.join(", "))
+						));
 					} else {
 						stack.push(types.new_str(`Error: "${page.data}" is not a built-in.`));
 					}

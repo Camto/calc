@@ -116,4 +116,8 @@ function cmp(left, right, comparator) {
 	return false;
 }
 
-module.exports = {...types, ...new_value, ...is_type, type_to_str, to_bool, eq, cmp};
+module.exports = {
+	...types, ...new_value, ...is_type,
+	type_to_str, to_bool,
+	eq, cmp
+};

@@ -1989,7 +1989,9 @@ The built-ins are classified in these categories:
 				if(page.type == types.sym) {
 					var found = made_built_ins[page.data];
 					if(found) {
-						stack.push(types.new_str(help.help_pages[found.main_alias](found.aliases.join(", "))));
+						stack.push(types.new_str(
+							help.help_pages[found.main_alias](found.aliases.join(", "))
+						));
 					} else {
 						stack.push(types.new_str(`Error: "${page.data}" is not a built-in.`));
 					}
@@ -2840,7 +2842,11 @@ function cmp(left, right, comparator) {
 	return false;
 }
 
-module.exports = {...types, ...new_value, ...is_type, type_to_str, to_bool, eq, cmp};
+module.exports = {
+	...types, ...new_value, ...is_type,
+	type_to_str, to_bool,
+	eq, cmp
+};
 },{}],10:[function(require,module,exports){
 function get_variable(name, scopes) {
 	for(let cou = scopes.length - 1; cou >= 0; cou--) {
