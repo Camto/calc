@@ -154,6 +154,8 @@ It returns the string as a number.
 
 	EVALUATE CALC= PROGRAM
 
+${built_in_warning}
+
 Usage: "calc= program eval", where "program" is a string representing a calc= program.
 
 Aliases: ${aliases}.
