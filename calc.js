@@ -1348,6 +1348,19 @@ Examples:
 
 It returns x to the power of y.
 `,
+	"..": `
+
+	TO FROM LIST
+
+Usage: "calc= from to ..", where "from" and "to" are either both numbers or characters (strings of length 1).
+
+Examples:
+	* (both numbers) "calc= -3 3 .." -> "calc=[-3, -2, -1, 0, 1, 2, 3]"
+	* (both numbers) "calc= 3 -3 .." -> "calc=[3, 2, 1, 0, -1, -2, -3]"
+	* (both characters) "calc= 'a 'f .." -> "calc=[a, b, c, d, e, f]"
+
+It returns a list starting from "from" and ending with "to", with an element in between for the distance of both. Charcters are treated as numbers in the ASCII table.
+`,
 	$: "Tried to get documentation of $ as a function. Don't do that."
 };
 
