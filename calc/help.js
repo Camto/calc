@@ -1322,7 +1322,7 @@ It returns x to the power of y.
 `,
 	"..": `
 
-	TO FROM LIST
+	TO FROM RANGE
 
 Usage: "calc= from to ..", where "from" and "to" are either both numbers or characters (strings of length 1).
 
