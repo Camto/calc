@@ -1419,15 +1419,15 @@ If x and y are both numbers or strings, it returns true (1) if their values are 
 Usage: "calc= x y =", where "x" and "y" are anything.
 
 Examples:
-	* "calc= 1 1 =" -> "calc=0"
-	* "calc= 1 2 =" -> "calc=1"
-	* "calc= "abc" "abc" =" -> "calc=0"
-	* "calc= "abc" "abd" =" -> "calc=1"
-	* "calc= 1 3 .. dup =" -> "calc=0"
-	* "calc= 1 3 .. 1 4 .. =" -> "calc=1"
-	* "calc= {} dup =" -> "calc=1"
-	* "calc= $a dup =" -> "calc=1"
-	* "calc= $+ dup =" -> "calc=1"
+	* "calc= 1 1 !=" -> "calc=0"
+	* "calc= 1 2 !=" -> "calc=1"
+	* "calc= "abc" "abc" !=" -> "calc=0"
+	* "calc= "abc" "abd" !=" -> "calc=1"
+	* "calc= 1 3 .. dup !=" -> "calc=0"
+	* "calc= 1 3 .. 1 4 .. !=" -> "calc=1"
+	* "calc= {} dup !=" -> "calc=1"
+	* "calc= $a dup !=" -> "calc=1"
+	* "calc= $+ dup !=" -> "calc=1"
 
 It returns true (1) if "calc= x y =" would return false (0), otherwise it returns false (0).
 `,
