@@ -1366,6 +1366,25 @@ Examples:
 
 It returns true (1) when x is false (0), otherwise it returns false (0).
 `,
+	"=": `
+
+	ARE EQUALS
+
+Usage: "calc= x y =", where "x" and "y" are anything.
+
+Examples:
+	* "calc= 1 1 =" -> "calc=1"
+	* "calc= 1 2 =" -> "calc=0"
+	* "calc= "abc" "abc" =" -> "calc=1"
+	* "calc= "abc" "abd" =" -> "calc=0"
+	* "calc= 1 3 .. dup =" -> "calc=1"
+	* "calc= 1 3 .. 1 4 .. =" -> "calc=0"
+	* "calc= {} dup =" -> "calc=0"
+	* "calc= $a dup =" -> "calc=0"
+	* "calc= $+ dup =" -> "calc=0"
+
+If x and y are both numbers or strings, it returns true (1) if their values are the same, otherwise false (0). If they are both lists, it returns true (1) if they're the same length and all their values are the same, otherwise false (0). With every other comparison, it returns false (0).
+`,
 	$: "Tried to get documentation of $ as a function. Don't do that."
 };
 
