@@ -86,6 +86,7 @@ The built-ins are classified in these categories:
 		* reverse_n - Reverse last n items of list.
 		* pop_n - Remove last n items of list.
 		* elem - Is item in list.
+		* split - Split string into list.
 		* expl - Explode list items.
 		* group - Group into list.
 		* copy_group - Copy and group into list.
@@ -413,6 +414,13 @@ The built-ins are classified in these categories:
 				(acc, cur) => acc || types.eq(item, cur),
 				false
 			)));
+		},
+		split() {
+			var splitter = stack.pop().data;
+			var string = stack.pop().data;
+			stack.push(types.new_list(
+				string.split(splitter).map(part => types.new_str(part))
+			));
 		},
 		"expl, explode, extr, extract, spr, spread"() {
 			var list = stack.pop().data;

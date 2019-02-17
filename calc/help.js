@@ -647,6 +647,20 @@ Examples:
 
 It returns true if the item is in the list, else it returns false.
 `,
+	split: aliases => `
+
+	SPLIT STRING INTO LIST
+
+Usage: "calc= string splitter split", where "string" is a string and "splitter" is a string used to split the other.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= "1,2,3,4" "," split" -> "calc=[1, 2, 3, 4]"
+	* "calc= "iiodddoisoisoiso" "" split" -> "calc=[i, i, o, d, d, d, o, i, s, o, i, s, o, i, s ,o]"
+
+It returns the string split where it matches the splitter.
+`,
 	expl: aliases => `
 
 	EXPLODE LIST ITEMS
