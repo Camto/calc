@@ -1493,7 +1493,7 @@ function lex(code) {
 			
 			var str = "";
 			var escaped = false;
-			while(code[pointer] != '"' || escaped) {
+			while((code[pointer] != '"' || escaped) && pointer < code.length) {
 				if(!escaped) {
 					if(code[pointer] != "\\") {
 						str += code[pointer];
@@ -1515,6 +1515,10 @@ function lex(code) {
 					}
 				}
 				pointer++;
+			}
+			
+			if(code[pointer] != '"') {
+				throw 'Found " to start a string, but none to finish it.';
 			}
 			
 			pointer++;
