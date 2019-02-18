@@ -1490,6 +1490,21 @@ Examples:
 
 If x and y are numbers, it returns true if x is less than or equal to y, otherwise it returns false. If x and y are list-likes, it returns true if x is shorter than or the same length as y, otherwise it returns false.
 `,
+	">=": `
+
+	MORE THAN, EQUAL TO, LONGER THAN, OR SAME LENGTH
+
+Usage: "calc= x y >=", where "x" and "y" are both numbers or list-likes (list or string).
+
+Examples:
+	* "calc= 1 2 >=" -> "calc=0"
+	* "calc= 4 4 >=" -> "calc=1"
+	* "calc= [8, 2] [1, 2, 3] >=" -> "calc=0"
+	* "calc= [8, 2, 9] "s" >=" -> "calc=1"
+	* "calc= "das" "sfg" >=" -> "calc=1"
+
+If x and y are numbers, it returns true if x is more than or equal to y, otherwise it returns false. If x and y are list-likes, it returns true if x is longer than or the same length as y, otherwise it returns false.
+`,
 	$: "Tried to get documentation of $ as a function. Don't do that."
 };
 
