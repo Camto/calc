@@ -133,6 +133,23 @@ The built-ins are classified in these categories:
 		* set - Set variable.
 		* inc - Increment variable.
 		* dec - Decrement variable.
+	
+	* Operators.
+		* "+" - Addition or concatenation.
+		* "-" - Subtraction or slicing.
+		* "*" - Multiplication, list-like repitition, or cartiesian products.
+		* "/" - Division.
+		* "^" - Exponetiation.
+		* ".." - To from range.
+		* "&" - Logical and.
+		* "|" - Logical or.
+		* "!" - Logical not.
+		* "=" - Are equals.
+		* "!=" - Aren't equals.
+		* "<" - Less than or shorter than.
+		* ">" - More than or longer than.
+		* "<=" - Less than, equal to, longer than, or same length.
+		* ">=" - More than, equal to, shorter than, or same length.
 `));
 			} else {
 				var page = stack.pop();
