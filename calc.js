@@ -690,7 +690,7 @@ Aliases: ${aliases}.
 
 Examples:
 	* "calc= "1,2,3,4" "," split" -> "calc=[1, 2, 3, 4]"
-	* "calc= "iiodddoisoisoiso" "" split" -> "calc=[i, i, o, d, d, d, o, i, s, o, i, s, o, i, s ,o]"
+	* "calc= "iiodddoisoisoiso" "" split" -> "calc=[i, i, o, d, d, d, o, i, s, o, i, s, o, i, s, o]"
 
 It returns the string split where it matches the splitter.
 `,
@@ -2121,6 +2121,9 @@ The built-ins are classified in these categories:
 		* cos - Cosine of angle in radians.
 		* sin - Sine of angle in radians.
 		* tan - Tangent of angle in radians.
+		* sec - Secant of angle in radians.
+		* csc - Cosecant of angle in radians.
+		* cot - Cotangent of angle in radians.
 		* sqrt - Square root.
 		* cbrt - Cube root.
 		* root - N-th root.

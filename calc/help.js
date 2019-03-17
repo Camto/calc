@@ -662,7 +662,7 @@ Aliases: ${aliases}.
 
 Examples:
 	* "calc= "1,2,3,4" "," split" -> "calc=[1, 2, 3, 4]"
-	* "calc= "iiodddoisoisoiso" "" split" -> "calc=[i, i, o, d, d, d, o, i, s, o, i, s, o, i, s ,o]"
+	* "calc= "iiodddoisoisoiso" "" split" -> "calc=[i, i, o, d, d, d, o, i, s, o, i, s, o, i, s, o]"
 
 It returns the string split where it matches the splitter.
 `,
