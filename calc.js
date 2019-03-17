@@ -61,6 +61,11 @@ Variables in calc= are not like normal mathematical variables. They are most sim
 	CUSTOM FUNCTIONS (6)
 
 You can make your own functions as you would make a variable. For example, the square function would be defined and possibly used like so: "calc= square = {x -> x x *} ; 4 square" -> "calc=16". Here, the function definition starts at the "{" and ends at the "}". The variable names before the "->" are the arguments, in that case, "x" is the only argument. What comes after the "->" is the function body. When the function, gets called, the arguments get defined and the body gets called.
+`,`
+
+	LISTS (7)
+
+The next useful feature would be lists. Lists are somewhat similar to mathematical sets, except that elements inside it are ordered and may be repeated. The syntax for lists is like so: "calc= [3, 6, 1]", makes the list containing, in that order, 3, 6, and 1. Lists are the best way to manipulate multiple values at once in calc=. One of the ways to manipulate these values is to "map" over them. For example, to add 1 to all the elements in a list, you would map over it with the function that adds one. The function that adds one would be "calc= {x -> x 1 +}". To actually map over a list, use the function "map", possible like so: "calc= [3, 6, 1] {x -> x 1 +} map" giving "calc=[4, 7, 2]".
 `];
 
 var adv_tut_pages = [`
