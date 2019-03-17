@@ -611,6 +611,15 @@ The built-ins are classified in these categories:
 		"tan, tangent"() {
 			stack.push(types.new_num(Math.tan(stack.pop().data)));
 		},
+		"sec, secant"() {
+			stack.push(types.new_num(1 / Math.cos(stack.pop().data)));
+		},
+		"csc, cosecant"() {
+			stack.push(types.new_num(1 / Math.sin(stack.pop().data)));
+		},
+		"cot, cotangent"() {
+			stack.push(types.new_num(1 / Math.tan(stack.pop().data)));
+		},
 		"sqrt, square_root"() {
 			stack.push(types.new_num(Math.sqrt(stack.pop().data)));
 		},
