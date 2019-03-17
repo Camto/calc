@@ -680,6 +680,20 @@ Examples:
 
 It returns true if the item is in the list, else it returns false.
 `,
+	join: aliases => `
+
+	JOIN LIST INTO STRING
+
+Usage: "calc= list joiner join", where "list" is a list of strings and "joiner" is the string to put in between each item.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= ['a, 'b, 'c] ': join" -> "calc=a:b:c"
+	* "calc= ["as", "fdg", "bb"] "" join" -> "calc=asfdgbb"
+
+It returns the list as a string with the joiner in between each string in the list.
+`,
 	split: aliases => `
 
 	SPLIT STRING INTO LIST
@@ -692,7 +706,7 @@ Examples:
 	* "calc= "1,2,3,4" "," split" -> "calc=[1, 2, 3, 4]"
 	* "calc= "iiodddoisoisoiso" "" split" -> "calc=[i, i, o, d, d, d, o, i, s, o, i, s, o, i, s, o]"
 
-It returns the string split where it matches the splitter.
+It returns the string split into a list where it matches the splitter.
 `,
 	expl: aliases => `
 
@@ -2090,7 +2104,7 @@ The built-ins are classified in these categories:
 		* reverse_n - Reverse last n items of list.
 		* pop_n - Remove last n items of list.
 		* elem - Is item in list.
-		* join - Join strings in list into string.
+		* join - Join list into string.
 		* split - Split string into list.
 		* expl - Explode list items.
 		* group - Group into list.

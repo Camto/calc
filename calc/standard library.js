@@ -86,7 +86,7 @@ The built-ins are classified in these categories:
 		* reverse_n - Reverse last n items of list.
 		* pop_n - Remove last n items of list.
 		* elem - Is item in list.
-		* join - Join strings in list into string.
+		* join - Join list into string.
 		* split - Split string into list.
 		* expl - Explode list items.
 		* group - Group into list.
