@@ -1099,10 +1099,52 @@ Usage: "calc= angle tan". where "angle" is an angle in radians.
 Aliases: ${aliases}.
 
 Examples:
-	* "calc= 1 4 / pi * tan" -> "calc=0.99999"
+	* "calc= pi 4 / tan" -> "calc=1"
 	* "calc= 3 pi * tan" -> "calc=0"
 
 It returns the tangent of the given angle, which is in radians.
+`,
+	sec: aliases => `
+
+	SECANT OF ANGLE IN RADIANS
+
+Usage: "calc= angle sec". where "angle" is an angle in radians.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= pi sec" -> "calc=-1"
+	* "calc= pi 4 / sec" -> "calc=1.41421"
+
+It returns the secant of the given angle, which is in radians.
+`,
+	csc: aliases => `
+
+	COSECANT OF ANGLE IN RADIANS
+
+Usage: "calc= angle csc". where "angle" is an angle in radians.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= pi 2 / csc" -> "calc=1"
+	* "calc= pi 4 / csc" -> "calc=1.41421"
+
+It returns the cosecant of the given angle, which is in radians.
+`,
+	cot: aliases => `
+
+	COTANGENT OF ANGLE IN RADIANS
+
+Usage: "calc= angle cot". where "angle" is an angle in radians.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= pi 4 / cot" -> "calc=1"
+	* "calc= pi 2 / cot" -> "calc=0"
+
+It returns the cotangent of the given angle, which is in radians.
 `,
 	sqrt: aliases => `
 
