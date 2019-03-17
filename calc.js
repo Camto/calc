@@ -2090,6 +2090,7 @@ The built-ins are classified in these categories:
 		* reverse_n - Reverse last n items of list.
 		* pop_n - Remove last n items of list.
 		* elem - Is item in list.
+		* join - Join strings in list into string.
 		* split - Split string into list.
 		* expl - Explode list items.
 		* group - Group into list.
@@ -2438,6 +2439,11 @@ The built-ins are classified in these categories:
 				(acc, cur) => acc || types.eq(item, cur),
 				false
 			)));
+		},
+		join() {
+			var joiner = stack.pop().data;
+			var list = stack.pop().data.map(str => str.data);
+			stack.push(types.new_str(list.join(joiner)));
 		},
 		split() {
 			var splitter = stack.pop().data;
