@@ -117,6 +117,9 @@ The built-ins are classified in these categories:
 		* cos - Cosine of angle in radians.
 		* sin - Sine of angle in radians.
 		* tan - Tangent of angle in radians.
+		* sec - Secant of angle in radians.
+		* csc - Cosecant of angle in radians.
+		* cot - Cotangent of angle in radians.
 		* sqrt - Square root.
 		* cbrt - Cube root.
 		* root - N-th root.
