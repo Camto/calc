@@ -22,12 +22,17 @@ In calc=, "2 + (5 - 1) / 3" would be written as "calc= 5 1 - 3 / 2 +" (there are
 
 	CALLING FUNCTIONS (4)
 
-To call any function, you just need to provide it's arguments and write it's name. For example, the absolute value function, shortened to "abs", can be used like so: "calc= 3 5 - abs" -> "calc=2". Use "calc= page" to find functions you need.
+To call any function, you just need to provide it's arguments and write it's name. For example, the absolute value function, shortened to "abs", can be used like so: "calc= -2 abs" -> "calc=2". Use "calc= page" to find functions you need.
 `,`
 
 	MAKING VARIABLES (5)
 
-Variables in calc= are not like normal mathematical variables. They are mosr similar to constants. For example: "calc= x = 3 ; x 4 +" defines a variable x as 3, then uses it. To define a variable, all you need to do is write the name, an equals sign (=), it's value, and a somecolon (;) to finish it. Here is a more complex example: "calc= x = 2 sqrt ; y = 6 2 + ; x 2 / y". x is set to the square root of 2, y is 6 + 2, and the result is x / 2 and y.
+Variables in calc= are not like normal mathematical variables. They are most similar to constants. For example: "calc= x = 3 ; x 4 +" defines a variable x as 3, then uses it. To define a variable, all you need to do is write the name, an equals sign (=), it's value, and a somecolon (;) to finish it. Here is a more complex example: "calc= x = 2 sqrt ; y = 6 2 + ; x 2 / y". x is set to the square root of 2, y is 6 + 2, and the result is x / 2 and y.
+`,`
+
+	CUSTOM FUNCTIONS (6)
+
+You can make your own functions as you would make a variable. For example, the square function would be defined and possibly used like so: "calc= square = {x -> x x *} ; 4 square" -> "calc=16". Here, the function definition starts at the "{" and ends at the "}". The variable names before the "->" are the arguments, in that case, "x" is the only argument. What comes after the "->" is the function body. When the function, gets called, the arguments get defined and the body gets called.
 `];
 
 var adv_tut_pages = [`
