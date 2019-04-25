@@ -2071,6 +2071,12 @@ var run_part = require("./run part");
 var variable_manipulation = require("./variable manipulation");
 var help = require("./help");
 
+function assert_stack_size(stack, len, func) {
+	if(stack.length < len) {
+		throw `${func.is_func ? "Function" : "Operator"} "${func.name}" expected the stack to contain at least ${len} items, but it contained ${stack.length}.`;
+	}
+}
+
 // Generate built-ins based on a stack, operators, and an end time.
 
 function built_ins(stack, calc, operators, end_time) {
@@ -2732,11 +2738,10 @@ The built-ins are classified in these categories:
 			var comp = {
 				args: ["f", "g"], variables: [],
 				data: [{
-						args: [], variables: [],
-						data: [types.new_sym("f"), types.new_sym("g")],
-						type: types.func
-					}
-				],
+					args: [], variables: [],
+					data: [types.new_sym("f"), types.new_sym("g")],
+					type: types.func
+				}],
 				type: types.func,
 				scopes: [{}]
 			};
@@ -2774,6 +2779,8 @@ function operators(stack) {
 	return {
 		
 		"+"() {
+			assert_stack_size(stack, 2, {name: "+", is_func: false});
+			
 			var right = stack.pop();
 			var left = stack.pop();
 			
@@ -2791,6 +2798,8 @@ function operators(stack) {
 				stack.push(types.new_list([left, ...right.data]));
 			} else if(types.is_list(left) && types.is_list(right)) {
 				stack.push(types.new_list([...left.data, ...right.data]));
+			} else {
+				throw `Incorrect argument types for "+", please use "calc= $+ page" to read the documentation.`;
 			}
 		},
 		"-"() {
@@ -2804,10 +2813,10 @@ function operators(stack) {
 				});
 			} else if(types.is_list_like(left) && types.is_num(right)) {
 				var cut_list_like = right.data > 0
-					? left.data.slice(0, -right.data)
-					: right.data < 0
-						? left.data.slice(-right.data)
-						: left.data;
+						? left.data.slice(0, -right.data)
+						: (right.data < 0
+							 ? left.data.slice(-right.data)
+							 : left.data);
 				stack.push({data: cut_list_like, type: left.type});
 			}
 		},
@@ -2838,11 +2847,11 @@ function operators(stack) {
 				)));
 			} else if(types.is_list_like(left) && types.is_list_like(right)) {
 				var list_left = types.is_list(left)
-					? left.data
-					: left.data.split("").map(char => types.new_str(char));
+						? left.data
+						: left.data.split("").map(char => types.new_str(char));
 				var list_right = types.is_list(right)
-					? right.data
-					: right.data.split("").map(char => types.new_str(char));
+						? right.data
+						: right.data.split("").map(char => types.new_str(char));
 				var prod = cartesian_prod(list_left, list_right);
 				stack.push(types.new_list(prod.map(
 					pair => types.new_list(pair)
