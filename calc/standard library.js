@@ -738,6 +738,8 @@ function operators(stack) {
 			}
 		},
 		"-"() {
+			assert_stack_size(stack, 2, {name: "-", is_func: false});
+			
 			var right = stack.pop();
 			var left = stack.pop();
 			
@@ -756,6 +758,8 @@ function operators(stack) {
 			}
 		},
 		"*"() {
+			assert_stack_size(stack, 2, {name: "*", is_func: false});
+			
 			var right = stack.pop();
 			var left = stack.pop();
 			
@@ -794,6 +798,8 @@ function operators(stack) {
 			}
 		},
 		"/"() {
+			assert_stack_size(stack, 2, {name: "/", is_func: false});
+			
 			var right = stack.pop();
 			var left = stack.pop();
 			
@@ -802,6 +808,8 @@ function operators(stack) {
 			}
 		},
 		"^"() {
+			assert_stack_size(stack, 2, {name: "^", is_func: false});
+			
 			var right = stack.pop();
 			var left = stack.pop();
 			
@@ -810,6 +818,8 @@ function operators(stack) {
 			}
 		},
 		".."() {
+			assert_stack_size(stack, 2, {name: "..", is_func: false});
+			
 			var right = stack.pop();
 			var left = stack.pop();
 			
@@ -846,6 +856,8 @@ function operators(stack) {
 			stack.push(types.new_list(gets_bigger ? list : list.reverse()));
 		},
 		"&"() {
+			assert_stack_size(stack, 2, {name: "&", is_func: false});
+			
 			var right = stack.pop();
 			var left = stack.pop();
 			
@@ -854,6 +866,8 @@ function operators(stack) {
 			}
 		},
 		"|"() {
+			assert_stack_size(stack, 2, {name: "|", is_func: false});
+			
 			var right = stack.pop();
 			var left = stack.pop();
 			
@@ -862,37 +876,51 @@ function operators(stack) {
 			}
 		},
 		"!"() {
+			assert_stack_size(stack, 1, {name: "!", is_func: false});
+			
 			var bool = stack.pop();
 			if(types.is_num(bool)) {
 				stack.push(types.new_bool(!bool.data));
 			}
 		},
 		"="() {
+			assert_stack_size(stack, 2, {name: "=", is_func: false});
+			
 			var right = stack.pop();
 			var left = stack.pop();
 			stack.push(types.new_bool(types.eq(left, right)));
 		},
 		"!="() {
+			assert_stack_size(stack, 2, {name: "!=", is_func: false});
+			
 			var right = stack.pop();
 			var left = stack.pop();
 			stack.push(types.new_bool(!types.eq(left, right)));
 		},
 		"<"() {
+			assert_stack_size(stack, 2, {name: "<", is_func: false});
+			
 			var right = stack.pop();
 			var left = stack.pop();
 			stack.push(types.new_bool(types.cmp(left, right, (x, y) => x < y)));
 		},
 		">"() {
+			assert_stack_size(stack, 2, {name: ">", is_func: false});
+			
 			var right = stack.pop();
 			var left = stack.pop();
 			stack.push(types.new_bool(types.cmp(left, right, (x, y) => x > y)));
 		},
 		"<="() {
+			assert_stack_size(stack, 2, {name: "<=", is_func: false});
+			
 			var right = stack.pop();
 			var left = stack.pop();
 			stack.push(types.new_bool(types.cmp(left, right, (x, y) => x <= y)));
 		},
 		">="() {
+			assert_stack_size(stack, 2, {name: ">=", is_func: false});
+			
 			var right = stack.pop();
 			var left = stack.pop();
 			stack.push(types.new_bool(types.cmp(left, right, (x, y) => x >= y)));
