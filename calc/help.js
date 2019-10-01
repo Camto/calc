@@ -733,6 +733,34 @@ Examples:
 
 It peeks at the top num items and puts them into a list, where the first item in the list was the last peeked at.
 `,
+	box: aliases => `
+
+	BOX ITEM INTO LIST
+
+Usage: "calc= n box", where n is the item.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 3 box" -> "calc=[3]"
+	* "calc= "abc" box" -> "calc=["abc"]"
+
+It puts the top item into a list on its own.
+`,
+	copy_box: aliases => `
+
+	COPY AND BOX ITEM INTO LIST
+
+Usage: "calc= n copy_box", where n is the item.
+
+Aliases: ${aliases}.
+
+Examples:
+	* "calc= 3 copy_box" -> "calc=3 [3]"
+	* "calc= "abc" copy_box" -> "calc="abc" ["abc"]"
+
+It copies then puts the top item into a list on its own.
+`,
 	group_all: aliases => `
 
 	GROUP ALL ITEMS INTO LIST
