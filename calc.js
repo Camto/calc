@@ -2933,7 +2933,7 @@ function operators(stack) {
 				var end = Math.floor(right.data);
 			} else if(types.is_str(left) && types.is_str(right)) {
 				if(left.data.length != 1 || right.data.length != 1) {
-					throw `Error: ".." found the strings "${beginning}" of length ${beginning.length} and "${end}" of length ${end.length}. ".." expected both to be length 1 (characters).`;
+					throw `Error: ".." found the strings "${left.data}" of length ${left.data.length} and "${right.data}" of length ${right.data.length}. ".." expected both to be length 1 (characters).`;
 				}
 				
 				var beginning = left.data.charCodeAt();
