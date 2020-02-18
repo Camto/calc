@@ -90,25 +90,29 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 					operators[block[instruccion_pointer].data]();
 				} else {
 					instruccion_pointer++;
-					switch(block[instruccion_pointer].type) {
-						case types.sym:
-							if(variable_manipulation.get_variable(block[instruccion_pointer].data, scopes)) {
-								var passed_function = variable_manipulation.get_variable(block[instruccion_pointer].data, scopes);
-								passed_function.name = block[instruccion_pointer].data;
-								passed_function.is_ref = true;
-								stack.push(passed_function);
-							} else {
+					if(instruccion_pointer < block.length) {
+						switch(block[instruccion_pointer].type) {
+							case types.sym:
+								if(variable_manipulation.get_variable(block[instruccion_pointer].data, scopes)) {
+									var passed_function = variable_manipulation.get_variable(block[instruccion_pointer].data, scopes);
+									passed_function.name = block[instruccion_pointer].data;
+									passed_function.is_ref = true;
+									stack.push(passed_function);
+								} else {
+									stack.push(block[instruccion_pointer]);
+								}
+								break;
+							case types.op:
 								stack.push(block[instruccion_pointer]);
-							}
-							break;
-						case types.op:
-							stack.push(block[instruccion_pointer]);
-							break;
-						default:
-							var reference = block[instruccion_pointer];
-							reference.is_ref = true;
-							stack.push(reference);
-							break;
+								break;
+							default:
+								var reference = block[instruccion_pointer];
+								reference.is_ref = true;
+								stack.push(reference);
+								break;
+						}
+					} else {
+						throw `Error: there is a "$" at the end of the code without anything to follow.`;
 					}
 				}
 				break;
