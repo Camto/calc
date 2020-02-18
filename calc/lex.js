@@ -64,7 +64,7 @@ function lex(code) {
 			}
 			
 			if(code[pointer] != '"') {
-				throw 'Found " to start a string, but none to finish it.';
+				throw 'Error: found " to start a string, but none to finish it.';
 			}
 			
 			pointer++;

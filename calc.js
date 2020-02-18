@@ -8,7 +8,7 @@ var print = require("./print");
 
 function calc(code_, max_time) {
 	if(code_.substr(0, 5) != "calc=") {
-		throw "There is no \"calc=\".";
+		throw "Error: there is no \"calc=\".";
 	}
 	var code = code_.substr(5, code_.length);
 	try {
@@ -1672,7 +1672,7 @@ function lex(code) {
 			}
 			
 			if(code[pointer] != '"') {
-				throw 'Found " to start a string, but none to finish it.';
+				throw 'Error: found " to start a string, but none to finish it.';
 			}
 			
 			pointer++;
@@ -1775,7 +1775,7 @@ function parse(tokens) {
 				if(tokens[token_pointer].type == types.sym) {
 					args.push(tokens[token_pointer].data);
 				} else {
-					throw `Parameter name "${tokens[token_pointer].data}" is a ${types.type_to_str(tokens[token_pointer].type)} when it should be a symbol.`;
+					throw `Error: parameter name "${tokens[token_pointer].data}" is a ${types.type_to_str(tokens[token_pointer].type)} when it should be a symbol.`;
 				}
 				token_pointer++;
 			}
@@ -1838,7 +1838,7 @@ function parse(tokens) {
 				if(!/,|\]|}|->/.test(tokens[token_pointer].data)) {
 					code.push(tokens[token_pointer]);
 				} else {
-					throw `Unexpected context operator "${tokens[token_pointer].data}".`;
+					throw `Error: unexpected context operator "${tokens[token_pointer].data}".`;
 				}
 				token_pointer++;
 			} else {
@@ -1872,7 +1872,7 @@ function parse(tokens) {
 					variable.push(tokens[token_pointer]);
 				}
 			} else {
-				throw `Unexpected context operator "${tokens[token_pointer].data}".`;
+				throw `Error: unexpected context operator "${tokens[token_pointer].data}".`;
 			}
 			token_pointer++;
 		} else {
@@ -2013,7 +2013,7 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 				} else if(built_ins[block[instruccion_pointer].data]) {
 					built_ins[block[instruccion_pointer].data](scopes);
 				} else {
-					throw `Symbol "${block[instruccion_pointer].data}" found in main expression without being a built-in function.`;
+					throw `Error: symbol "${block[instruccion_pointer].data}" found in main expression without being a built-in function.`;
 				}
 				break;
 			case types.num:
@@ -2037,25 +2037,29 @@ function run_block(block, stack, scopes, built_ins, operators, end_time) {
 					operators[block[instruccion_pointer].data]();
 				} else {
 					instruccion_pointer++;
-					switch(block[instruccion_pointer].type) {
-						case types.sym:
-							if(variable_manipulation.get_variable(block[instruccion_pointer].data, scopes)) {
-								var passed_function = variable_manipulation.get_variable(block[instruccion_pointer].data, scopes);
-								passed_function.name = block[instruccion_pointer].data;
-								passed_function.is_ref = true;
-								stack.push(passed_function);
-							} else {
+					if(instruccion_pointer < block.length) {
+						switch(block[instruccion_pointer].type) {
+							case types.sym:
+								if(variable_manipulation.get_variable(block[instruccion_pointer].data, scopes)) {
+									var passed_function = variable_manipulation.get_variable(block[instruccion_pointer].data, scopes);
+									passed_function.name = block[instruccion_pointer].data;
+									passed_function.is_ref = true;
+									stack.push(passed_function);
+								} else {
+									stack.push(block[instruccion_pointer]);
+								}
+								break;
+							case types.op:
 								stack.push(block[instruccion_pointer]);
-							}
-							break;
-						case types.op:
-							stack.push(block[instruccion_pointer]);
-							break;
-						default:
-							var reference = block[instruccion_pointer];
-							reference.is_ref = true;
-							stack.push(reference);
-							break;
+								break;
+							default:
+								var reference = block[instruccion_pointer];
+								reference.is_ref = true;
+								stack.push(reference);
+								break;
+						}
+					} else {
+						throw `Error: there is a "$" at the end of the code without anything to follow.`;
 					}
 				}
 				break;
@@ -2101,7 +2105,7 @@ var help = require("./help");
 
 function assert_stack_size(stack, len, func) {
 	if(stack.length < len) {
-		throw `${func.is_func ? "Function" : "Operator"} "${func.name}" expected the stack to contain at least ${len} items, but it contained ${stack.length}.`;
+		throw `Error: ${func.is_func ? "function" : "operator"} "${func.name}" expected the stack to contain at least ${len} items, but it contained ${stack.length}.`;
 	}
 }
 
@@ -2835,7 +2839,7 @@ function operators(stack) {
 			} else if(types.is_list(left) && types.is_list(right)) {
 				stack.push(types.new_list([...left.data, ...right.data]));
 			} else {
-				throw `Incorrect argument types for "+", please use "calc= $+ page" to read the documentation.`;
+				throw `Error: incorrect argument types for "+", please use "calc= $+ page" to read the documentation.`;
 			}
 		},
 		"-"() {
@@ -2929,13 +2933,13 @@ function operators(stack) {
 				var end = Math.floor(right.data);
 			} else if(types.is_str(left) && types.is_str(right)) {
 				if(left.data.length != 1 || right.data.length != 1) {
-					throw `".." found the strings "${beginning}" of length ${beginning.length} and "${end}" of length ${end.length}. ".." expected both to be length 1 (characters).`;
+					throw `Error: ".." found the strings "${beginning}" of length ${beginning.length} and "${end}" of length ${end.length}. ".." expected both to be length 1 (characters).`;
 				}
 				
 				var beginning = left.data.charCodeAt();
 				var end = right.data.charCodeAt();
 			} else {
-				throw `".." expected two numbers or two strings, instead found a ${types.type_to_str(left.type)} "${print(left)}" and a ${types.type_to_str(right.type)} "${print(right)}".`
+				throw `Error: ".." expected two numbers or two strings, instead found a ${types.type_to_str(left.type)} "${print(left)}" and a ${types.type_to_str(right.type)} "${print(right)}".`
 			}
 			
 			var gets_bigger = beginning < end;
@@ -3027,7 +3031,7 @@ function operators(stack) {
 			stack.push(types.new_bool(types.cmp(left, right, (x, y) => x >= y)));
 		},
 		$() {
-			throw "Tried to call $ as a function. Don't do that.";
+			throw "Error: tried to call $ as a function. Don't do that.";
 		}
 		
 	};

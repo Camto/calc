@@ -8,7 +8,7 @@ var help = require("./help");
 
 function assert_stack_size(stack, len, func) {
 	if(stack.length < len) {
-		throw `${func.is_func ? "Function" : "Operator"} "${func.name}" expected the stack to contain at least ${len} items, but it contained ${stack.length}.`;
+		throw `Error: ${func.is_func ? "function" : "operator"} "${func.name}" expected the stack to contain at least ${len} items, but it contained ${stack.length}.`;
 	}
 }
 
@@ -742,7 +742,7 @@ function operators(stack) {
 			} else if(types.is_list(left) && types.is_list(right)) {
 				stack.push(types.new_list([...left.data, ...right.data]));
 			} else {
-				throw `Incorrect argument types for "+", please use "calc= $+ page" to read the documentation.`;
+				throw `Error: incorrect argument types for "+", please use "calc= $+ page" to read the documentation.`;
 			}
 		},
 		"-"() {
@@ -836,13 +836,13 @@ function operators(stack) {
 				var end = Math.floor(right.data);
 			} else if(types.is_str(left) && types.is_str(right)) {
 				if(left.data.length != 1 || right.data.length != 1) {
-					throw `".." found the strings "${beginning}" of length ${beginning.length} and "${end}" of length ${end.length}. ".." expected both to be length 1 (characters).`;
+					throw `Error: ".." found the strings "${beginning}" of length ${beginning.length} and "${end}" of length ${end.length}. ".." expected both to be length 1 (characters).`;
 				}
 				
 				var beginning = left.data.charCodeAt();
 				var end = right.data.charCodeAt();
 			} else {
-				throw `".." expected two numbers or two strings, instead found a ${types.type_to_str(left.type)} "${print(left)}" and a ${types.type_to_str(right.type)} "${print(right)}".`
+				throw `Error: ".." expected two numbers or two strings, instead found a ${types.type_to_str(left.type)} "${print(left)}" and a ${types.type_to_str(right.type)} "${print(right)}".`
 			}
 			
 			var gets_bigger = beginning < end;
@@ -934,7 +934,7 @@ function operators(stack) {
 			stack.push(types.new_bool(types.cmp(left, right, (x, y) => x >= y)));
 		},
 		$() {
-			throw "Tried to call $ as a function. Don't do that.";
+			throw "Error: tried to call $ as a function. Don't do that.";
 		}
 		
 	};
