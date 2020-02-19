@@ -22,7 +22,7 @@ bot.on("ready", function (evt) {
 });
 
 bot.on("message", function(user, user_id, channel_id, message, event) {
-	if (user != "calcbot" && message.substring(0, 5) == "calc=") {
+	if(user != "calcbot" && message.substring(0, 5) == "calc=") {
 		bot.sendMessage({
 			to: channel_id,
 			message: (() => {
