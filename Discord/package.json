@@ -5,7 +5,6 @@
 	"main": "calcbot.js",
 	"author": "Benjamin Philippe Applegate",
 	"dependencies": {
-		"discord.io": "github:woor/discord.io#gateway_v6",
-		"winston": "^2.4.1"
+		"discord.js": "^12.2.0"
 	}
 }
