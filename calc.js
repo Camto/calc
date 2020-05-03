@@ -2146,7 +2146,7 @@ The built-ins are classified in these categories:
 		* page - Built-in/operator documentation.
 		* tut - Basic tutorial.
 		* adv_tut - Advanced tutorial.
-
+	
 	* Basic functions.
 		* type - Get type.
 		* true
@@ -2154,10 +2154,10 @@ The built-ins are classified in these categories:
 		* num_to_str - Convert number to string.
 		* str_to_num - Convert string to number.
 		* eval - Evaluate calc= program.
-
+	
 	* Flow control.
 		* if - If/else statement.
-
+	
 	* Stack functions.
 		* dup - Duplicate.
 		* swap
@@ -2171,7 +2171,7 @@ The built-ins are classified in these categories:
 		* nip - Nip under.
 		* tuck - Tuck under.
 		* over - Duplicate over.
-
+	
 	* List functions.
 		* map - Map over list.
 		* fold - Fold list to the left.
@@ -2209,7 +2209,7 @@ The built-ins are classified in these categories:
 		* list_nip - Nip under list.
 		* list_tuck - Tuck under list.
 		* list_over - Duplicate over on list.
-
+	
 	* Math functions.
 		* pi - The constant pi.
 		* tau - The constant tau.
@@ -2233,13 +2233,13 @@ The built-ins are classified in these categories:
 		* root - N-th root.
 		* log - Logarithm.
 		* ln - Natural logarithm.
-
+	
 	* Function functions.
 		* call - Call function or built-in.
 		* iter - Iterate over.
 		* id - Identity function.
 		* comp - Compose functions.
-
+	
 	* State functions.
 		* set - Set variable.
 		* inc - Increment variable.
