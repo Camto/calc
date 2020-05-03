@@ -58,6 +58,137 @@ var adv_tut_pages = [`
 Advanced tutorial pages are still a work in progress.
 `];
 
+var page_index = `
+
+	HELP PAGES
+
+This is the help page index!
+
+To find the help page of a built-in or an operator, just run this command: "calc= $thing page", where "thing" is the name of the built-in or the operator.
+
+The built-ins are classified in these categories:
+	* Help functions.
+		* help - Help menu.
+		* page - Built-in/operator documentation.
+		* tut - Basic tutorial.
+		* adv_tut - Advanced tutorial.
+	
+	* Basic functions.
+		* type - Get type.
+		* true
+		* false
+		* num_to_str - Convert number to string.
+		* str_to_num - Convert string to number.
+		* eval - Evaluate calc= program.
+	
+	* Flow control.
+		* if - If/else statement.
+	
+	* Stack functions.
+		* dup - Duplicate.
+		* swap
+		* stack_reverse_n - Reverse top n items.
+		* drop
+		* drop_n - Drop n items.
+		* rot - Rotate.
+		* unrot - Rotate backward.
+		* roll - Roll.
+		* unroll - Roll backward.
+		* nip - Nip under.
+		* tuck - Tuck under.
+		* over - Duplicate over.
+	
+	* List functions.
+		* map - Map over list.
+		* fold - Fold list to the left.
+		* foldr - Fold list to the right.
+		* filter - Filter list with predicate.
+		* length - Length of.
+		* head - First item.
+		* snd - Second item.
+		* last - Last item.
+		* back_snd - Before last item.
+		* nth - N-th item.
+		* back_nth - N-th item from the end.
+		* init - All but first item.
+		* tail - All but last item.
+		* body - All but first and last item.
+		* reverse - Reverse list.
+		* reverse_n - Reverse last n items of list.
+		* pop_n - Remove last n items of list.
+		* elem - Is item in list.
+		* join - Join list into string.
+		* split - Split string into list.
+		* expl - Explode list items.
+		* group - Group into list.
+		* copy_group - Copy and group into list.
+		* box - Box item into list.
+		* copy_box - Copy and box item into list.
+		* group_all - Group all items into list.
+		* copy_group_all - Copy and group all items into list.
+		* list_dup - Duplicate top of list.
+		* list_swap - Swap top of list.
+		* list_rot - Rotate top of list.
+		* list_unrot - Rotate top of list backward.
+		* list_roll - Roll top of list.
+		* list_unroll - Roll top of list backward.
+		* list_nip - Nip under list.
+		* list_tuck - Tuck under list.
+		* list_over - Duplicate over on list.
+	
+	* Math functions.
+		* pi - The constant pi.
+		* tau - The constant tau.
+		* e - The constant e.
+		* abs - Absolute value.
+		* round - Round to the nearest integer.
+		* ceil - Round upwards.
+		* floor - Round downwards.
+		* max - Biggest or longest.
+		* min - Smallest or shortest.
+		* sgn - Sign of number.
+		* rand - Generate random number.
+		* cos - Cosine of angle in radians.
+		* sin - Sine of angle in radians.
+		* tan - Tangent of angle in radians.
+		* sec - Secant of angle in radians.
+		* csc - Cosecant of angle in radians.
+		* cot - Cotangent of angle in radians.
+		* sqrt - Square root.
+		* cbrt - Cube root.
+		* root - N-th root.
+		* log - Logarithm.
+		* ln - Natural logarithm.
+	
+	* Function functions.
+		* call - Call function or built-in.
+		* iter - Iterate over.
+		* id - Identity function.
+		* comp - Compose functions.
+	
+	* State functions.
+		* set - Set variable.
+		* inc - Increment variable.
+		* dec - Decrement variable.
+	
+	* Operators.
+		* "+" - Addition or concatenation.
+		* "-" - Subtraction or slicing.
+		* "*" - Multiplication, list-like repitition, or cartiesian products.
+		* "/" - Division.
+		* "^" - Exponetiation.
+		* ".." - To from range.
+		* "&" - Logical and.
+		* "|" - Logical or.
+		* "!" - Logical not.
+		* "=" - Are equals.
+		* "!=" - Aren't equals.
+		* "<" - Less than or shorter than.
+		* ">" - More than or longer than.
+		* "<=" - Less than, equal to, longer than, or same length.
+		* ">=" - More than, equal to, shorter than, or same length.
+`;
+
 var help_pages = {
 	help: aliases => `
 
@@ -1587,4 +1718,4 @@ If x and y are numbers, it returns true if x is more than or equal to y, otherwi
 
 var built_in_warning = "!WARNING: This function is discouraged from being used, the only reason it is here is for the few cases in which it is necessary!";
 
-module.exports = {help_menu, tut_pages, adv_tut_pages, help_pages, op_help_pages};
+module.exports = {help_menu, tut_pages, adv_tut_pages, page_index, help_pages, op_help_pages};
