@@ -175,6 +175,8 @@ The built-ins are classified in these categories:
 		* max - Biggest or longest.
 		* min - Smallest or shortest.
 		* sgn - Sign of number.
+		* evn - Is number even.
+		* odd - Is number odd.
 		* rand - Generate random number.
 		* cos - Cosine of angle in radians.
 		* sin - Sine of angle in radians.
@@ -1245,6 +1247,36 @@ Examples:
 	* "calc= -3 3 .. $sgn map" -> "calc=[-1, -1, -1, 0, 1, 1, 1]"
 
 It returns the sign of num, 1 for positive, -1 for negative, and 0 for none.
+`,
+	evn: aliases => `
+
+	IS NUMBER EVEN
+
+Usage: "calc= num evn" where "num" is a number.
+
+Aliases: ${aliases}.
+
+Example:
+	* "calc= 4 evn" -> "calc=1"
+	* "calc= -3 evn" -> "calc=0"
+	* "calc= -5 5 .. $evn map" -> "calc=[0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]"
+
+It returns true (1) if the number is even, otherwise false (0).
+`,
+	odd: aliases => `
+
+	IS NUMBER ODD
+
+Usage: "calc= num odd" where "num" is a number.
+
+Aliases: ${aliases}.
+
+Example:
+	* "calc= 4 odd" -> "calc=1"
+	* "calc= -3 odd" -> "calc=0"
+	* "calc= -5 5 .. $odd map" -> "calc=[1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]"
+
+It returns true (1) if the number is odd, otherwise false (0).
 `,
 	rand: aliases => `
 
@@ -2720,6 +2752,12 @@ function built_ins(stack, calc, operators, end_time) {
 		},
 		"sgn, sign"() {
 			stack.push(types.new_num(Math.sign(stack.pop().data)));
+		},
+		"evn, even"() {
+			stack.push(types.new_num(stack.pop().data % 2 == 0));
+		},
+		odd() {
+			stack.push(types.new_num(Math.abs(stack.pop().data % 2) == 1));
 		},
 		"rand, random"() {
 			var max = stack.pop().data;

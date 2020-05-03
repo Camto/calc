@@ -482,6 +482,12 @@ function built_ins(stack, calc, operators, end_time) {
 		"sgn, sign"() {
 			stack.push(types.new_num(Math.sign(stack.pop().data)));
 		},
+		"evn, even"() {
+			stack.push(types.new_num(stack.pop().data % 2 == 0));
+		},
+		odd() {
+			stack.push(types.new_num(Math.abs(stack.pop().data % 2) == 1));
+		},
 		"rand, random"() {
 			var max = stack.pop().data;
 			var min = stack.pop().data;
