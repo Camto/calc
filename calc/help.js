@@ -179,6 +179,7 @@ The built-ins are classified in these categories:
 		* "*" - Multiplication, list-like repitition, or cartiesian products.
 		* "/" - Division.
 		* "^" - Exponetiation.
+		* "%" - Modulo.
 		* ".." - To from range.
 		* "&" - Logical and.
 		* "|" - Logical or.
@@ -1601,6 +1602,18 @@ Examples:
 	* "calc= 10 -5 ^" -> "calc=0.00001"
 
 It returns x to the power of y.
+`,
+	"%": `
+
+	MODULO
+
+Usage: "calc= x y %", where "x" and "y" are both numbers.
+
+Examples:
+	* "calc= 5 3 %" -> "calc=2"
+	* "calc= -3 2 %" -> "calc=-1"
+
+It returns x modulo y, being the remainder of x divided by y.
 `,
 	"..": `
 

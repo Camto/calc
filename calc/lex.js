@@ -125,7 +125,7 @@ function lex(code) {
 			tokens.push(expect.str());
 		} else if(code[pointer] == "'") {
 			tokens.push(expect.char());
-		} else if(/\[|,|\]|{|}|\$|;|\+|\*|\/|\^|\.|=|<|>|&|\||!/.test(code[pointer])) {
+		} else if(/\[|,|\]|{|}|\$|;|\+|\*|\/|\^|%|\.|=|<|>|&|\||!/.test(code[pointer])) {
 			tokens.push(expect.op());
 		} else {
 			pointer++;

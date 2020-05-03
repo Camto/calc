@@ -693,6 +693,16 @@ function operators(stack) {
 				stack.push(types.new_num(left.data ** right.data));
 			}
 		},
+		"%"() {
+			assert_stack_size(stack, 2, {name: "^", is_func: false});
+			
+			var right = stack.pop();
+			var left = stack.pop();
+			
+			if(types.is_num(left) && types.is_num(right)) {
+				stack.push(types.new_num(left.data % right.data));
+			}
+		},
 		".."() {
 			assert_stack_size(stack, 2, {name: "..", is_func: false});
 			
