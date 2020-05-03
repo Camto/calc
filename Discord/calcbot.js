@@ -8,6 +8,7 @@ var client = new discord.Client();
 
 client.on("ready", () => {
 	console.log(`${client.user.tag} is logged in!`);
+	client.user.setActivity("calc= h");
 });
 
 client.on("message", msg => {
