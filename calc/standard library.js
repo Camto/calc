@@ -20,16 +20,7 @@ function built_ins(stack, calc, operators, end_time) {
 		// Help functions.
 		
 		"help, h"() {
-			stack.push(types.new_str(`
-
-	CALC=
-
-Welcome to calc=, the stack language for chats! For a basic tutorial, type "calc= tut". If you already know stack based programming, use "calc= adv_tut".
-
-Demos:
-	* Fibonacci: "calc= fib = {n -> 0 1 {x y -> y x y +} n iter drop} ; 0 9 .. $fib map"
-	* Factorial: "calc= 1 5 .. 1 $* fold"
-`));
+			stack.push(types.new_str(help.help_menu));
 		},
 		"page, help_page, hp, h_page, help_p, doc, docs, documentation"() {
 			if(stack.length == 0) {

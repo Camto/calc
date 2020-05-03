@@ -26,6 +26,17 @@ var err_to_str = err => !(err instanceof Error)
 
 module.exports = {calc, print, err_to_str};
 },{"./lex":3,"./parse":4,"./print":5,"./run":7}],2:[function(require,module,exports){
+var help_menu = `
+
+	CALC=
+
+Welcome to calc=, the stack language for chats! For a basic tutorial, type "calc= tut". If you already know stack based programming, use "calc= adv_tut".
+
+Demos:
+	* Fibonacci: "calc= fib = {n -> 0 1 {x y -> y x y +} n iter drop} ; 0 9 .. $fib map"
+	* Factorial: "calc= 1 5 .. 1 $* fold"
+`;
+
 var tut_pages = [`
 
 	INTRODUCTION (0)
@@ -1604,7 +1615,7 @@ If x and y are numbers, it returns true if x is more than or equal to y, otherwi
 
 var built_in_warning = "!WARNING: This function is discouraged from being used, the only reason it is here is for the few cases in which it is necessary!";
 
-module.exports = {tut_pages, adv_tut_pages, help_pages, op_help_pages};
+module.exports = {help_menu, tut_pages, adv_tut_pages, help_pages, op_help_pages};
 },{}],3:[function(require,module,exports){
 "use strict";
 
@@ -2117,16 +2128,7 @@ function built_ins(stack, calc, operators, end_time) {
 		// Help functions.
 		
 		"help, h"() {
-			stack.push(types.new_str(`
-
-	CALC=
-
-Welcome to calc=, the stack language for chats! For a basic tutorial, type "calc= tut". If you already know stack based programming, use "calc= adv_tut".
-
-Demos:
-	* Fibonacci: "calc= fib = {n -> 0 1 {x y -> y x y +} n iter drop} ; 0 9 .. $fib map"
-	* Factorial: "calc= 1 5 .. 1 $* fold"
-`));
+			stack.push(types.new_str(help.help_menu));
 		},
 		"page, help_page, hp, h_page, help_p, doc, docs, documentation"() {
 			if(stack.length == 0) {
