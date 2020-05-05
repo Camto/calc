@@ -16,11 +16,16 @@ client.on("message", msg => {
 		msg.author.username != "calcbot" &&
 		msg.content.substring(0, 5) == "calc="
 	) {
+		console.log("Got request.")
+		
 		var result = (() => {
 			try {
 				return calc.print(calc.calc(msg.content));
 			} catch(err) {
-				console.log(calc.err_to_str(err));
+				console.log(`Ran program
+  ${msg.content}
+with error
+  ${calc.err_to_str(err)}`);
 				return calc.err_to_str(err);
 			}
 		})();

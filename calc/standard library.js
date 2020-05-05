@@ -27,7 +27,14 @@ function built_ins(stack, calc, operators, end_time) {
 				stack.push(types.new_str(help.page_index));
 			} else {
 				var page = stack.pop();
-				if(page.type == types.sym) {
+				if(page.type == types.str) {
+					var found = help.page_categories[page.data];
+					if(found) {
+						stack.push(types.new_str(found));
+					} else {
+						stack.push(type.new_str(`Error: "${page.data}" is not a category.`));
+					}
+				} else if(page.type == types.sym) {
 					var found = made_built_ins[page.data];
 					if(found) {
 						stack.push(types.new_str(
