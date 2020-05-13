@@ -12,6 +12,11 @@ client.on("ready", () => {
 });
 
 client.on("message", msg => {
+	if(msg.content == "calcbotact") {
+		client.user.setActivity("calc= h");
+		console.log('Reset activity to "calc= h".');
+	}
+	
 	if(
 		msg.author.username != "calcbot" &&
 		msg.content.substring(0, 5) == "calc="
