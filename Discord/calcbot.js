@@ -1,7 +1,6 @@
 "use strict";
 
 var calc = require("./../calc/calc");
-var auth = require("./auth.json");
 var discord = require("discord.js");
 
 var client = new discord.Client();
@@ -39,4 +38,4 @@ with error
 	}
 });
 
-client.login(auth.token);
+client.login(process.env.TOKEN);
