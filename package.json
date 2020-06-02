@@ -2,7 +2,7 @@
 	"name": "calcbot",
 	"version": "1.0.0",
 	"description": "The calc= programming language bot.",
-	"main": "calcbot.js",
+	"main": "Discord/calcbot.js",
 	"author": "Benjamin Philippe Applegate",
 	"license": "MIT",
 	"dependencies": {
