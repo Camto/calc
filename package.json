@@ -7,6 +7,5 @@
 	"license": "MIT",
 	"dependencies": {
 		"discord.js": "^12.2.0"
-	},
-	"engines": "12.x"
+	}
 }
