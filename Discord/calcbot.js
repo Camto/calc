@@ -24,7 +24,7 @@ client.on("message", msg => {
 		
 		var result = (() => {
 			try {
-				return calc.print(calc.calc(msg.content));
+				return calc.print(calc.calc(msg.content), 10000);
 			} catch(err) {
 				console.log(`Ran program
   ${msg.content}
