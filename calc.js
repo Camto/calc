@@ -95,18 +95,22 @@ First up is numbers, calc= only has floating points, which are used to approxima
 To access different pages of the tutorial, use "calc= number adv_tut" with the page number, "calc= 1 adv_tut", for example.
 `,`
 
-	FUNCTIONS AND OPERATORS (1)
+	BUILT-INS, FUNCTIONS, AND OPERATORS (1)
 
-When accessing these tutorial pages, you're using a built-in function, namely "adv_tut". You can use "calc= page" to go to the built-in index (which I recommend you check now), or "calc= $name page", where "name" is the name of a built-in or operator, for example "calc= $adv_tut page" or "calc= $+ page".
+When accessing these tutorial pages, you're using a built-in function, namely "adv_tut". You can use "calc= page" to go to the built-in index (which I recommend you check now), or "calc= $name page", where "name" is the name of a built-in or operator, for example "calc= $adv_tut page" or "calc= $+ page". By the way, almost every built-in has one or more aliases, which are alternate names you can use to refer to it, so you don't have to remember the main name if you're used to another one.
 
 As for defining your own functions, you can define an anonymous function with "{arguments -> body}", for example "calc= {w h -> w 2 * h 2 * +}" pushes the perimited function to the stack (The "+" and "*" are operators, found at "calc= "operator" page"). But because functions can do what they want with the stack, this can be rewritten as "calc= {2 * swap 2 * +}". It may be harder to read, but calc= isn't meant to be especially readable, it's meant to be quick to write.
 `,`
 
 	VARIABLES (2)
 
-As part of the main program or function body (after the argument's "->"), you can have variable definitions. Variables are defined with "name = expression ; body", where expression is any calc= expression and body can be more variables or an expression. For example, "calc= pythagoras = {x = dup fst ; y = snd ; x 2 ^ y 2 ^ + sqrt} ; [3, 4] pythagoras [5, 12] pythagoras" (the lists will be explained on the next page).
+As part of the main program or function body (after the argument's "->"), you can have variable definitions. Variables are defined with "name = expression ; body", where expression is any calc= expression and body can be more variables or an expression. For example:
 
-Variables are mutable using the built-ins at "calc= "state" page" and references (explained at "calc= 4 adv_tut"), but this is not recommended, as there is almost always a better way to do it. Also, as implemented now, mutation works well but still has a few bugs.
+	"calc= pythagoras = {x = dup fst ; y = snd ; x 2 ^ y 2 ^ + sqrt} ; "pythagoras of [3, 4] is" [3, 4] pythagoras "pythagoras of [5, 12] is" [5, 12] pythagoras"
+
+(the lists and strings will be explained on the next page)
+
+Variables are mutable using the built-ins at "calc= "state" page" and references (explained at "calc= 5 adv_tut"), but this is not recommended, as there is almost always a better way to do it. Also, as implemented now, mutation works well but still has a few bugs.
 `,`
 
 	LISTS AND STRINGS (3)
@@ -114,6 +118,35 @@ Variables are mutable using the built-ins at "calc= "state" page" and references
 Lists are the only composite data type in calc=, and have a syntax of "calc= [1, 2, "string"]". Strings are for the most part treated as lists of characters, and if a built-in that works with lists doesn't work with strings, then it will be fixed in a later calc= version.
 
 As with the rest of the language, lists can abuse of the stack for more consiceness, for example "calc= [1, 2, 3]" will give the same result as "calc= 1 2 3 [,,]". The edge case here is that "calc= [1]" will not be the same as "calc= 1 []" because "[]" refers to an empty list, not one to be filled with one element. Instead, use "calc= 1 [id]", because "id" is a built-in that does nothing.
+`,`
+
+	FUNCTIONAL LIST MANIPULATION (4)
+
+Since calc= is an almost pure functional programming language, the list manipulation is done in a functional way, with "map", "filter", "fold", and more at "calc= "list" page". For more info on those three most important ones, visit their pages.
+`,`
+
+	REFERENCES (5)
+
+You can push references of variables, arguments, built-ins, or operators to the stack with "$". This means you can do
+
+	"calc= square = {2 ^} ; 1 5 .. $square map"
+
+instead of
+
+	"calc= square = {2 ^} ; 1 5 .. {square} map"
+
+and
+
+	"calc= 1 5 .. 1 $* fold"
+
+instead of
+
+	"calc= 1 5 .. 1 {*} fold"
+`,`
+
+	THANK YOU (6)
+
+That's the entire advanced tutorial for now. If you want to help add to it, you can contribute at https://github.com/Camto/calc .
 `];
 
 var find_page_tip = `To find the help page of a built-in or an operator, just run "calc= $name page", where "name" is the name of the built-in or the operator.`
