@@ -100,6 +100,11 @@ To access different pages of the tutorial, use "calc= number adv_tut" with the p
 When accessing these tutorial pages, you're using a built-in function, namely "adv_tut". You can use "calc= page" to go to the built-in index, or "calc= $name page", where "thing" is the name of a built-in or operator, for example "calc= $adv_tut page" or "calc= $+ page".
 
 As for defining your own functions, you can define an anonymous function with "{arguments -> body}", for example "calc= {w h -> w 2 * h 2 * +}" pushes the perimited function to the stack (The "+" and "*" are operators, found at "calc= "operator" page"). But because functions can do what they want with the stack, this can be rewritten as "calc= {2 * swap 2 * +}". It may be harder to read, but calc= isn't meant to be especially readable, it's meant to be quick to write.
+`,`
+
+	VARIABLES (2)
+
+As part of the main program or function body, you can have variable definitions. Variables are defined with "name = expression ; body", where expression is any calc= expression and body can be more variables or an expression. For example, "calc= pythagoras = {x = dup fst ; y = snd ; x 2 ^ y 2 ^ + sqrt} ; [3, 4] pythagoras [5, 12] pythagoras" (the lists will be explained on the next page).
 `];
 
 var find_page_tip = `To find the help page of a built-in or an operator, just run "calc= $name page", where "thing" is the name of the built-in or the operator.`
