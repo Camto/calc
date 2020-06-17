@@ -95,7 +95,11 @@ First up is numbers, calc= only has floating points, which are used to approxima
 To access different pages of the tutorial, use "calc= number adv_tut" with the page number, "calc= 1 adv_tut", for example.
 `,`
 
+	FUNCTIONS AND OPERATORS (1)
 
+When accessing these tutorial pages, you're using a built-in function, namely "adv_tut". You can use "calc= page" to go to the built-in index.
+
+As for defining your own functions, you can define an anonymous function with "{arguments -> body}", for example "calc= {w h -> w 2 * h 2 * +}" pushes the perimited function to the stack (The "+" and "*" are operators, found at "calc= "operator" page"). But because functions can do what they want with the stack, this can be rewritten as "calc= {2 * swap 2 * +}". It may be harder to read, but calc= isn't meant to be especially readable, it's meant to be quick to write.
 `];
 
 var find_page_tip = `To find the help page of a built-in or an operator, just run "calc= $thing page", where "thing" is the name of the built-in or the operator.`
