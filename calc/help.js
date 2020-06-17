@@ -53,7 +53,7 @@ The next useful feature would be lists. Lists are somewhat similar to mathematic
 
 	THANK YOU (8)
 
-That's the entire basic tutorial for now. If you find that anything is really missing, you can contribute at https://github.com/Camto/calc .
+That's the entire basic tutorial for now. If you want to help add to it, you can contribute at https://github.com/Camto/calc .
 `];
 
 var adv_tut_pages = [`
