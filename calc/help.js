@@ -246,7 +246,7 @@ These are functions that manipulate the program state:
 	* inc - Increment variable.
 	* dec - Decrement variable.
 `,	
-	operators: `
+	operator: `
 
 	OPERATORS
 
