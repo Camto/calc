@@ -79,10 +79,11 @@ The built-ins are sorted by these categories:
 	* Flow control. "calc= "control" page"
 	* Stack functions. "calc= "stack" page"
 	* List functions. "calc= "list" page"
-	* Math functions. "calc= math page"
+	* Math functions. "calc= "math" page"
 	* Function functions. "calc= "function" page"
 	* State functions. "calc= "state" page"
-	* Operators. "calc= "operator" page"`
+	* Operators. "calc= "operator" page"
+`;
 
 var page_categories = {
 	help: `
@@ -94,8 +95,8 @@ ${find_page_tip}
 These are the functions that explain calc=:
 	* page - Built-in/operator documentation.
 	* tut - Basic tutorial.
-	* adv_tut - Advanced tutorial.`,
-	
+	* adv_tut - Advanced tutorial.
+`,
 	basic: `
 
 	BASIC FUNCTIONS
@@ -108,8 +109,8 @@ These are the fundamental functions:
 	* false
 	* num_to_str - Convert number to string.
 	* str_to_num - Convert string to number.
-* eval - Evaluate calc= program.`,
-	
+	* eval - Evaluate calc= program.
+`,	
 	control: `
 
 	FLOW CONTROL
@@ -117,8 +118,8 @@ These are the fundamental functions:
 ${find_page_tip}
 
 There are the functions for controllin the program flow:
-	* if - If/else statement.`,
-	
+	* if - If/else statement.
+`,	
 	stack: `
 
 	STACK FUNCTIONS
@@ -137,8 +138,8 @@ These are the functions that manipulate the stack:
 	* unroll - Roll backward.
 	* nip - Nip under.
 	* tuck - Tuck under.
-	* over - Duplicate over.`,
-	
+	* over - Duplicate over.
+`,	
 	list: `
 
 	LIST FUNCTIONS
@@ -181,8 +182,8 @@ These are the functions for list manipulation:
 	* list_unroll - Roll top of list backward.
 	* list_nip - Nip under list.
 	* list_tuck - Tuck under list.
-	* list_over - Duplicate over on list.`,
-	
+	* list_over - Duplicate over on list.
+`,	
 	"math": `
 
 	MATH FUNCTIONS
@@ -213,8 +214,8 @@ These are the mathematical functions:
 	* cbrt - Cube root.
 	* root - N-th root.
 	* log - Logarithm.
-	* ln - Natural logarithm.`,
-	
+	* ln - Natural logarithm.
+`,	
 	"function": `
 
 	FUNCTION FUNCTIONS
@@ -225,8 +226,8 @@ These are the functions that manipulate other functions:
 	* call - Call function or built-in.
 	* iter - Iterate over.
 	* id - Identity function.
-	* comp - Compose functions.`,
-	
+	* comp - Compose functions.
+`,	
 	state: `
 
 	STATE FUNCTIONS
@@ -236,8 +237,8 @@ ${find_page_tip}
 These are functions that manipulate the program state:
 	* set - Set variable.
 	* inc - Increment variable.
-	* dec - Decrement variable.`,
-	
+	* dec - Decrement variable.
+`,	
 	operators: `
 
 	OPERATORS
@@ -260,7 +261,8 @@ These are the calc= operators:
 	* "<" - Less than or shorter than.
 	* ">" - More than or longer than.
 	* "<=" - Less than, equal to, longer than, or same length.
-	* ">=" - More than, equal to, shorter than, or same length.`
+	* ">=" - More than, equal to, shorter than, or same length.
+`
 };
 
 var built_in_warning = "!WARNING: This function is discouraged from being used, the only reason it is here is for the few cases in which it is necessary!";
