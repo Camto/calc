@@ -49,6 +49,11 @@ You can make your own functions as you would make a variable. For example, the s
 	LISTS (7)
 
 The next useful feature would be lists. Lists are somewhat similar to mathematical sets, except that elements inside it are ordered and may be repeated. The syntax for lists is like so: "calc= [3, 6, 1]", makes the list containing, in that order, 3, 6, and 1. Lists are the best way to manipulate multiple values at once in calc=. One of the ways to manipulate these values is to "map" over them. For example, to add 1 to all the elements in a list, you would map over it with the function that adds one. The function that adds one would be "calc= {x -> x 1 +}". To actually map over a list, use the function "map", possible like so: "calc= [3, 6, 1] {x -> x 1 +} map" giving "calc=[4, 7, 2]".
+`,`
+
+	THANK YOU (8)
+
+That's the entire basic tutorial for now. If you find that anything is really missing, you can contribute at https://github.com/Camto/calc .
 `];
 
 var adv_tut_pages = [`
