@@ -58,9 +58,16 @@ That's the entire basic tutorial for now. If you find that anything is really mi
 
 var adv_tut_pages = [`
 
-	WIP (0)
+	INTRODUCTION (0)
 
-Advanced tutorial pages are still a work in progress.
+calc= is a fairly typical concatenative language, with it's biggest difference being that it's meant to be run on one line. Every program has to start with "calc=", for compatibility with chat bots.
+
+First up is numbers, calc= only has floating points, which are used to approximate integers. calc= numbers have the same syntax as any other language.
+
+To access different pages of the tutorial, use "calc= number adv_tut" with the page number, "calc= 1 adv_tut", for example.
+`,`
+
+
 `];
 
 var find_page_tip = `To find the help page of a built-in or an operator, just run "calc= $thing page", where "thing" is the name of the built-in or the operator.`
