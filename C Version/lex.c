@@ -28,13 +28,15 @@
 
 Calc_Tokens calc_lex(const Calc_Len_Str* prog) {
 	Calc_Tokens tokens;
+	size_t pos;
+	char curr;
+	int succeeded;
+	
 	tokens.len = 0;
 	tokens.cap = 128;
 	tokens.tokens = malloc(sizeof(Calc_Token) * 128);
 	
-	size_t pos = 0;
-	
-	char curr;
+	pos = 0;
 	while(pos < prog->len) {
 		curr = prog->chars[pos];
 		if(is_digit(curr)) calc_expect_num(&tokens, prog, &pos);
@@ -47,15 +49,15 @@ Calc_Tokens calc_lex(const Calc_Len_Str* prog) {
 					is_digit(prog->chars[pos + 2]))
 			) calc_expect_num(&tokens, prog, &pos);
 			else {
-				int succeeded = calc_expect_op(&tokens, prog, &pos);
+				succeeded = calc_expect_op(&tokens, prog, &pos);
 				if(!succeeded) return tokens;
 			}
 		} else if(curr == '"') {
-			int succeeded = calc_expect_str(&tokens, prog, &pos);
+			succeeded = calc_expect_str(&tokens, prog, &pos);
 			if(!succeeded) return tokens;
 		}
 		else if(is_non_num_op_char(curr)) {
-			int succeeded = calc_expect_op(&tokens, prog, &pos);
+			succeeded = calc_expect_op(&tokens, prog, &pos);
 			if(!succeeded) return tokens;
 		}
 		else if(!is_whitespace(curr)) calc_expect_sym(&tokens, prog, &pos);
