@@ -5,7 +5,7 @@
 
 typedef struct {
 	size_t len;
-	char chars[];
+	char chars[1];
 } Calc_Len_Str;
 
 const Calc_Len_Str empty_str;

@@ -52,7 +52,7 @@ typedef struct {
 
 struct Calc_Val_List {
 	size_t len;
-	Calc_Val* vals[];
+	Calc_Val* vals[1];
 };
 
 struct Calc_Func {
