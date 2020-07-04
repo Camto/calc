@@ -89,10 +89,11 @@ void calc_expect_num(
 	
 	printf("Num: %f\n", num);
 	
-	calc_append_token(tokens, (Calc_Token) {
-		.type = calc_num_token,
-		.data.num = num
-	});
+	Calc_Token token;
+	token.type = calc_num_token;
+	token.data.num = num;
+	calc_append_token(tokens, token);
+	
 	*pos = end;
 }
 
@@ -137,10 +138,11 @@ int calc_expect_str(
 	printf("Str: \"%s\"\n", buf);
 	free(buf);
 	
-	calc_append_token(tokens, (Calc_Token) {
-		.type = calc_str_token,
-		.data.str = str
-	});
+	Calc_Token token;
+	token.type = calc_str_token;
+	token.data.str = str;
+	calc_append_token(tokens, token);
+	
 	*pos = end;
 	return 1;
 }
@@ -189,10 +191,11 @@ int calc_expect_op(
 	printf("Op: %s\n", buf);
 	free(buf);
 	
-	calc_append_token(tokens, (Calc_Token) {
-		.type = calc_op_token,
-		.data.op = op
-	});
+	Calc_Token token;
+	token.type = calc_op_token;
+	token.data.op = op;
+	calc_append_token(tokens, token);
+	
 	(*pos)++;
 	return 1;
 }
@@ -224,10 +227,11 @@ void calc_expect_sym(
 	printf("Sym: %s\n", buf);
 	free(buf);
 	
-	calc_append_token(tokens, (Calc_Token) {
-		.type = calc_sym_token,
-		.data.sym = sym
-	});
+	Calc_Token token;
+	token.type = calc_sym_token;
+	token.data.sym = sym;
+	calc_append_token(tokens, token);
+	
 	*pos = end;
 }
 
