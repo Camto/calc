@@ -1,2 +1,2 @@
-clang *.c -std=c89 -pedantic -o calc.exe
+clang *.c -std=c89 -pedantic-errors -o calc.exe
 ./calc
