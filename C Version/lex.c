@@ -28,7 +28,7 @@
 
 Calc_Tokens calc_lex(const Calc_Len_Str* prog) {
 	Calc_Tokens tokens;
-	tokens.size = 0;
+	tokens.len = 0;
 	tokens.cap = 128;
 	tokens.tokens = malloc(sizeof(Calc_Token) * 128);
 	
