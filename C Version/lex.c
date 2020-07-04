@@ -28,7 +28,7 @@
 
 Calc_Tokens calc_lex(const Calc_Len_Str* prog) {
 	Calc_Tokens tokens;
-	size_t pos;
+	size_t pos = 0;
 	char curr;
 	int succeeded;
 	
@@ -36,7 +36,6 @@ Calc_Tokens calc_lex(const Calc_Len_Str* prog) {
 	tokens.cap = 128;
 	tokens.tokens = malloc(sizeof(Calc_Token) * 128);
 	
-	pos = 0;
 	while(pos < prog->len) {
 		curr = prog->chars[pos];
 		if(is_digit(curr)) calc_expect_num(&tokens, prog, &pos);
@@ -73,6 +72,9 @@ void calc_expect_num(
 	size_t* pos
 ) {
 	size_t end = *pos;
+	char* num_str;
+	double num;
+	Calc_Token token;
 	
 	if(prog->chars[end] == '-') end++;
 	while(end < prog->len && is_digit(prog->chars[end])) end++;
@@ -85,13 +87,12 @@ void calc_expect_num(
 		while(end < prog->len && is_digit(prog->chars[end])) end++;
 	}
 	
-	char* num_str = calc_from_len_str_slice(prog, *pos, end - *pos);
-	double num = strtod(num_str, NULL);
+	num_str = calc_from_len_str_slice(prog, *pos, end - *pos);
+	num = strtod(num_str, NULL);
 	free(num_str);
 	
 	printf("Num: %f\n", num);
 	
-	Calc_Token token;
 	token.type = calc_num_token;
 	token.data.num = num;
 	calc_append_token(tokens, token);
@@ -105,8 +106,12 @@ int calc_expect_str(
 	size_t* pos
 ) {
 	size_t end = *pos + 1;
-	
 	size_t escapes = 0;
+	Calc_Len_Str* str;
+	size_t i;
+	char* buf;
+	Calc_Token token;
+	
 	while(end < prog->len && prog->chars[end] != '"') {
 		if(prog->chars[end] == '\\') {
 			if(end + 1 < prog->len) {
@@ -119,8 +124,7 @@ int calc_expect_str(
 	if(prog->chars[end] != '"') return 0;
 	end++;
 	
-	Calc_Len_Str* str = calc_len_str_prealloc(end - *pos - escapes - 2);
-	size_t i;
+	str = calc_len_str_prealloc(end - *pos - escapes - 2);
 	for(i = *pos + 1; i < end - 1; i++) {
 		if(prog->chars[i] == '\\') {
 			i++;
@@ -136,11 +140,10 @@ int calc_expect_str(
 		}
 	}
 	
-	char* buf = calc_from_len_str(str);
+	buf = calc_from_len_str(str);
 	printf("Str: \"%s\"\n", buf);
 	free(buf);
 	
-	Calc_Token token;
 	token.type = calc_str_token;
 	token.data.str = str;
 	calc_append_token(tokens, token);
@@ -157,6 +160,8 @@ int calc_expect_op(
 	Calc_Op op;
 	char curr = prog->chars[*pos];
 	char next = *pos + 1 < prog->len ? prog->chars[*pos + 1] : '\0';
+	char* buf;
+	Calc_Token token;
 	
 	if(curr == '+') op = calc_add;
 	else if(curr == '-') {
@@ -189,11 +194,10 @@ int calc_expect_op(
 	else if(curr == '}') op = calc_func_end;
 	else if(curr == ';') op = calc_list_start;
 	
-	char* buf = calc_from_len_str(calc_op_to_str(op));
+	buf = calc_from_len_str(calc_op_to_str(op));
 	printf("Op: %s\n", buf);
 	free(buf);
 	
-	Calc_Token token;
 	token.type = calc_op_token;
 	token.data.op = op;
 	calc_append_token(tokens, token);
@@ -208,6 +212,10 @@ void calc_expect_sym(
 	size_t* pos
 ) {
 	size_t end = *pos;
+	Calc_Len_Str* sym;
+	size_t i;
+	char* buf;
+	Calc_Token token;
 	
 	while(
 		end < prog->len &&
@@ -218,18 +226,16 @@ void calc_expect_sym(
 		prog->chars[end] != '"'
 	) end++;
 	
-	Calc_Len_Str* sym = calc_len_str_prealloc(end - *pos);
-	size_t i;
+	sym = calc_len_str_prealloc(end - *pos);
 	for(i = *pos; i < end; i++) {
 		sym->chars[sym->len] = prog->chars[i];
 		sym->len++;
 	}
 	
-	char* buf = calc_from_len_str(sym);
+	buf = calc_from_len_str(sym);
 	printf("Sym: %s\n", buf);
 	free(buf);
 	
-	Calc_Token token;
 	token.type = calc_sym_token;
 	token.data.sym = sym;
 	calc_append_token(tokens, token);
