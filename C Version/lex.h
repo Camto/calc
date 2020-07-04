@@ -10,12 +10,12 @@ typedef enum {
 } Calc_Token_Type;
 
 typedef enum {
-	// Normal operators.
+	/* Normal operators. */
 	calc_add, calc_sub, calc_mul, calc_div, calc_pow, calc_mod,
 	calc_to,
 	calc_and, calc_or, calc_not,
 	calc_eq_, calc_neq, calc_lt, calc_gt, calc_lte, calc_gte,
-	// Context operators (only for parsing).
+	/* Context operators (only for parsing). */
 	calc_refof,
 	calc_list_start, calc_list_end, calc_list_sep,
 	calc_func_start, calc_func_end, calc_func_arrow,

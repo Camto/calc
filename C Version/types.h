@@ -14,7 +14,7 @@ typedef enum {
 	calc_func, calc_ref, calc_op
 } Calc_Type;
 
-#include "lex.h" // Remove later.
+#include "lex.h" /* Remove later. */
 
 typedef struct Calc_Val_List Calc_Val_List;
 typedef Calc_Val_List Calc_Block;

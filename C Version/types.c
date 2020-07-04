@@ -149,14 +149,14 @@ bool calc_cmp(Calc_Val* v, Calc_Val* u, bool comp(double, double)) {
 		v_num = v->data.num;
 	else if(calc_is_str(v))
 		v_num = (double) v->data.str->len;
-	else // Must be a list.
+	else /* Must be a list. */
 		v_num = (double) v->data.list->len;
 	
 	if(calc_is_num(u))
 		u_num = u->data.num;
 	else if(calc_is_str(u))
 		u_num = (double) u->data.str->len;
-	else // Must be a list.
+	else /* Must be a list. */
 		u_num = (double) u->data.list->len;
 	
 	return comp(v_num, u_num);

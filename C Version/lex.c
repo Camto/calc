@@ -5,7 +5,7 @@
 
 #define is_digit(curr) ((curr) >= '0' && (curr) <= '9')
 
-// A num op is the first character of an operator which can also be the first character of a number.
+/* A num op is the first character of an operator which can also be the first character of a number. */
 
 #define is_non_num_op_char(curr) ( \
 		(curr) == '+' || (curr) == '*' || (curr) == '/' || \
@@ -264,7 +264,7 @@ static const Calc_Len_Str calc_var_sep_str = {1, ';'};
 
 const Calc_Len_Str* calc_op_to_str(Calc_Op op) {
 	switch(op) {
-		// Normal operators.
+		/* Normal operators. */
 		case calc_add: return &calc_add_str;
 		case calc_sub: return &calc_sub_str;
 		case calc_mul: return &calc_mul_str;
@@ -281,7 +281,7 @@ const Calc_Len_Str* calc_op_to_str(Calc_Op op) {
 		case calc_gt: return &calc_gt_str;
 		case calc_lte: return &calc_lte_str;
 		case calc_gte: return &calc_gte_str;
-		// Context operators.
+		/* Context operators. */
 		case calc_refof: return &calc_refof_str;
 		case calc_list_start: return &calc_list_start_str;
 		case calc_list_end: return &calc_list_end_str;
@@ -293,7 +293,7 @@ const Calc_Len_Str* calc_op_to_str(Calc_Op op) {
 	}
 }
 
-// Clean up.
+/* Clean up. */
 
 #undef is_digit
 #undef is_non_num_op_char
