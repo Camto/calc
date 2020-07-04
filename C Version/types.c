@@ -4,6 +4,8 @@
 #include <math.h>
 #include <float.h>
 
+#include <stdio.h> /* Hide this behind a debug macro later. */
+
 #include "len str.h"
 #include "types.h"
 
