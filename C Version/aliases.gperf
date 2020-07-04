@@ -1,0 +1,35 @@
+%{
+#ifndef CALC_ALIASES
+#define CALC_ALIASES
+
+#include <stddef.h>
+#include <string.h>
+
+#include "len str.h"
+
+static const Calc_Len_Str calc_type_main_alias = {4, 't', 'y', 'p', 'e'};
+static const Calc_Len_Str calc_dup_main_alias = {3, 'd', 'u', 'p'};
+static const Calc_Len_Str calc_drop_main_alias = {4, 'd', 'r', 'o', 'p'};
+%}
+%define lookup-function-name get_main_alias
+%define hash-function-name hash_aliases
+struct Calc_Alias {char* name; const Calc_Len_Str* main_alias;};
+%%
+type, &calc_type_main_alias
+typeof, &calc_type_main_alias
+instance, &calc_type_main_alias
+instanceof, &calc_type_main_alias
+#
+dup, &calc_dup_main_alias
+duplicate, &calc_dup_main_alias
+#
+drop, &calc_drop_main_alias
+stack_pop, &calc_drop_main_alias
+%%
+#undef TOTAL_KEYWORDS
+#undef MIN_WORD_LENGTH
+#undef MAX_WORD_LENGTH
+#undef MIN_HASH_VALUE
+#undef MAX_HASH_VALUE
+
+#endif

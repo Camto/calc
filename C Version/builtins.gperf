@@ -1,0 +1,47 @@
+%{
+#ifndef CALC_BUILTINS
+#define CALC_BUILTINS
+
+#include <stddef.h>
+#include <string.h>
+
+#include "types.h"
+
+#define __builtin(name) void name( \
+	Calc_Stack* stack, \
+	Calc_Scopes* scopes, \
+	void* custom_builtins, \
+	time_t end_time \
+)
+
+__builtin(calc_builtin_type) {
+	Calc_Val* val = calc_pop(stack);
+	calc_push(stack, calc_new_str(calc_len_str_copy(calc_type_to_str(val->type))));
+	calc_lose_ref(val);
+}
+
+__builtin(calc_builtin_dup) {
+	Calc_Val* val = calc_peek(stack);
+	calc_gain_ref(val);
+	calc_push(stack, val);
+}
+
+__builtin(calc_builtin_drop) {
+	calc_lose_ref(calc_pop(stack));
+}
+%}
+%define lookup-function-name get_builtin
+%define hash-function-name hash_builtins
+struct Calc_Lookup_Builtin {char* name; Calc_Builtin builtin;};
+%%
+type, calc_builtin_type
+dup, calc_builtin_dup
+drop, calc_builtin_drop
+%%
+#undef TOTAL_KEYWORDS
+#undef MIN_WORD_LENGTH
+#undef MAX_WORD_LENGTH
+#undef MIN_HASH_VALUE
+#undef MAX_HASH_VALUE
+
+#endif
