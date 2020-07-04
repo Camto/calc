@@ -251,59 +251,59 @@ void calc_append_token(Calc_Tokens* tokens, Calc_Token token) {
 	tokens->tokens[tokens->len-1] = token;
 }
 
-static const Calc_Len_Str calc_add_str = {1, '+'};
-static const Calc_Len_Str calc_sub_str = {1, '-'};
-static const Calc_Len_Str calc_mul_str = {1, '*'};
-static const Calc_Len_Str calc_div_str = {1, '/'};
-static const Calc_Len_Str calc_pow_str = {1, '^'};
-static const Calc_Len_Str calc_mod_str = {1, '%'};
-static const Calc_Len_Str calc_to_str = {2, '.', '.'};
-static const Calc_Len_Str calc_and_str = {1, '&'};
-static const Calc_Len_Str calc_or_str = {1, '|'};
-static const Calc_Len_Str calc_not_str = {1, '!'};
-static const Calc_Len_Str calc_eq_str = {1, '='};
-static const Calc_Len_Str calc_neq_str = {2, '!', '='};
-static const Calc_Len_Str calc_lt_str = {1, '<'};
-static const Calc_Len_Str calc_gt_str = {1, '>'};
-static const Calc_Len_Str calc_lte_str = {2, '<', '='};
-static const Calc_Len_Str calc_gte_str = {2, '>', '='};
-static const Calc_Len_Str calc_refof_str = {1, '$'};
-static const Calc_Len_Str calc_list_start_str = {1, '['};
-static const Calc_Len_Str calc_list_end_str = {1, ']'};
-static const Calc_Len_Str calc_list_sep_str = {1, ','};
-static const Calc_Len_Str calc_func_start_str = {1, '{'};
-static const Calc_Len_Str calc_func_end_str = {1, '}'};
-static const Calc_Len_Str calc_func_arrow_str = {2, '-', '>'};
-static const Calc_Len_Str calc_var_sep_str = {1, ';'};
+static const Calc_Len_Str_Size(1) calc_add_str = {1, '+'};
+static const Calc_Len_Str_Size(1) calc_sub_str = {1, '-'};
+static const Calc_Len_Str_Size(1) calc_mul_str = {1, '*'};
+static const Calc_Len_Str_Size(1) calc_div_str = {1, '/'};
+static const Calc_Len_Str_Size(1) calc_pow_str = {1, '^'};
+static const Calc_Len_Str_Size(1) calc_mod_str = {1, '%'};
+static const Calc_Len_Str_Size(2) calc_to_str = {2, '.', '.'};
+static const Calc_Len_Str_Size(1) calc_and_str = {1, '&'};
+static const Calc_Len_Str_Size(1) calc_or_str = {1, '|'};
+static const Calc_Len_Str_Size(1) calc_not_str = {1, '!'};
+static const Calc_Len_Str_Size(1) calc_eq_str = {1, '='};
+static const Calc_Len_Str_Size(2) calc_neq_str = {2, '!', '='};
+static const Calc_Len_Str_Size(1) calc_lt_str = {1, '<'};
+static const Calc_Len_Str_Size(1) calc_gt_str = {1, '>'};
+static const Calc_Len_Str_Size(2) calc_lte_str = {2, '<', '='};
+static const Calc_Len_Str_Size(2) calc_gte_str = {2, '>', '='};
+static const Calc_Len_Str_Size(1) calc_refof_str = {1, '$'};
+static const Calc_Len_Str_Size(1) calc_list_start_str = {1, '['};
+static const Calc_Len_Str_Size(1) calc_list_end_str = {1, ']'};
+static const Calc_Len_Str_Size(1) calc_list_sep_str = {1, ','};
+static const Calc_Len_Str_Size(1) calc_func_start_str = {1, '{'};
+static const Calc_Len_Str_Size(1) calc_func_end_str = {1, '}'};
+static const Calc_Len_Str_Size(2) calc_func_arrow_str = {2, '-', '>'};
+static const Calc_Len_Str_Size(1) calc_var_sep_str = {1, ';'};
 
 const Calc_Len_Str* calc_op_to_str(Calc_Op op) {
 	switch(op) {
 		/* Normal operators. */
-		case calc_add: return &calc_add_str;
-		case calc_sub: return &calc_sub_str;
-		case calc_mul: return &calc_mul_str;
-		case calc_div: return &calc_div_str;
-		case calc_pow: return &calc_pow_str;
-		case calc_mod: return &calc_mod_str;
-		case calc_to: return &calc_to_str;
-		case calc_and: return &calc_and_str;
-		case calc_or: return &calc_or_str;
-		case calc_not: return &calc_not_str;
-		case calc_eq_: return &calc_eq_str;
-		case calc_neq: return &calc_neq_str;
-		case calc_lt: return &calc_lt_str;
-		case calc_gt: return &calc_gt_str;
-		case calc_lte: return &calc_lte_str;
-		case calc_gte: return &calc_gte_str;
+		case calc_add: return (const Calc_Len_Str*) &calc_add_str;
+		case calc_sub: return (const Calc_Len_Str*) &calc_sub_str;
+		case calc_mul: return (const Calc_Len_Str*) &calc_mul_str;
+		case calc_div: return (const Calc_Len_Str*) &calc_div_str;
+		case calc_pow: return (const Calc_Len_Str*) &calc_pow_str;
+		case calc_mod: return (const Calc_Len_Str*) &calc_mod_str;
+		case calc_to: return (const Calc_Len_Str*) &calc_to_str;
+		case calc_and: return (const Calc_Len_Str*) &calc_and_str;
+		case calc_or: return (const Calc_Len_Str*) &calc_or_str;
+		case calc_not: return (const Calc_Len_Str*) &calc_not_str;
+		case calc_eq_: return (const Calc_Len_Str*) &calc_eq_str;
+		case calc_neq: return (const Calc_Len_Str*) &calc_neq_str;
+		case calc_lt: return (const Calc_Len_Str*) &calc_lt_str;
+		case calc_gt: return (const Calc_Len_Str*) &calc_gt_str;
+		case calc_lte: return (const Calc_Len_Str*) &calc_lte_str;
+		case calc_gte: return (const Calc_Len_Str*) &calc_gte_str;
 		/* Context operators. */
-		case calc_refof: return &calc_refof_str;
-		case calc_list_start: return &calc_list_start_str;
-		case calc_list_end: return &calc_list_end_str;
-		case calc_list_sep: return &calc_list_sep_str;
-		case calc_func_start: return &calc_func_start_str;
-		case calc_func_end: return &calc_func_end_str;
-		case calc_func_arrow: return &calc_func_arrow_str;
-		case calc_var_sep: return &calc_var_sep_str;
+		case calc_refof: return (const Calc_Len_Str*) &calc_refof_str;
+		case calc_list_start: return (const Calc_Len_Str*) &calc_list_start_str;
+		case calc_list_end: return (const Calc_Len_Str*) &calc_list_end_str;
+		case calc_list_sep: return (const Calc_Len_Str*) &calc_list_sep_str;
+		case calc_func_start: return (const Calc_Len_Str*) &calc_func_start_str;
+		case calc_func_end: return (const Calc_Len_Str*) &calc_func_end_str;
+		case calc_func_arrow: return (const Calc_Len_Str*) &calc_func_arrow_str;
+		case calc_var_sep: return (const Calc_Len_Str*) &calc_var_sep_str;
 	}
 }
 
