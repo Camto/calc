@@ -5,38 +5,41 @@
 #include "types.h"
 #include "print.h"
 
-static const Calc_Len_Str list_start = {1, '['};
-static const Calc_Len_Str list_end = {1, ']'};
-static const Calc_Len_Str list_sep = {2, ',', ' '};
+static const Calc_Len_Str_Size(1) list_start = {1, '['};
+static const Calc_Len_Str_Size(1) list_end = {1, ']'};
+static const Calc_Len_Str_Size(2) list_sep = {2, ',', ' '};
 
-static const Calc_Len_Str func_start = {1, '{'};
-static const Calc_Len_Str func_end = {26, ' ', '-', '>', ' ', '<', 'f', 'u', 'n', 'c', 't', 'i', 'o', 'n', ' ', 'd', 'e', 'f', 'i', 'n', 'i', 't', 'i', 'o', 'n', '>', '}'};
-static const Calc_Len_Str func_sep = {1, ' '};
+static const Calc_Len_Str_Size(1) func_start = {1, '{'};
+static const Calc_Len_Str_Size(26) func_end = {26, ' ', '-', '>', ' ', '<', 'f', 'u', 'n', 'c', 't', 'i', 'o', 'n', ' ', 'd', 'e', 'f', 'i', 'n', 'i', 't', 'i', 'o', 'n', '>', '}'};
+static const Calc_Len_Str_Size(1) func_sep = {1, ' '};
 
-static const Calc_Len_Str stack_start = {5, 'c', 'a', 'l', 'c', '='};
-static const Calc_Len_Str stack_sep = {1, ' '};
+static const Calc_Len_Str_Size(5) stack_start = {5, 'c', 'a', 'l', 'c', '='};
+static const Calc_Len_Str_Size(1) stack_sep = {1, ' '};
 
 Calc_Len_Str* calc_print(Calc_Stack* stack) {
 	Calc_Val** vals = stack->vals;
 	size_t len = stack->len;
+	Calc_Len_Str** printed_vals;
+	size_t buf_size;
+	Calc_Len_Str* buf;
 	size_t i;
 	
 	if(len == 0) return calc_to_len_str("calc=");
 	
-	Calc_Len_Str** printed_vals = malloc(sizeof(Calc_Len_Str*) * len);
+	printed_vals = malloc(sizeof(Calc_Len_Str*) * len);
 	
-	size_t buf_size = stack_start.len + stack_sep.len * (len - 1);
+	buf_size = stack_start.len + stack_sep.len * (len - 1);
 	for(i = 0; i < len; i++) {
 		printed_vals[i] = calc_print_val(vals[i]);
 		buf_size += printed_vals[i]->len;
 	}
 	
-	Calc_Len_Str* buf = calc_len_str_prealloc(buf_size);
-	calc_len_str_append(buf, &stack_start);
+	buf = calc_len_str_prealloc(buf_size);
+	calc_len_str_append(buf, (const Calc_Len_Str*) &stack_start);
 	for(i = 0; i < len; i++) {
 		calc_len_str_append(buf, printed_vals[i]);
 		if(i < len - 1)
-			calc_len_str_append(buf, &stack_sep);
+			calc_len_str_append(buf, (const Calc_Len_Str*) &stack_sep);
 	}
 	
 	for(i = 0; i < len; i++)
@@ -51,8 +54,9 @@ Calc_Len_Str* calc_print_val(Calc_Val* val) {
 		case calc_num: {
 			int len = snprintf(NULL, 0, "%.5f", val->data.num);
 			char* buf = malloc(sizeof(char) * len);
+			Calc_Len_Str* len_str;
 			sprintf(buf, "%.5f", val->data.num);
-			Calc_Len_Str* len_str = calc_to_len_str(buf);
+			len_str = calc_to_len_str(buf);
 			free(buf);
 			return len_str;
 		}
@@ -60,13 +64,16 @@ Calc_Len_Str* calc_print_val(Calc_Val* val) {
 		case calc_list: {
 			Calc_Val_List* val_data = val->data.list;
 			size_t list_len = val_data->len;
+			Calc_Len_Str** printed_vals;
+			size_t buf_size;
+			Calc_Len_Str* buf;
 			size_t i;
 			
 			if(list_len == 0) return calc_to_len_str("[]");
 			
-			Calc_Len_Str** printed_vals = malloc(sizeof(Calc_Len_Str*) * list_len);
+			printed_vals = malloc(sizeof(Calc_Len_Str*) * list_len);
 			
-			size_t buf_size =
+			buf_size =
 				list_start.len +
 				list_sep.len * (list_len - 1) +
 				list_end.len;
@@ -75,14 +82,14 @@ Calc_Len_Str* calc_print_val(Calc_Val* val) {
 				buf_size += printed_vals[i]->len;
 			}
 			
-			Calc_Len_Str* buf = calc_len_str_prealloc(buf_size);
-			calc_len_str_append(buf, &list_start);
+			buf = calc_len_str_prealloc(buf_size);
+			calc_len_str_append(buf, (const Calc_Len_Str*) &list_start);
 			for(i = 0; i < list_len; i++) {
 				calc_len_str_append(buf, printed_vals[i]);
 				if(i < list_len - 1)
-					calc_len_str_append(buf, &list_sep);
+					calc_len_str_append(buf, (const Calc_Len_Str*) &list_sep);
 			}
-			calc_len_str_append(buf, &list_end);
+			calc_len_str_append(buf, (const Calc_Len_Str*) &list_end);
 			
 			for(i = 0; i < list_len; i++)
 				free(printed_vals[i]);
@@ -93,25 +100,27 @@ Calc_Len_Str* calc_print_val(Calc_Val* val) {
 		case calc_func: {
 			Calc_Len_Str** args = val->data.func->args.args;
 			size_t args_len = val->data.func->args.len;
+			size_t buf_size;
+			Calc_Len_Str* buf;
 			size_t i;
 			
 			if(args_len == 0) return calc_to_len_str("{<function definition>}");
 			
-			size_t buf_size =
+			buf_size =
 				func_start.len +
 				func_sep.len * (args_len - 1) +
 				func_end.len;
 			for(i = 0; i < args_len; i++)
 				buf_size += args[i]->len;
 			
-			Calc_Len_Str* buf = calc_len_str_prealloc(buf_size);
-			calc_len_str_append(buf, &func_start);
+			buf = calc_len_str_prealloc(buf_size);
+			calc_len_str_append(buf, (const Calc_Len_Str*) &func_start);
 			for(i = 0; i < args_len; i++) {
 				calc_len_str_append(buf, args[i]);
 				if(i < args_len - 1)
-					calc_len_str_append(buf, &func_sep);
+					calc_len_str_append(buf, (const Calc_Len_Str*) &func_sep);
 			}
-			calc_len_str_append(buf, &func_end);
+			calc_len_str_append(buf, (const Calc_Len_Str*) &func_end);
 			
 			return buf;
 		}
