@@ -81,21 +81,21 @@ bool calc_is_list_like(Calc_Val* val) {
 	return calc_is_str(val) || calc_is_list(val);
 }
 
-static const Calc_Len_Str calc_num_str = {6, 'n', 'u', 'm', 'b', 'e', 'r'};
-static const Calc_Len_Str calc_str_str = {6, 's', 't', 'r', 'i', 'n', 'g'};
-static const Calc_Len_Str calc_list_str = {4, 'l', 'i', 's', 't'};
-static const Calc_Len_Str calc_func_str = {8, 'f', 'u', 'n', 'c', 't', 'i', 'o', 'n'};
-static const Calc_Len_Str calc_ref_str = {9, 'r', 'e', 'f', 'e', 'r', 'e', 'n', 'c', 'e'};
-static const Calc_Len_Str calc_op_str = {8, 'o', 'p', 'e', 'r', 'a', 't', 'o', 'r'};
+static const Calc_Len_Str_Size(6) calc_num_str = {6, 'n', 'u', 'm', 'b', 'e', 'r'};
+static const Calc_Len_Str_Size(6) calc_str_str = {6, 's', 't', 'r', 'i', 'n', 'g'};
+static const Calc_Len_Str_Size(4) calc_list_str = {4, 'l', 'i', 's', 't'};
+static const Calc_Len_Str_Size(8) calc_func_str = {8, 'f', 'u', 'n', 'c', 't', 'i', 'o', 'n'};
+static const Calc_Len_Str_Size(9) calc_ref_str = {9, 'r', 'e', 'f', 'e', 'r', 'e', 'n', 'c', 'e'};
+static const Calc_Len_Str_Size(8) calc_op_str = {8, 'o', 'p', 'e', 'r', 'a', 't', 'o', 'r'};
 
 const Calc_Len_Str* calc_type_to_str(Calc_Type type) {
 	switch(type) {
-		case calc_num: return &calc_num_str;
-		case calc_str: return &calc_str_str;
-		case calc_list: return &calc_list_str;
-		case calc_func: return &calc_func_str;
-		case calc_ref: return &calc_ref_str;
-		case calc_op: return &calc_op_str;
+		case calc_num: return (const Calc_Len_Str*) &calc_num_str;
+		case calc_str: return (const Calc_Len_Str*) &calc_str_str;
+		case calc_list: return (const Calc_Len_Str*) &calc_list_str;
+		case calc_func: return (const Calc_Len_Str*) &calc_func_str;
+		case calc_ref: return (const Calc_Len_Str*) &calc_ref_str;
+		case calc_op: return (const Calc_Len_Str*) &calc_op_str;
 	}
 }
 
