@@ -14,10 +14,10 @@
 		(curr) == '^' || (curr) == '%' || \
 		(curr) == '&' || (curr) == '|' || (curr) == '!' || \
 		(curr) == '=' || (curr) == '<' || (curr) == '>' || \
-		(curr) == '$' || \
+		(curr) == '\'' || \
 		(curr) == '[' || (curr) == ']' || (curr) == ',' || \
 		(curr) == '{' || (curr) == '}' || \
-		(curr) == ';' \
+		(curr) == ':' || (curr) == ';' \
 	)
 
 #define is_num_op_char(curr) ((curr) == '-' || (curr) == '.')
@@ -186,13 +186,16 @@ int calc_expect_op(
 	} else if(curr == '>') {
 		if(next == '=') {op = calc_gte; (*pos)++;}
 		else op = calc_gt;
-	} else if(curr == '$') op = calc_refof;
+	} else if(curr == '\'') op = calc_refof;
 	else if(curr == '[') op = calc_list_start;
 	else if(curr == ']') op = calc_list_end;
 	else if(curr == ',') op = calc_list_sep;
 	else if(curr == '{') op = calc_func_start;
 	else if(curr == '}') op = calc_func_end;
-	else if(curr == ';') op = calc_list_start;
+	else if(curr == ':') {
+		if(next == '=') {op = calc_var_decl; (*pos)++;}
+		else return 0;
+	} else if(curr == ';') op = calc_list_start;
 	
 	buf = calc_from_len_str(calc_op_to_str(op));
 	printf("Op: %s\n", buf);
@@ -267,13 +270,14 @@ static const Calc_Len_Str_Size(1) calc_lt_str = {1, '<'};
 static const Calc_Len_Str_Size(1) calc_gt_str = {1, '>'};
 static const Calc_Len_Str_Size(2) calc_lte_str = {2, '<', '='};
 static const Calc_Len_Str_Size(2) calc_gte_str = {2, '>', '='};
-static const Calc_Len_Str_Size(1) calc_refof_str = {1, '$'};
+static const Calc_Len_Str_Size(1) calc_refof_str = {1, '\''};
 static const Calc_Len_Str_Size(1) calc_list_start_str = {1, '['};
 static const Calc_Len_Str_Size(1) calc_list_end_str = {1, ']'};
 static const Calc_Len_Str_Size(1) calc_list_sep_str = {1, ','};
 static const Calc_Len_Str_Size(1) calc_func_start_str = {1, '{'};
 static const Calc_Len_Str_Size(1) calc_func_end_str = {1, '}'};
 static const Calc_Len_Str_Size(2) calc_func_arrow_str = {2, '-', '>'};
+static const Calc_Len_Str_Size(2) calc_var_decl_str = {2, ':', '='};
 static const Calc_Len_Str_Size(1) calc_var_sep_str = {1, ';'};
 
 const Calc_Len_Str* calc_op_to_str(Calc_Op op) {
@@ -303,6 +307,7 @@ const Calc_Len_Str* calc_op_to_str(Calc_Op op) {
 		case calc_func_start: return (const Calc_Len_Str*) &calc_func_start_str;
 		case calc_func_end: return (const Calc_Len_Str*) &calc_func_end_str;
 		case calc_func_arrow: return (const Calc_Len_Str*) &calc_func_arrow_str;
+		case calc_var_decl: return (const Calc_Len_Str*) &calc_var_decl_str;
 		case calc_var_sep: return (const Calc_Len_Str*) &calc_var_sep_str;
 	}
 }

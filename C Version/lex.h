@@ -19,7 +19,7 @@ typedef enum {
 	calc_refof,
 	calc_list_start, calc_list_end, calc_list_sep,
 	calc_func_start, calc_func_end, calc_func_arrow,
-	calc_var_sep
+	calc_var_decl, calc_var_sep
 } Calc_Op;
 
 typedef struct {
