@@ -1,10 +1,10 @@
 @font-face {
-	font-family: FiraCode;
-	src: url(../FiraCode.ttf);
+	font-family: FiraMono;
+	src: url(../FiraMono.ttf);
 }
 
 * {
-	font-family: FiraCode, Courier;
+	font-family: FiraMono, Courier;
 	font-size: 16px;
 	color: white;
 }
