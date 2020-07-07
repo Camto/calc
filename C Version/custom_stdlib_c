@@ -1,0 +1,70 @@
+#include "khash.h"
+
+#include "types.h"
+#include "len str.h"
+#include "stdlib.h"
+
+Calc_Builtins* make_builtins() {
+	Calc_Builtins* builtins = kh_init(Calc_Builtin_Hash);
+	khint_t iter;
+	int ret;
+	
+	Calc_Builtin type = {
+		.main_alias = calc_to_len_str("type"),
+		.aliases = {
+			.len = 4,
+			.aliases = malloc(sizeof(Calc_Len_Str*) * 4)
+		},
+		.func = calc_builtin_type
+	};
+	type.aliases.aliases[0] = calc_to_len_str("type");
+	type.aliases.aliases[1] = calc_to_len_str("typeof");
+	type.aliases.aliases[2] = calc_to_len_str("instance");
+	type.aliases.aliases[3] = calc_to_len_str("instanceof");
+	iter = calc_builtins_put(builtins, "type", &ret);
+	kh_val(builtins, iter) = type;
+	
+	Calc_Builtin dup = {
+		.main_alias = calc_to_len_str("dup"),
+		.aliases = {
+			.len = 2,
+			.aliases = malloc(sizeof(Calc_Len_Str*) * 2)
+		},
+		.func = calc_builtin_dup
+	};
+	dup.aliases.aliases[0] = calc_to_len_str("dup");
+	dup.aliases.aliases[1] = calc_to_len_str("duplicate");
+	iter = calc_builtins_put(builtins, "dup", &ret);
+	kh_val(builtins, iter) = dup;
+	
+	Calc_Builtin drop = {
+		.main_alias = calc_to_len_str("drop"),
+		.aliases = {
+			.len = 2,
+			.aliases = malloc(sizeof(Calc_Len_Str*) * 2)
+		},
+		.func = calc_builtin_drop
+	};
+	drop.aliases.aliases[0] = calc_to_len_str("drop");
+	drop.aliases.aliases[1] = calc_to_len_str("stack_pop");
+	iter = calc_builtins_put(builtins, "drop", &ret);
+	kh_val(builtins, iter) = drop;
+	
+	return builtins;
+}
+
+__builtin(calc_builtin_type) {
+	Calc_Val* val = calc_pop(stack);
+	calc_push(stack, calc_new_str(calc_len_str_copy(calc_type_to_str(val->type))));
+	calc_lose_ref(val);
+}
+
+__builtin(calc_builtin_dup) {
+	Calc_Val* val = calc_peek(stack);
+	calc_gain_ref(val);
+	calc_push(stack, val);
+}
+
+__builtin(calc_builtin_drop) {
+	calc_lose_ref(calc_pop(stack));
+}
