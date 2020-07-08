@@ -1,7 +1,7 @@
+#include "len str.h"
+
 #include <stdlib.h>
 #include <string.h>
-
-#include "len str.h"
 
 const Calc_Len_Str empty_str = {0};
 

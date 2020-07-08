@@ -1,9 +1,10 @@
+#include "print.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 
 #include "len str.h"
 #include "types.h"
-#include "print.h"
 
 static const Calc_Len_Str_Size(1) list_start = {1, '['};
 static const Calc_Len_Str_Size(1) list_end = {1, ']'};

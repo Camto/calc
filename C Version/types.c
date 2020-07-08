@@ -1,3 +1,5 @@
+#include "types.h"
+
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
@@ -7,7 +9,6 @@
 #include <stdio.h> /* Hide this behind a debug macro later. */
 
 #include "len str.h"
-#include "types.h"
 
 Calc_Val* calc_new_num(double num) {
 	Calc_Val* val = malloc(sizeof(Calc_Val));

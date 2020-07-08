@@ -1,9 +1,10 @@
+#include "lex.h"
+
 #include <stdlib.h>
 
 #include <stdio.h> /* Hide this behind a debug macro later. */
 
 #include "len str.h"
-#include "lex.h"
 
 #define is_digit(curr) ((curr) >= '0' && (curr) <= '9')
 
