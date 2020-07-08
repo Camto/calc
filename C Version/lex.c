@@ -268,6 +268,29 @@ void calc_append_token(Calc_Tokens* tokens, Calc_Token token) {
 	tokens->tokens[tokens->len-1] = token;
 }
 
+bool calc_is_op_normal(Calc_Op op) {
+	switch(op) {
+		case calc_add:
+		case calc_sub:
+		case calc_mul:
+		case calc_div:
+		case calc_pow:
+		case calc_mod:
+		case calc_to:
+		case calc_and:
+		case calc_or:
+		case calc_not:
+		case calc_eq_:
+		case calc_neq:
+		case calc_lt:
+		case calc_gt:
+		case calc_lte:
+		case calc_gte:
+			return 1;
+		default: return 0;
+	}
+}
+
 static const Calc_Len_Str_Size(1) calc_add_str = {1, '+'};
 static const Calc_Len_Str_Size(1) calc_sub_str = {1, '-'};
 static const Calc_Len_Str_Size(1) calc_mul_str = {1, '*'};

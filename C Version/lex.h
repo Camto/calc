@@ -65,6 +65,7 @@ void calc_free_tokens(Calc_Tokens tokens);
 
 void calc_append_token(Calc_Tokens* tokens, Calc_Token token);
 
+bool calc_is_op_normal(Calc_Op op);
 const Calc_Len_Str* calc_op_to_str(Calc_Op op);
 
 #endif
