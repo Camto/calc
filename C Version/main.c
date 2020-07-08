@@ -44,7 +44,8 @@ int main(int argc, char** argv) {
 	
 	if(argc > 1) {
 		Calc_Len_Str* prog = calc_to_len_str(argv[1]);
-		calc_lex(prog);
+		Calc_Tokens tokens = calc_lex(prog);
+		calc_free_tokens(tokens);
 		free(prog);
 	} else printf("Please provide code to lex :)");
 }

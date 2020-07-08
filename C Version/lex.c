@@ -246,6 +246,20 @@ void calc_expect_sym(
 	*pos = end;
 }
 
+void calc_free_tokens(Calc_Tokens tokens) {
+	size_t i;
+	for(i = 0; i < tokens.len; i++) {
+		switch(tokens.tokens[i].type) {
+			case calc_num_token:
+			case calc_op_token:
+				break;
+			case calc_str_token: {free(tokens.tokens[i].data.str); break;}
+			case calc_sym_token: {free(tokens.tokens[i].data.sym); break;}
+		}
+	}
+	free(tokens.tokens);
+}
+
 void calc_append_token(Calc_Tokens* tokens, Calc_Token token) {
 	if(++tokens->len > tokens->cap) {
 		tokens->cap *= 2;

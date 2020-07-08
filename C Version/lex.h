@@ -61,6 +61,8 @@ void calc_expect_sym(
 	size_t* pos
 );
 
+void calc_free_tokens(Calc_Tokens tokens);
+
 void calc_append_token(Calc_Tokens* tokens, Calc_Token token);
 
 const Calc_Len_Str* calc_op_to_str(Calc_Op op);
