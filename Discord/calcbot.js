@@ -17,7 +17,7 @@ client.on("message", msg => {
 	}
 	
 	if(
-		!msg.author.bot &&
+		msg.author.id != client.user.id &&
 		msg.content.substring(0, 5) == "calc="
 	) {
 		console.log("Got request.")
