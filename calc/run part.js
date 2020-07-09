@@ -20,7 +20,11 @@ function run_function(func, stack, built_ins, operators, end_time) {
 				
 				for(let cou = 0; cou < func.variables.length; cou++) {
 					run_block(func.variables[cou].data, stack, scopes, built_ins, operators, end_time);
-					variables[func.variables[cou].name] = stack.pop();
+					var value = stack.pop();
+					if(value == undefined) {
+						throw `Expected stack to have at least 1 item when defining the variable "${func.variables[cou].name}".`;
+					}
+					variables[func.variables[cou].name] = value;
 				}
 				
 				run_block(func.data, stack, scopes, built_ins, operators, end_time);
