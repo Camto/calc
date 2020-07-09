@@ -22,12 +22,28 @@ html, body, #console {
 	flex-direction: column;
 }
 
+#calcbox {
+	display: flex;
+	background: black;
+	border: none;
+	outline: none;
+	border-top: 1px solid white;
+}
+
+#calc-header {
+	float: left;
+	padding: 2px;
+	padding-right: 0px;
+}
+
 #calc {
 	resize: none;
 	background: black;
 	border: none;
 	outline: none;
-	border-top: 1px solid white;
+	padding: 2px;
+	padding-left: 0px;
+	flex-grow: 1;
 }
 
 #log {

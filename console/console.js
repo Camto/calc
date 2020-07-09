@@ -1,18 +1,20 @@
 "use strict";
 
-var past = ["calc= "];
+var past = [""];
 var travel = 2;
 
 $(function() {
 	$("#log").append(escape_input(calc.print(calc.calc("calc= h", 10000))) + "<br />");
-	past.push("calc= h");
+	past.push("h");
 	if(location.search.substring(6) == "") {
-		history.replaceState("", "", "?calc=calc%3D%20h");
+		history.replaceState("", "", "?calc=h");
 	} else {
-		if(decodeURIComponent(location.search.substring(6)) != "calc= h") {
+		var prog = decodeURIComponent(location.search.substring(6));
+		if(prog != "h") {
+			$("#log").append("calc= " + escape_input(prog) + "<br />");
 			var result;
 			try {
-				result = calc.print(calc.calc(decodeURIComponent(location.search.substring(6)), 10000));
+				result = calc.print(calc.calc("calc= " + prog, 10000));
 			} catch(err) {
 				result = calc.err_to_str(err);
 			}
@@ -28,7 +30,7 @@ $(function() {
 				$(this).val($(this).val().replace(/[\n\r]/g, ""));
 				var result = "";
 				try {
-					result = calc.print(calc.calc($(this).val(), 10000));
+					result = calc.print(calc.calc("calc= " + $(this).val(), 10000));
 				} catch(err) {
 					result = calc.err_to_str(err);
 				}
@@ -36,10 +38,10 @@ $(function() {
 				travel = past.length;
 				history.replaceState("", "", "?calc=" + encodeURIComponent($(this).val().replace(/[\n\r]/g, "")));
 				
-				$("#log").append(escape_input(result));
-				$("#log").append("<br />");
-				$(this).val("calc= ");
-				$('#log').scrollTop($('#log')[0].scrollHeight);
+				$("#log").append("calc= " + escape_input($(this).val()) + "<br />");
+				$("#log").append(escape_input(result) + "<br />");
+				$(this).val("");
+				$("#log").scrollTop($("#log")[0].scrollHeight);
 				break;
 			case 38:
 				travel--;
@@ -54,7 +56,7 @@ $(function() {
 				travel++;
 				if(travel > past.length - 1) {
 					travel = past.length;
-					$(this).val("calc= ");
+					$(this).val("");
 					setTimeout(() => this.setSelectionRange(6, 6), 1);
 				} else {
 					$(this).val(past[travel]);
