@@ -15,8 +15,7 @@ if(args.length >= 1) {
 		} catch(err) {
 			console.log(`Ran program
 ${prog}
-with error
-${calc.err_to_str(err)}`);
+with error`);
 			return calc.err_to_str(err);
 		}
 	})();
