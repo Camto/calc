@@ -15,4 +15,6 @@ typedef enum {calc_error, calc_result} Calc_Is_Error;
 		} data; \
 	}
 
+Calc_Len_Str* calc_error_header(const Calc_Len_Str* prog, size_t pos);
+
 #endif
