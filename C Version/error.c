@@ -2,42 +2,55 @@
 
 #include <string.h>
 
-Calc_Len_Str* calc_error_header(const Calc_Len_Str* prog, size_t pos) {
+Calc_Error_Header_Info calc_error_header_info(
+	const Calc_Len_Str* prog,
+	size_t pos
+) {
 	size_t i;
-	size_t start_prog_cut = 0;
-	size_t end_prog_cut = prog->len;
-	size_t cut_len;
+	size_t start_cut = 0;
+	size_t end_cut = prog->len;
 	int line_count = 0;
-	Calc_Len_Str* buf;
+	Calc_Error_Header_Info info;
 	
 	for(i = 0; i < pos; i++)
 		if(prog->chars[i] == '\n') {
 			line_count++;
-			start_prog_cut = i + 1;
+			start_cut = i + 1;
 		}
 	
 	for(i = pos; i < prog->len; i++)
 		if(prog->chars[i] == '\n') {
-			end_prog_cut = i;
+			end_cut = i;
 			break;
 		}
 	
-	if(pos - start_prog_cut > 10) start_prog_cut = pos - 10;
-	if(end_prog_cut - pos > 11) end_prog_cut = pos + 11;
-	cut_len = end_prog_cut - start_prog_cut;
+	if(pos - start_cut > 10) start_cut = pos - 10;
+	if(end_cut - pos > 11) end_cut = pos + 11;
 	
-	buf = calc_len_str_prealloc(cut_len * 2 + 1);
-	memcpy(buf->chars, &prog->chars[start_prog_cut], cut_len);
+	info.start_cut = start_cut;
+	info.end_cut = end_cut;
+	info.line_count = line_count;
+	return info;
+}
+
+Calc_Len_Str* calc_error_header(
+	const Calc_Len_Str* prog, size_t pos, Calc_Len_Str* buf,
+	size_t start_cut, size_t end_cut
+) {
+	size_t i;
+	size_t cut_len = end_cut - start_cut;
+	
+	memcpy(&buf->chars[buf->len], &prog->chars[start_cut], cut_len);
 	buf->len += cut_len;
 	buf->chars[buf->len] = '\n';
 	buf->len++;
-	for(i = 0; i < pos - start_prog_cut; i++) {
+	for(i = 0; i < pos - start_cut; i++) {
 		buf->chars[buf->len] = ' ';
 		buf->len++;
 	}
 	buf->chars[buf->len] = '^';
 	buf->len++;
-	for(i = 0; i < end_prog_cut - pos - 1; i++) {
+	for(i = 0; i < end_cut - pos - 1; i++) {
 		buf->chars[buf->len] = ' ';
 		buf->len++;
 	}
