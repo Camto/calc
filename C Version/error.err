@@ -1,0 +1,4 @@
+lex_unclosed_str `Found " to start a string starting here, but none to finish it.`
+
+lex_dot `Found a single ".", did you mean to put the ".." operator or a number there?`
+lex_colon `Found a ":", did you mean to put the ":=" operator there?`
