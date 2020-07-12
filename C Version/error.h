@@ -26,8 +26,9 @@ Calc_Error_Header_Info calc_error_header_info(
 	size_t pos
 );
 
-void calc_error_header(
-	const Calc_Len_Str* prog, size_t pos, Calc_Len_Str* buf,
+void calc_error_append_header(
+	Calc_Len_Str* buf,
+	const Calc_Len_Str* prog, size_t pos,
 	size_t start_cut, size_t end_cut
 );
 

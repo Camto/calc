@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "len str.h"
+#include "lex.h"
+#include "error.h"
 
 /*
 #include "types.h"
@@ -8,8 +11,6 @@
 #include "builtins.h"
 #include "aliases.h"
 */
-
-#include "lex.h"
 
 int lt(double n, double m) {return n < m;}
 
@@ -42,10 +43,31 @@ int main(int argc, char** argv) {
 	calc_free_stack(&stack);
 	*/
 	
-	if(argc > 1) {
-		Calc_Len_Str* prog = calc_to_len_str(argv[1]);
-		Calc_Tokens tokens = calc_lex(prog);
-		calc_free_tokens(tokens);
+	if(argc > 2) {
+		Calc_Len_Str* prog;
+		Calc_Error_Header_Info info;
+		Calc_Len_Str* err_buf;
+		Calc_Len_Str* err;
+		char* printable;
+		
+		prog = calc_to_len_str(argv[1]);
+		
+		info = calc_error_header_info(prog, atoi(argv[2]));
+		err_buf = calc_len_str_prealloc(
+			(info.start_cut - info.end_cut) * 2 + 1 + 5
+		);
+		calc_len_str_append(err_buf, calc_to_len_str("bruh\n"));
+		calc_error_append_header(
+			err_buf,
+			prog, atoi(argv[2]),
+			info.start_cut, info.end_cut
+		);
+		
+		printable = calc_from_len_str(err);
+		printf("Error:\n```\n%s| end here\n```", printable);
+		
+		free(err);
+		free(printable);
 		free(prog);
 	} else printf("Please provide code to lex :)");
 }
