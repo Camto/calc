@@ -1,4 +1,4 @@
-local pretty = require "pl.pretty"
+require "pl"
 
 local function skip_ws(prog, i)
 	local ws = prog:sub(i):match"[ \n]*"
@@ -26,7 +26,7 @@ local function parse_str(prog, i)
 end
 
 local function parse_prog(prog)
-	local errors = {}
+	local errors = List{}
 
 	local i = 1
 	while i <= #prog do
@@ -37,10 +37,19 @@ local function parse_prog(prog)
 		i = skip_ws(prog, i)
 		str_, i = parse_str(prog, i)
 		i = skip_ws(prog, i)
-		errors[name] = str_
+		table.insert(errors, {name = name, str = str_})
 	end
 	
 	return errors
+end
+
+local function error_to_func(error)
+	return
+"Calc_Len_Str* " .. error.name .. [[(const Calc_Len_Str* prog, size_t pos) {
+	Calc_Len_Str* buf = calc_error_header(prog, pos);
+}
+
+]]
 end
 
 local error_file = io.open("error.err", "r")
@@ -48,4 +57,5 @@ local prog = error_file:read"*a"
 error_file:close()
 
 errors = parse_prog(prog)
-pretty.dump(errors)
+
+print(errors:map(error_to_func))
