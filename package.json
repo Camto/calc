@@ -7,5 +7,8 @@
 	"license": "MIT",
 	"dependencies": {
 		"discord.js": "^12.2.0"
+	},
+	"scripts": {
+		"start": "pushd console; npx http-server -p $PORT; popd"
 	}
 }
